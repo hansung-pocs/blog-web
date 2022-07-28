@@ -1,0 +1,41 @@
+.hidden {
+    display: none;
+}
+
+#login-form {
+    text-align: center;
+}
+
+nav {
+    background-color: white;
+}
+
+.notice-title {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.notice-title-first {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.notice-title-second {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
+}
+
+.notice-title-area input{
+    border-style : hidden;
+    border-color : white;
+    padding-bottom : 1em;
+    border-bottom : 1px solid black;
+}
+
+.notice-content-area textarea{
+    border-style : hidden;
+    border-color : white;
+}
+
+
