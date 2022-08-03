@@ -6,7 +6,7 @@ const url = new URL('http://34.64.161.55:8001/users/' + id);
 const title = document.querySelector("#user_detail_edit_title");
 
 const saveBtn = document.querySelector("#user_detail_edit_saveBtn"); //[Login]로그인 정보와 유저 정보가 같아야 보이도록
-const saveBtn_a = document.querySelector("#user_detail_edit_saveBtn a");
+const cancelBtn = document.querySelector("#user_detail_edit_cancelBtn");
 
 //정보
 const userName = document.querySelector("#user_detail_edit_userName");
@@ -28,8 +28,7 @@ fetch(url)
             `
                 ${data.data.userName}님의 정보 수정
             `
-            saveBtn_a.href='user_detail.html?userId='+id; //임시-수정은 안되고 직전 user_detail.html로
-
+            
             userName.value=`${data.data.userName}`;
             email.value=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
@@ -45,3 +44,41 @@ fetch(url)
         }
     })
 
+//저장버튼-업데이트
+saveBtn.addEventListener("click",async function userEdit(event){
+    event.preventDefault();
+    console.log('edit');
+    const sendData={
+        //password:,//password 데이터는 현재 미구현
+        userName:edit_userName.value,
+        email:edit_email.value,
+        github:edit_github.value,
+        company:edit_company.value,
+    };
+
+    const options = {
+        method : 'PATCH',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(sendData)
+    };
+
+    const response = await fetch('http://34.64.161.55:8001/users/'+id, options);
+    const result = await response.json();
+    console.log(result);
+
+    if(result.status !==302){ //에러 발생시
+        window.location.href = '../html/user_detail.html?userId='+id;
+
+    }
+    else{ //잘 되었다면
+        console.log(result.message);
+        //window.location.href = '../html/user_detail.html?userId='+id;////편집후 바로 이전화면으로
+    }
+});
+//유저 정보 수정을 취소하는 버튼 이벤트
+cancelBtn.addEventListener("click",function (event) {
+    event.preventDefault();
+    window.location.href = '../html/user_detail.html?userId='+id;
+});

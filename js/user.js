@@ -1,5 +1,5 @@
 let sort='';
-const url = new URL("http://34.64.161.55:8001/users"+sort);
+let url = "http://34.64.161.55:8001/users";
 
 const user = document.querySelector("#user table");
 const thead = document.querySelector("#user table thead");
@@ -40,12 +40,13 @@ function doFetch(){
 
 function onClick(event){
     console.log(event.target.id);
-    if(event.target.id==inlineRadio0)
+    if(event.target.id=="inlineRadio0")
         sort="";
-    else if(event.target.id==inlineRadio1)
+    else if(event.target.id=="inlineRadio1")
         sort="?sort=generation";
-    else if(event.target.id==inlineRadio2)
+    else if(event.target.id=="inlineRadio2")
         sort="?sort=studentId";
+    url="http://34.64.161.55:8001/users"+sort;
     doFetch();
 }
 radio0.addEventListener("click", onClick);
