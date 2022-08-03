@@ -19,7 +19,7 @@ fetch(url)
         if (data.data === null) {
             notice_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            for (let i = 0; i < data.data.posts.length; i++) {
+            for (let i = 0; i < 3; i++) {
                 notice_card.innerHTML +=
                     `
         <div class="col-xl">
