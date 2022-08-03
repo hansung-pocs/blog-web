@@ -25,9 +25,9 @@ function doFetch(){
                 for(let i=0; i<data.data.users.length;i++){
                     tbody.innerHTML+=
                         `
-                <tr>
+                <tr onclick="window.location.href='user_detail.html?userId=${data.data.users[i].userId}'">
                     <td>${i+1}</td>
-                    <td><a  href='user_detail.html?userId=${data.data.users[i].userId}'>${data.data.users[i].userName}</a></td>
+                    <td>${data.data.users[i].userName}</td>
                     <td>${data.data.users[i].studentId}</td>
                     <td>${data.data.users[i].email}</td>
                 </tr>
