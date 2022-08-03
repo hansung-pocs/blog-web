@@ -16,7 +16,7 @@ function doFetch(){
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            thead.innerHTML="<tr><td>#</td><td>성명</td><td>학번</td><td>e-mail</td></tr>";
+            thead.innerHTML="<tr><td>#</td><td>성명</td><td>기수</td><td>학번</td><td>e-mail</td></tr>";
             tbody.innerHTML='';
             if(data.data.users ===  null ){
                 tbody.innerHTML="<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
@@ -28,6 +28,7 @@ function doFetch(){
                 <tr onclick="window.location.href='user_detail.html?userId=${data.data.users[i].userId}'">
                     <td>${i+1}</td>
                     <td>${data.data.users[i].userName}</td>
+                    <td>${data.data.users[i].generation}</td>
                     <td>${data.data.users[i].studentId}</td>
                     <td>${data.data.users[i].email}</td>
                 </tr>
