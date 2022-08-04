@@ -1,9 +1,7 @@
 const user_url = new URL("http://34.64.161.55:8001/users");
 
 //정보
-const userName = document.querySelector("#user_main_userName");
-const generation =document.querySelector("#user_main_generation");
-const tbody =document.querySelector("#user_main")
+const user_main =document.querySelector("#user-main")
 fetch(user_url)
     .then((response) => response.json())
     .then((data) => {
@@ -12,8 +10,8 @@ fetch(user_url)
             console.log('존재하지 않는 유저입니다.');
         }
         else{
-            for(let i=0; i<data.data.users.length; i++){
-                tbody.innerHTML+=
+            for(let i=0; i<5; i++){
+                user_main.innerHTML+=
             `
             <div class="col" style="text-align: center;">
                 <img src="../img/profile.png" style="width:100px;" class="rounded-pill">

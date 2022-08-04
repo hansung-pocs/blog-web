@@ -1,5 +1,5 @@
 let sort='';
-const url = new URL("http://34.64.161.55:8001/users"+sort);
+let url = "http://34.64.161.55:8001/users";
 
 const user = document.querySelector("#user table");
 const thead = document.querySelector("#user table thead");
@@ -16,7 +16,7 @@ function doFetch(){
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            thead.innerHTML="<tr><td>#</td><td>성명</td><td>학번</td><td>e-mail</td></tr>";
+            thead.innerHTML="<tr><td>#</td><td>성명</td><td>기수</td><td>학번</td><td>e-mail</td></tr>";
             tbody.innerHTML='';
             if(data.data.users ===  null ){
                 tbody.innerHTML="<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
@@ -25,9 +25,10 @@ function doFetch(){
                 for(let i=0; i<data.data.users.length;i++){
                     tbody.innerHTML+=
                         `
-                <tr>
+                <tr onclick="window.location.href='user_detail.html?userId=${data.data.users[i].userId}'">
                     <td>${i+1}</td>
-                    <td><a  href='user_detail.html?userId=${data.data.users[i].userId}'>${data.data.users[i].userName}</a></td>
+                    <td>${data.data.users[i].userName}</td>
+                    <td>${data.data.users[i].generation}</td>
                     <td>${data.data.users[i].studentId}</td>
                     <td>${data.data.users[i].email}</td>
                 </tr>
@@ -40,12 +41,13 @@ function doFetch(){
 
 function onClick(event){
     console.log(event.target.id);
-    if(event.target.id==inlineRadio0)
+    if(event.target.id=="inlineRadio0")
         sort="";
-    else if(event.target.id==inlineRadio1)
+    else if(event.target.id=="inlineRadio1")
         sort="?sort=generation";
-    else if(event.target.id==inlineRadio2)
+    else if(event.target.id=="inlineRadio2")
         sort="?sort=studentId";
+    url="http://34.64.161.55:8001/users"+sort;
     doFetch();
 }
 radio0.addEventListener("click", onClick);
