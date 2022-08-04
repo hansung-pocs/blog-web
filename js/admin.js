@@ -58,7 +58,7 @@ function fetchNotice(){
                 for (let i = Notice_first; i < Notice_last; i++) {
                     notice_tbody.innerHTML +=
                         `
-                <tr>
+                <tr onclick="moveNoticeDetailPage(${post_data[i].postId})">
                 <td>${i+1}</td>
                 <td>${post_data[i].title}</td>
                 <td>${post_data[i].writerName}</td>
@@ -230,6 +230,10 @@ function moveNoticeAddPage(){
 
 function moveUserDetailPage(Id){
     window.location.href =`../html/user_detail.html?userId=${Id}`
+}
+
+function moveNoticeDetailPage(postId){
+    window.location.href =`../html/admin_notice_detail.html?postId=${postId}`
 }
 
 fetchNotice();

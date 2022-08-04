@@ -19,11 +19,26 @@ let notice_Id;
 let userId;
 
 //pagination에 필요한 변수
-let cnt=0;
+let post_index=[];
 let currentPage=1;
 let totalPage;
 let first=0;
 let last=1;
+
+function getArticleCount() {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            for (let i = 0; i < data.data.posts.length; i++) {
+                if (data.data.posts[i].category !== "notice") {
+                    post_index.push(i);
+                }
+            }
+            console.log(post_index);
+            //마지막페이지 계산
+            totalPage = Math.ceil(cnt / 10);
+        })
+}
 
 //공지사항 목록 조회
 function fetchPost(){
@@ -31,7 +46,6 @@ function fetchPost(){
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            cnt=0;
             thead.innerHTML = `<tr>
         <th>번호</th>
         <th>제목</th>
@@ -44,32 +58,22 @@ function fetchPost(){
             if (data.data === null) {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-
-                data.data.posts.forEach((item)=>{
-                    if(item.category!=="notice"){
-                        //데이터 개수
-                        cnt++;
-                    }
-                })
-                //마지막페이지 계산
-                totalPage = Math.ceil(cnt/10);
-
                 //페이지에 10개만 보여주기 위해 변수 설정
                 last = 10*currentPage;
                 first = last-10;
 
-                for(let i=first;i<data.data.posts.length;i++){
-                    if(data.data.posts[i].category!=="notice"){
+                for(let i=first;i<last;i++){
+                    if(data.data.posts[post_index[i]].category!=="notice"){
 
                         tbody.innerHTML +=
                             `
-        <tr onclick="GotoPostDetailPage(${data.data.posts[i].postId})">
-        <td>${cnt--}</td>
-        <td>${data.data.posts[i].title}</td>
-        <td>${data.data.posts[i].writerName}</td>
-        <td>${data.data.posts[i].createdAt}</td>
-        <td>${data.data.posts[i].updatedAt}</td>
-        <td>${data.data.posts[i].category}</td>
+        <tr onclick="GotoPostDetailPage(${data.data.posts[post_index[i]].postId})">
+        <td>${post_index.length-i}</td>
+        <td>${data.data.posts[post_index[i]].title}</td>
+        <td>${data.data.posts[post_index[i]].writerName}</td>
+        <td>${data.data.posts[post_index[i]].createdAt}</td>
+        <td>${data.data.posts[post_index[i]].updatedAt}</td>
+        <td>${data.data.posts[post_index[i]].category}</td>
         </tr>
         `;
                     }
@@ -233,7 +237,6 @@ async function DeletePost(){
         console.log(result.message);
     }
 }
-
+getArticleCount();
 fetchPost();
 showPagination();
-
