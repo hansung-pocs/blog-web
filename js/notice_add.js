@@ -1,16 +1,15 @@
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 
-
 notice_title.addEventListener("click", ()=>{
-    notice_title.value="";
-
+    if(notice_title.value ==="제목")
+        notice_title.value="";
 });
 
 notice_content.addEventListener("click", ()=>{
-    notice_content.value="";
+    if(notice_content.value === "내용을 입력하세요.")
+        notice_content.value="";
 });
-
 
 async function noticeSubmit(){
 
@@ -29,7 +28,7 @@ async function noticeSubmit(){
         body : JSON.stringify(sendData)
     };
 
-    const response = await fetch('https://cors-anywhere.herokuapp.com/http://34.64.161.55:8001/posts', options);
+    const response = await fetch('http://34.64.161.55:8001/posts', options);
     const result = await response.json();
     console.log(result);
 

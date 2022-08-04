@@ -1,13 +1,11 @@
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
-const url = new URL('http://34.64.161.55:8001/users/' + id);
+
+const user_detail_url = new URL('http://34.64.161.55:8001/users/' + id);
 
 const title = document.querySelector("#user_detail_title");
-
-const editBtn = document.querySelector("#user_detail_editBtn"); //[Login]로그인 정보와 유저 정보가 같아야 보이도록
 const editBtn_a = document.querySelector("#user_detail_editBtn a");
-
 
 //정보
 const userName = document.querySelector("#user_detail_userName");
@@ -17,7 +15,7 @@ const generation =document.querySelector("#user_detail_generation");
 const company =document.querySelector("#user_detail_company");
 const github =document.querySelector("#user_detail_github");
 
-fetch(url)
+fetch(user_detail_url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -30,19 +28,59 @@ fetch(url)
                 ${data.data.userName}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
-
             userName.innerHTML=`${data.data.userName}`;
             email.innerHTML=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
             generation.innerHTML=`${data.data.generation}`;
 
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.company==null ||data.data.company=='undefined')
                 company.innerHTML=`-`;
             else company.innerHTML=`${data.data.company}`;
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.company==null ||data.data.company=='undefined')
                 github.innerHTML=`-`;
             else github.innerHTML=`${data.data.github}`;
 
         }
     })
+
+function backToAdminPage(){
+    window.location.href = '../html/admin.html'
+}
+
+async function userKick(){
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2)
+    const hours = ('0' + today.getHours()).slice(-2);
+    const minutes = ('0' + today.getMinutes()).slice(-2);
+    const seconds = ('0' + today.getSeconds()).slice(-2);
+
+    const sendData={
+        canceldAt : `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    };
+
+    const options = {
+        method : 'PATCH',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(sendData)
+    };
+
+    const response = await fetch(`http://34.64.161.55:8001/admin/users/${id}/kick`, options);
+    const result = await response.json();
+    if(result.status ===201){
+        backToAdminPage();
+    }
+    else{
+        console.log(result.message);
+    }
+}
+
+function LookupUserPost(){
+   window.location.href=`../html/user_posts.html?userId=${id}`;
+}
 

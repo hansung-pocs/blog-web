@@ -4,7 +4,6 @@ const id = arr[1];
 const url = new URL('http://34.64.161.55:8001/users/' + id);
 
 const title = document.querySelector("#user_detail_edit_title");
-
 const saveBtn = document.querySelector("#user_detail_edit_saveBtn"); //[Login]로그인 정보와 유저 정보가 같아야 보이도록
 const cancelBtn = document.querySelector("#user_detail_edit_cancelBtn");
 
@@ -28,7 +27,7 @@ fetch(url)
             `
                 ${data.data.userName}님의 정보 수정
             `
-            
+
             userName.value=`${data.data.userName}`;
             email.value=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
@@ -50,10 +49,6 @@ saveBtn.addEventListener("click",async function userEdit(event){
     console.log('edit');
     const sendData={
         //password:,//password 데이터는 현재 미구현
-        // userName:edit_userName.value,
-        // email:edit_email.value,
-        // github:edit_github.value,
-        // company:edit_company.value,
         userName:userName.value,
         email:email.value,
         github:github.value,
@@ -86,3 +81,6 @@ cancelBtn.addEventListener("click",function (event) {
     event.preventDefault();
     window.location.href = '../html/user_detail.html?userId='+id;
 });
+
+
+

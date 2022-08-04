@@ -1,23 +1,21 @@
-<html lang="kr">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
-    <title>POCS</title>
+    <title>post_add</title>
 </head>
-
 <body>
+
 <!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-sm justify-content-center" style="margin-bottom : 1em;">
+<nav class="navbar navbar-expand-sm bg-light justify-content-center">
     <div class="container">
         <a class="navbar-brand" href="main.html">POCS</a>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class='nav-link' href="notices.html">Notice</a>
+                <a class="nav-link" href="notices.html">Notice</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="posts.html">Post</a>
@@ -26,7 +24,7 @@
                 <a class="nav-link" href="user.html">User</a>
             </li>
         </ul>
-        <div class="nav-item dropdown" style="display : flex; justify-content: space-between; align-items: center;">
+        <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                 <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
             </a>
@@ -34,12 +32,10 @@
                 <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
                 <li><a class="dropdown-item" href="#">로그아웃</a></li>
             </ul>
-            <a href="../html/admin.html" class="link-primary">관리자</a>
         </div>
     </div>
 </nav>
 
-<!-- Carousel 이미지 슬라이드-->
 <div id="demo" class="carousel slide" data-bs-ride="carousel" style="margin-bottom : 100px;">
 
     <!-- Indicators/dots -->
@@ -83,48 +79,42 @@
     </button>
 </div>
 
-<!-- 공지사항 -->
-<div class="p-1 container" style="margin-bottom: 100px;">
-    <div class="row" style="margin-bottom: 1em;">
-        <div class="col">
-            <h1><b>공지사항</b></h1>
-        </div>
-        <div class="col">
-            <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveNoticePage()">더보기</button>
-            </div>
-        </div>
-    </div>
-    <!--공지사항 카드 형식으로 표시 -->
-    <div class="row notice-card">
+<div class="container">
+    <h1 style="margin-bottom : 1em;">게시글</h1>
 
-    </div>
-</div>
+    <div class="btn-group" style="margin-bottom : 2em;">
 
-<!-- 동아리원 -->
-<div class="p-1 container">
-    <div class="row" style="margin-bottom: 1em;">
-        <div class="col" style="margin-bottom: 1em;">
-            <h1><b>동아리원</b></h1>
-        </div>
-        <div class="col">
-            <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveUserPage()">더보기</button>
-            </div>
+        <button type="button" id="category-button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            게시글 분류
+        </button>
+
+        <ul class="dropdown-menu">
+            <li class="dropdown-item" onclick="checkedCategory(event)">스터디</li>
+            <li class="dropdown-item" onclick="checkedCategory(event)">동아리 활동</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 1em;">
+        <div class="notice-title-area">
+            <input type="text" value="제목" id="title" style="width : 1300px;">
         </div>
     </div>
 
-    <div class="row" style="margin-bottom: 1em;" id="user-main">
+    <div class="notice-content-area" style="margin-bottom : 1em;">
+        <textarea id="content" style="height : 300px; width : 1300px;">내용을 입력하세요.</textarea>
+    </div>
 
+    <div style="text-align: end;">
+        <button type="submit" class="btn btn-outline-primary" onclick="postSubmit()">게시하기</button>
     </div>
 </div>
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<script src="../js/app.js"></script>
-<script src="../js/user_main.js"></script>
+<script src="../js/posts_add.js"></script>
 </body>
-
 </html>

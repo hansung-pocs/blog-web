@@ -1,4 +1,3 @@
-
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
 function moveNoticePage() {
     window.location.href = '../html/notices.html';
@@ -19,17 +18,23 @@ fetch(url)
         if (data.data === null) {
             notice_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            for (let i = 0; i < 3; i++) {
-                notice_card.innerHTML +=
-                    `
-        <div class="col-xl">
-            <div class="card">
-                <div class="card-header">${data.data.posts[i].title}</div>
-                <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-               <div class="card-footer">${data.data.posts[i].content}</div>
-            </div>
-        </div>
-        `;
+            let cnt=0;
+            for (let i = 0; i < data.data.posts.length; i++) {
+                if(cnt>2)
+                    break;
+                if(data.data.posts[i].category==="notice"){
+                    notice_card.innerHTML +=
+                        `
+                    <div class="col-xl">
+                        <div class="card">
+                            <div class="card-header">${data.data.posts[i].title}</div>
+                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                           <div class="card-footer">${data.data.posts[i].content}</div>
+                        </div>
+                    </div>
+                     `;
+                    cnt++;
+                }
             }
         }
     })

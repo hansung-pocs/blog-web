@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Title</title>
+</head>
+<body>
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-sm bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="main.html">POCS</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="notices.html">Notice</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="posts.html">Post</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="user.html">User</a>
+            </li>
+        </ul>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
+                <li><a class="dropdown-item" href="#">로그아웃</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 유저 게시글 작성 목록  -->
+<div class="container notice-list">
+    <div class="row" style="margin-bottom: 1em;">
+        <div class="col">
+            <h1 id="user-post-title">00님의 게시글</h1>
+        </div>
+
+        <div class="col" style="text-align: end;">
+            <div class="d-flex" style="float: right;">
+                <!-- Example single danger button -->
+                <div class="btn-group" style="height : 38px;">
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        제목
+                    </button>
+                    <!-- 검색 기능 구현 아직 안함 -->
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">제목</a></li>
+                        <li><a class="dropdown-item" href="#">작성자</a></li>
+                    </ul>
+                </div>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="notice">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>수정일</th>
+                <th>카테고리</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center" id="pagination-bar">
+                <li class="page-item">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true" onclick="movePreviousPage()">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="moveNextPage()">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="../js/user_posts.js"></script>
+</body>
+</html>

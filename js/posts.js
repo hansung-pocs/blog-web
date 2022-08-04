@@ -1,8 +1,8 @@
 const url = "http://34.64.161.55:8001/posts";
-
 const notice = document.querySelector("#notice table");
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
+
 //공지사항 목록, 공지사항 세부목록  container 가져오기
 const notice_list = document.querySelector(".notice-list");
 const notice_detail = document.querySelector(".notice-detail");
@@ -23,62 +23,63 @@ let cnt=0;
 let currentPage=1;
 let totalPage;
 let first=0;
-let last;
+let last=1;
 
 //공지사항 목록 조회
-function fetchNotice(){
+function fetchPost(){
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
             cnt=0;
             thead.innerHTML = `<tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>수정일</th>
-                <th>카테고리</th>
-            </tr>`;
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>수정일</th>
+        <th>카테고리</th>
+    </tr>`;
             tbody.innerHTML="";
             if (data.data === null) {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
+
                 data.data.posts.forEach((item)=>{
-                    if(item.category=="notice"){
+                    if(item.category!=="notice"){
                         //데이터 개수
                         cnt++;
                     }
                 })
-
                 //마지막페이지 계산
                 totalPage = Math.ceil(cnt/10);
 
                 //페이지에 10개만 보여주기 위해 변수 설정
                 last = 10*currentPage;
-                first = last -10;
+                first = last-10;
 
-                for (let i = first; i <data.data.posts.length; i++) {
-                    if(data.data.posts[i].category==="notice"){
+                for(let i=first;i<data.data.posts.length;i++){
+                    if(data.data.posts[i].category!=="notice"){
+
                         tbody.innerHTML +=
                             `
-                <tr onclick="GotoDetailPage(${data.data.posts[i].postId})">
-                <td>${cnt--}</td>
-                <td>${data.data.posts[i].title}</td>
-                <td>${data.data.posts[i].writerName}</td>
-                <td>${data.data.posts[i].createdAt}</td>
-                <td>${data.data.posts[i].updatedAt}</td>
-                <td>${data.data.posts[i].category}</td>
-                </tr>
-                `;
+        <tr onclick="GotoPostDetailPage(${data.data.posts[i].postId})">
+        <td>${cnt--}</td>
+        <td>${data.data.posts[i].title}</td>
+        <td>${data.data.posts[i].writerName}</td>
+        <td>${data.data.posts[i].createdAt}</td>
+        <td>${data.data.posts[i].updatedAt}</td>
+        <td>${data.data.posts[i].category}</td>
+        </tr>
+        `;
                     }
-                }
+                };
             }
         })
 }
 
 //공지사항 상세페이지 구현
-function GotoDetailPage(Id) {
+function GotoPostDetailPage(Id) {
     notice_Id=Id;
     notice_list.classList.add("hidden");
     notice_detail.classList.remove("hidden");
@@ -127,27 +128,26 @@ function showPagination(){
                     <a class="page-link" href="#" onclick="moveNextPage()">Next</a>
                 </li>`;
 
-    document.querySelector("#notice-pagination-bar").innerHTML = pageHTML;
+    document.querySelector("#post-pagination-bar").innerHTML = pageHTML;
 }
 
 function movePage(pageNum){
-    if(pageNum > totalPage)
+    if(pageNum>totalPage)
         return;
     //이동할 페이지가 이미 그 페이지라면
     if(currentPage===pageNum)
         return;
     currentPage =pageNum;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
-
 
 function moveNextPage(){
     //넘길페이지가 전체 페이지보다 클경우 그냥 return
     if(currentPage>=totalPage)
         return;
     currentPage++;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
 
@@ -156,31 +156,32 @@ function movePreviousPage(){
     if(currentPage<=1)
         return;
     currentPage--;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
-function backToList() {
-    window.location.href = '../html/notices.html';
+function backToPostList() {
+    window.location.href = '../html/posts.html';
 }
 
-function moveNoticeAddPage(){
-    window.location.href = '../html/notices_add.html';
+function movePostAddPage(){
+    window.location.href = '../html/posts_add.html';
 }
 
 //공지사항 수정 페이지
-function noticeEditPage(){
+function postEditPage(){
     const notice_edit = document.querySelector(".notice-edit");
     notice_edit.classList.remove("hidden");
     notice_detail.classList.add("hidden");
 
     notice_title.value = present_page_title;
     notice_content.value = present_page_content;
+
 }
 
 //공지사항 수정하기 버튼 눌렀을때 호출되는 함수
-async function noticeEdit(){
+async function postEdit(){
     const sendData={
         title : notice_title.value,
         content: notice_content.value,
@@ -199,7 +200,7 @@ async function noticeEdit(){
     const response = await fetch(`http://34.64.161.55:8001/posts/${notice_Id}`, options);
     const result = await response.json();
     if(result.status ===302){
-        backToList();
+        backToPostList();
     }
     else{
         console.log(result.message);
@@ -207,7 +208,7 @@ async function noticeEdit(){
 }
 
 //공지사항 삭제하기
-async function DeleteNotice(){
+async function DeletePost(){
     const sendData={
         userId : 1,
     };
@@ -226,18 +227,13 @@ async function DeleteNotice(){
 
     //삭제 성공(result.status===201)하면
     if(result.status ===201){
-        backToList();
+        backToPostList();
     }
     else{
         console.log(result.message);
     }
 }
 
-fetchNotice();
+fetchPost();
 showPagination();
-
-
-
-
-
 
