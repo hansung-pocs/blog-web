@@ -50,10 +50,14 @@ saveBtn.addEventListener("click",async function userEdit(event){
     console.log('edit');
     const sendData={
         //password:,//password 데이터는 현재 미구현
-        userName:edit_userName.value,
-        email:edit_email.value,
-        github:edit_github.value,
-        company:edit_company.value,
+        // userName:edit_userName.value,
+        // email:edit_email.value,
+        // github:edit_github.value,
+        // company:edit_company.value,
+        userName:userName.value,
+        email:email.value,
+        github:github.value,
+        company:company.value,
     };
 
     const options = {
@@ -74,7 +78,7 @@ saveBtn.addEventListener("click",async function userEdit(event){
     }
     else{ //잘 되었다면
         console.log(result.message);
-        //window.location.href = '../html/user_detail.html?userId='+id;////편집후 바로 이전화면으로
+        window.location.href = '../html/user_detail.html?userId='+id;////편집후 바로 이전화면으로
     }
 });
 //유저 정보 수정을 취소하는 버튼 이벤트
