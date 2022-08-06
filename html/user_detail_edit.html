@@ -40,22 +40,38 @@
     <div class="container">
         <h1 id="user_detail_edit_title"><b>ooo님의 정보 수정</b></h1>
         <hr>
-        <form>
+        <form id="editForm">
             <div class="d-flex">
                 <div>
                     <img src="../img/logo.png" alt="..."  style="width: 200px; height:200px">
                     <div class="m-1 text-center">
-                        <button type="button" id="user_detail_edit_saveBtn" class="btn btn-primary">수정</button>
+                        <button type="submit" id="user_detail_edit_saveBtn" class="btn btn-primary">수정</button>
                         <button type="button"  id="user_detail_edit_cancelBtn" class="btn btn-primary">취소</button>
                     </div>
                 </div>
                 <div class="flex-grow-1 ms-3">
                     <div class="row">
                         <div class="col p-1">
+                            아이디
+                        </div>
+                        <div class="col-10 p-1">
+                            <input type="text" id="user_detail_edit_userName" maxlength="15">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-1">
+                            비밀번호
+                        </div>
+                        <div class="col-10 p-1">
+                            <input type="text" id="user_detail_edit_password" maxlength="255">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-1">
                             이름
                         </div>
                         <div class="col-10 p-1">
-                            <input type="text" id="user_detail_edit_userName">
+                            <input type="text" id="user_detail_edit_Name" maxlength="20">
                         </div>
                     </div>
                     <div class="row">
@@ -63,15 +79,15 @@
                             메일
                         </div>
                         <div class="col-10 p-1">
-                            <input type="text" id="user_detail_edit_email">
+                            <input type="text" id="user_detail_edit_email" maxlength="255" required pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$" oninvalid="alert('이메일 형식이 틀립니다.')">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col p-1">
                             학번
                         </div>
-                        <div class="col-10 p-1" id="user_detail_edit_studentId">
-                            학번
+                        <div class="col-10 p-1">
+                            <input type="text" id="user_detail_edit_studentId">
                         </div>
                     </div>
                     <div class="row">
@@ -79,15 +95,15 @@
                             회사
                         </div>
                         <div class="col-10 p-1">
-                            <input type="text"  id="user_detail_edit_company">
+                            <input type="text"  id="user_detail_edit_company" maxlength="20">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col p-1">
                             기수
                         </div>
-                        <div class="col-10 p-1" id="user_detail_edit_generation">
-                            기수
+                        <div class="col-10 p-1">
+                            <input type="text"  id="user_detail_edit_generation" maxlength="5">
                         </div>
                     </div>
                     <div class="row">
@@ -95,7 +111,7 @@
                             깃헙주소
                         </div>
                         <div class="col-10 p-1">
-                            <input type="text" id="user_detail_edit_github">
+                            <input type="text" id="user_detail_edit_github" maxlength="255" required pattern="https://github.com/[a-zA-Z0-9\-]{1,38}" oninvalid="alert('깃헙주소 형식이 틀립니다.')">
                         </div>
                     </div>
                 </div>
