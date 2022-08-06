@@ -7,9 +7,14 @@ const studentId =document.querySelector("#user_detail_edit_studentId");
 const generation =document.querySelector("#user_detail_edit_generation");
 const company =document.querySelector("#user_detail_edit_company");
 const github =document.querySelector("#user_detail_edit_github");
+const addBtn = document.querySelector("#addBtn");
+const dataForm = document.querySelector("#dataForm");
+
 const member = "member";
 
-async function addUser(){
+async function addUser(event){
+    event.preventDefault();
+
     const sendData={
         userName : userName.value,
         password : passWord.value,
@@ -41,3 +46,6 @@ async function addUser(){
         console.log(result.message);
     }
 }
+
+dataForm.addEventListener("submit", addUser);
+
