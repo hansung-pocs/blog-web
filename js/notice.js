@@ -7,13 +7,7 @@ const tbody = document.querySelector("#notice table tbody");
 const notice_list = document.querySelector(".notice-list");
 const notice_detail = document.querySelector(".notice-detail");
 
-//공지사항 제목, 공지사항 내용 가져오기
-const notice_title = document.querySelector("#title");
-const notice_content = document.querySelector("#content");
 
-//공지사항 수정때 쓰일 변수들
-let present_page_title;
-let present_page_content;
 let category;
 let notice_Id;
 let userId;
@@ -24,6 +18,7 @@ let currentPage=1;
 let totalPage;
 let first=0;
 let last;
+let cnt=0;
 
 function getArticleCount(){
     fetch(url)
@@ -31,6 +26,7 @@ function getArticleCount(){
         .then((data) =>{
             for(let i=0; i<data.data.posts.length;i++){
                 if(data.data.posts[i].category ==="notice"){
+                    cnt++;
                     notice_index.push(i);
                 }
             }
@@ -66,47 +62,18 @@ function fetchNotice(){
                     if(data.data.posts[notice_index[i]].category==="notice"){
                         tbody.innerHTML +=
                             `
-                <tr onclick="GotoDetailPage(${data.data.posts[notice_index[i]].postId})">
+                <tr onclick="window.location.href='notices_detail.html?postId=${data.data.posts[notice_index[i]].postId}'">
                 <td>${notice_index.length-i}</td>
                 <td>${data.data.posts[notice_index[i]].title}</td>
                 <td>${data.data.posts[notice_index[i]].writerName}</td>
                 <td>${data.data.posts[notice_index[i]].createdAt}</td>
-                <td>${data.data.posts[notice_index[i]].updatedAt}</td>
+                <td>${data.data.posts[notice_index[i]].updatedAt|| ""}</td>
                 <td>${data.data.posts[notice_index[i]].category}</td>
                 </tr>
                 `;
                     }
                 }
             }
-        })
-}
-
-//공지사항 상세페이지 구현
-function GotoDetailPage(Id) {
-    notice_Id=Id;
-    notice_list.classList.add("hidden");
-    notice_detail.classList.remove("hidden");
-    const notice_title_first = document.querySelector(".notice-title-first");
-    const notice_title_second = document.querySelector(".notice-title-second");
-    const notice_detail_content = document.querySelector(".notice-detail-content");
-    const d_url = `http://34.64.161.55:8001/posts/${Id}`;
-
-    fetch(d_url)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            console.log(data.title);
-            notice_title_first.innerHTML = `<h3>${data.data.title}</h3>`;
-            notice_title_second.innerHTML = `<div>${data.data.category}  |</div>
-            <div> ${data.data.createdAt}  | </div>
-            <div> ${data.data.updatedAt}  | </div>
-            <div> ${data.data.writer.userName} </div>
-            `;
-            notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;
-
-            present_page_title = data.data.title;
-            present_page_content = data.data.content;
-            category = data.data.category;
         })
 }
 
@@ -173,69 +140,7 @@ function moveNoticeAddPage(){
     window.location.href = '../html/notices_add.html';
 }
 
-//공지사항 수정 페이지
-function noticeEditPage(){
-    const notice_edit = document.querySelector(".notice-edit");
-    notice_edit.classList.remove("hidden");
-    notice_detail.classList.add("hidden");
 
-    notice_title.value = present_page_title;
-    notice_content.value = present_page_content;
-}
-
-//공지사항 수정하기 버튼 눌렀을때 호출되는 함수
-async function noticeEdit(){
-    const sendData={
-        title : notice_title.value,
-        content: notice_content.value,
-        userId: 1,
-        category : category
-    };
-
-    const options = {
-        method : 'PATCH',
-        headers : {
-            'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(sendData)
-    };
-
-    const response = await fetch(`http://34.64.161.55:8001/posts/${notice_Id}`, options);
-    const result = await response.json();
-    if(result.status ===302){
-        backToList();
-    }
-    else{
-        console.log(result.message);
-    }
-}
-
-//공지사항 삭제하기
-async function DeleteNotice(){
-    const sendData={
-        userId : 1,
-    };
-
-    const options = {
-        method : 'PATCH',
-        headers : {
-            'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(sendData)
-    };
-
-    const response = await fetch(`http://34.64.161.55:8001/posts/${notice_Id}/delete`, options);
-    const result = await response.json();
-    console.log(result.status);
-
-    //삭제 성공(result.status===201)하면
-    if(result.status ===201){
-        backToList();
-    }
-    else{
-        console.log(result.message);
-    }
-}
 getArticleCount();
 fetchNotice();
 showPagination();

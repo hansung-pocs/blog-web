@@ -54,7 +54,7 @@ function fetchNotice(){
                 for(let i=first; i<last;i++){
                     tbody.innerHTML +=
                         `
-            <tr onclick="GotoPostDetailPage(${data.data.posts[i].postId})">
+            <tr>
             <td>${i}</td>
             <td>${data.data.posts[i].title}</td>
             <td>${data.data.posts[i].writerName||""}</td>

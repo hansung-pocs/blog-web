@@ -27,7 +27,6 @@ fetch(url)
             `
                 ${data.data.userName}님의 정보 수정
             `
-
             userName.value=`${data.data.userName}`;
             email.value=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
@@ -48,7 +47,7 @@ saveBtn.addEventListener("click",async function userEdit(event){
     event.preventDefault();
     console.log('edit');
     const sendData={
-        //password:,//password 데이터는 현재 미구현
+        password: "password",
         userName:userName.value,
         email:email.value,
         github:github.value,
@@ -63,7 +62,7 @@ saveBtn.addEventListener("click",async function userEdit(event){
         body : JSON.stringify(sendData)
     };
 
-    const response = await fetch('http://34.64.161.55:8001/users/'+id, options);
+    const response = await fetch(`http://34.64.161.55:8001/users/${id}`, options);
     const result = await response.json();
     console.log(result);
 

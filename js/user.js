@@ -11,7 +11,6 @@ const radio2= document.querySelector("#inlineRadio2");
 const search= document.querySelector("#user_search"); //검색
 
 //pagination에 필요한 변수
-let cnt;
 let currentPage=1;
 let totalPage;
 let first=0;

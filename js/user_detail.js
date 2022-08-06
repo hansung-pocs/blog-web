@@ -19,8 +19,14 @@ fetch(user_detail_url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
-        if(data.data === null){
-            console.log('존재하지 않는 유저입니다.');
+        if(data.status ===403){
+            title.innerHTML=`존재하지 않은 회웝입니다.`
+            userName.innerHTML="";
+            email.innerHTML="";
+            studentId.innerHTML="";
+            generation.innerHTML="";
+            company.innerHTML="";
+            github.innerHTML="";
         }
         else{
             title.innerHTML=
@@ -34,10 +40,10 @@ fetch(user_detail_url)
             generation.innerHTML=`${data.data.generation}`;
 
             if(data.data.company==null ||data.data.company=='undefined')
-                company.innerHTML=`-`;
+                company.innerHTML=``;
             else company.innerHTML=`${data.data.company}`;
             if(data.data.company==null ||data.data.company=='undefined')
-                github.innerHTML=`-`;
+                github.innerHTML='';
             else github.innerHTML=`${data.data.github}`;
 
         }
