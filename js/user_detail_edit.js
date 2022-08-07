@@ -14,6 +14,8 @@ const studentId =document.querySelector("#user_detail_edit_studentId");
 const generation =document.querySelector("#user_detail_edit_generation");
 const company =document.querySelector("#user_detail_edit_company");
 const github =document.querySelector("#user_detail_edit_github");
+const editForm =document.querySelector("#editForm");
+
 
 fetch(url)
     .then((response) => response.json())
@@ -43,7 +45,7 @@ fetch(url)
     })
 
 //저장버튼-업데이트
-saveBtn.addEventListener("click",async function userEdit(event){
+editForm.addEventListener("submit",async function userEdit(event){
     event.preventDefault();
     console.log('edit');
     const sendData={
