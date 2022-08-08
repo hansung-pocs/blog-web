@@ -2,18 +2,6 @@ const post_title = document.querySelector("#title");
 const post_content = document.querySelector("#content");
 let category;
 
-post_title.addEventListener("click", ()=>{
-    console.log(post_title.value);
-    if(post_title.value ==="제목")
-        post_title.value="";
-});
-
-post_content.addEventListener("click", ()=>{
-    if(post_content.value === "내용을 입력하세요.")
-        post_content.value="";
-});
-
-
 async function postSubmit(){
 
     const sendData={

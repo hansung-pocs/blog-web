@@ -1,15 +1,6 @@
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 
-notice_title.addEventListener("click", ()=>{
-    if(notice_title.value ==="제목")
-        notice_title.value="";
-});
-
-notice_content.addEventListener("click", ()=>{
-    if(notice_content.value === "내용을 입력하세요.")
-        notice_content.value="";
-});
 
 async function noticeSubmit(){
 
