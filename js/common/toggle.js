@@ -8,6 +8,10 @@ const toggleDetail = document.getElementById("toggleDetail");
 async function handleToggle(event){
     event.preventDefault();
 
+    if(!toggle.classList.contains("show")){
+        return;
+    }
+
     if(sessionToken != null){
         let userId = await handleValidation(sessionToken);
         if(userId != null){
