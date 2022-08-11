@@ -1,182 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-            crossorigin="anonymous"
-        />
-        <link rel="stylesheet" href="../css/style.css" />
-        <title>POST</title>
-    </head>
-    <body>
-        <!-- 네비게이션 바 -->
-        <nav class="navbar navbar-expand-sm justify-content-center" style="position: sticky; top: 0; height: auto; z-index: 10">
-            <div class="container">
-                <a class="navbar-brand" href="main.html">POCS</a>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="notices.html">Notice</a>
+
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>POST</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-sm justify-content-center"
+        style="position: sticky; top: 0; height: auto; z-index: 10">
+        <div class="container">
+            <a class="navbar-brand" href="main.html">POCS</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="notices.html">Notice</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="posts.html">Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">User</a>
+                </li>
+            </ul>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="toggle" role="button" data-bs-toggle="dropdown">
+                    <img src="../img/logo.png" style="width: 40px" class="rounded-pill" />
+                </a>
+                <ul class="dropdown-menu" id="toggleDetail">
+                    <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
+                    <li><a class="dropdown-item" href="#">로그아웃</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="demo" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 100px">
+        <!-- Indicators/dots -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        </div>
+
+        <!-- The slideshow/carousel -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../img/bug.jpg" alt="Los Angeles" class="d-block w-100" style="height: 500px" />
+                <div class="carousel-caption">
+                    <h3>동아리 MT</h3>
+                    <p>We had such a great time in LA!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../img/forest.jpg" alt="Chicago" class="d-block w-100" style="height: 500px" />
+                <div class="carousel-caption">
+                    <h3>프로젝트</h3>
+                    <p>We had such a great time in LA!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../img/waterfall.jpg" alt="New York" class="d-block w-100" style="height: 500px" />
+                <div class="carousel-caption">
+                    <h3>스터디</h3>
+                    <p>We had such a great time in LA!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls/icons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <!-- 게시글 목록  -->
+    <div class="container notice-list">
+        <div class="row" style="margin-bottom: 1em">
+            <div class="col">
+                <h1>게시글</h1>
+            </div>
+
+            <div class="col" style="text-align: end">
+                <div class="d-flex" style="float: right">
+                    <!-- Example single danger button -->
+                    <div class="btn-group" style="height: 38px">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">제목</button>
+                        <!-- 검색 기능 구현 아직 안함 -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">제목</a></li>
+                            <li><a class="dropdown-item" href="#">작성자</a></li>
+                        </ul>
+                    </div>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            <div style="text-align: end">
+                <button type="submit" class="btn btn-outline-primary" onclick="movePostAddPage()">게시글 추가</button>
+            </div>
+        </div>
+
+        <div id="notice">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>수정일</th>
+                        <th>카테고리</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center" id="post-pagination-bar">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="posts.html">Post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="user.html">User</a>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
                     </li>
                 </ul>
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <img src="../img/logo.png" style="width: 40px" class="rounded-pill" />
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
-                        <li><a class="dropdown-item" href="#">로그아웃</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div id="demo" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 100px">
-            <!-- Indicators/dots -->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-            </div>
-
-            <!-- The slideshow/carousel -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../img/bug.jpg" alt="Los Angeles" class="d-block w-100" style="height: 500px" />
-                    <div class="carousel-caption">
-                        <h3>동아리 MT</h3>
-                        <p>We had such a great time in LA!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="../img/forest.jpg" alt="Chicago" class="d-block w-100" style="height: 500px" />
-                    <div class="carousel-caption">
-                        <h3>프로젝트</h3>
-                        <p>We had such a great time in LA!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="../img/waterfall.jpg" alt="New York" class="d-block w-100" style="height: 500px" />
-                    <div class="carousel-caption">
-                        <h3>스터디</h3>
-                        <p>We had such a great time in LA!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Left and right controls/icons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+            </nav>
         </div>
+    </div>
 
-        <!-- 게시글 목록  -->
-        <div class="container notice-list">
-            <div class="row" style="margin-bottom: 1em">
-                <div class="col">
-                    <h1>게시글</h1>
-                </div>
-
-                <div class="col" style="text-align: end">
-                    <div class="d-flex" style="float: right">
-                        <!-- Example single danger button -->
-                        <div class="btn-group" style="height: 38px">
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">제목</button>
-                            <!-- 검색 기능 구현 아직 안함 -->
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">제목</a></li>
-                                <li><a class="dropdown-item" href="#">작성자</a></li>
-                            </ul>
-                        </div>
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button type="submit" class="btn btn-outline-primary">Search</button>
-                        </form>
-                    </div>
-                </div>
-
-                <div style="text-align: end">
-                    <button type="submit" class="btn btn-outline-primary" onclick="movePostAddPage()">게시글 추가</button>
-                </div>
+    <!-- 게시글 상세조회  -->
+    <div class="container notice-detail hidden">
+        <h1 style="margin-bottom: 1em">게시글</h1>
+        <div class="notice-title" style="margin-bottom: 1em">
+            <div class="notice-title-first">
+                <h3>제목</h3>
             </div>
-
-            <div id="notice">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>수정일</th>
-                            <th>카테고리</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center" id="post-pagination-bar">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+            <div style="display: flex; justify-content: space-between">
+                <div class="notice-title-second">
+                    <div>카테고리 |</div>
+                    <div>작성일 |</div>
+                    <div>수정일 |</div>
+                    <div>작성자</div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-primary" onclick="postEditPage()">수정하기</button>
+                </div>
             </div>
         </div>
 
-        <!-- 게시글 상세조회  -->
-        <div class="container notice-detail hidden">
-            <h1 style="margin-bottom: 1em">게시글</h1>
-            <div class="notice-title" style="margin-bottom: 1em">
-                <div class="notice-title-first">
-                    <h3>제목</h3>
-                </div>
-                <div style="display: flex; justify-content: space-between">
-                    <div class="notice-title-second">
-                        <div>카테고리 |</div>
-                        <div>작성일 |</div>
-                        <div>수정일 |</div>
-                        <div>작성자</div>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-outline-primary" onclick="postEditPage()">수정하기</button>
-                    </div>
-                </div>
-            </div>
+        <div class="notice-detail-content" style="margin-bottom: 1em">Content asdf asfd adf sdf d f d xcv xcv xcv</div>
 
-            <div class="notice-detail-content" style="margin-bottom: 1em">Content asdf asfd adf sdf d f d xcv xcv xcv</div>
-
-            <div style="text-align: center">
-                <button type="button" class="btn btn-outline-primary" onclick="backToPostList()">목록으로</button>
-                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제하기</button>
-            </div>
+        <div style="text-align: center">
+            <button type="button" class="btn btn-outline-primary" onclick="backToPostList()">목록으로</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">삭제하기</button>
         </div>
+    </div>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"
-        ></script>
-        <script src="../js/posts.js"></script>
-    </body>
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <img src="../img/pocs.jpg" width="100px" height="100px" />
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">@Your Company 2022. We Love You</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="../js/posts.js"></script>
+    <script src="../js/common/toggle.js"></script>
+</body>
+
 </html>
