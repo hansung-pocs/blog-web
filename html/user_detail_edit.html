@@ -10,7 +10,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-sm bg-light justify-content-center"
         style="position: sticky; top: 0; height: auto; z-index: 10">
@@ -28,10 +28,10 @@
                 </li>
             </ul>
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="toggle" role="button" data-bs-toggle="dropdown">
                     <img src="../img/logo.png" style="width: 40px" class="rounded-pill" />
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" id="toggleDetail">
                     <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
                     <li><a class="dropdown-item" href="#">로그아웃</a></li>
                 </ul>
@@ -108,10 +108,21 @@
         <hr />
     </div>
 
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <img src="../img/pocs.jpg" width="100px" height="100px" />
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">Additional Link</span>
+            <span class="text-muted px-5">@Your Company 2022. We Love You</span>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script src="../js/user_detail_edit.js"></script>
+    <script src="../js/common/toggle.js"></script>
 </body>
 
 </html>
