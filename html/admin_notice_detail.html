@@ -49,22 +49,22 @@
             <div style="display: flex; justify-content: space-between">
                 <div class="notice-title-second"></div>
                 <div>
-                    <button type="button" class="btn btn-outline-primary" onclick="noticeEditPage()">수정하기</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="noticeEditPage()">수정</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제</button>
                 </div>
             </div>
         </div>
 
         <div class="notice-detail-content" style="margin-bottom: 1em"></div>
 
-        <div style="text-align: center">
-            <button type="button" class="btn btn-outline-primary" onclick="backToAdminPage()">목록으로</button>
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">삭제하기</button>
-        </div>
     </div>
 
     <div class="container notice-edit hidden">
-        <h1 style="margin-bottom: 1em">공지사항</h1>
+        <h1>공지사항</h1>
+        <div style="text-align: end">
+            <button type="submit" class="btn btn-outline-primary" onclick="noticeEdit()">게시하기</button>
+        </div>
+        <hr>
         <div style="margin-bottom: 1em">
             <div class="notice-title-area">
                 <input type="text" value="제목" id="title" style="width: 1300px" />
@@ -75,9 +75,6 @@
             <textarea id="content" style="height: 300px; width: 1300px">내용을 입력하세요.</textarea>
         </div>
 
-        <div style="text-align: end">
-            <button type="submit" class="btn btn-outline-primary" onclick="noticeEdit()">게시하기</button>
-        </div>
     </div>
 
     <!-- 삭제 경고창 -->

@@ -42,32 +42,26 @@
     <div class="container notice-list"
         style="padding-bottom: 100px; border-bottom: 1px solid black; margin-bottom: 100px">
         <div class="row" style="margin-bottom: 1em">
+            <h1>관리자</h1>
+            <h3 style="color:cornflowerblue">|</h3>
             <div class="col">
-                <h1>공지사항</h1>
+                <h3>공지사항</h3>
             </div>
-
-            <div class="col" style="text-align: end">
-                <div class="d-flex" style="float: right">
-                    <!-- Example single danger button -->
-                    <div class="btn-group" style="height: 38px">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">제목</button>
-                        <!-- 검색 기능 구현 아직 안함 -->
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">제목</a></li>
-                            <li><a class="dropdown-item" href="#">작성자</a></li>
-                        </ul>
+            <!-- 검색과 게시글 추가 버튼 -->
+            <div class="row my-4">
+                <div class="col" style="text-align: end">
+                    <div class="d-flex" style="float: left">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button type="submit" class="btn btn-outline-primary">Search</button>
+                        </form>
                     </div>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
-                    </form>
+                </div>
+                <div class="col" style="text-align: end">
+                    <button type="submit" class="btn btn-outline-primary" onclick="moveNoticeAddPage()">공지 추가</button>
                 </div>
             </div>
-
-            <div style="text-align: end">
-                <button type="submit" class="btn btn-outline-primary" onclick="moveNoticeAddPage()">공지 추가</button>
-            </div>
+            <hr>
         </div>
 
         <div id="notice">
@@ -134,7 +128,7 @@
     </div>
 
     <div class="container">
-        <h1><b>회원 목록</b></h1>
+        <h3>회원 목록</h3>
         <div style="text-align: end">
             <button type="submit" class="btn btn-outline-primary" onclick="moveUserAddPage()">회원 추가</button>
         </div>

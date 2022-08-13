@@ -83,33 +83,75 @@
     <!-- 게시글 목록  -->
     <div class="container notice-list">
         <div class="row" style="margin-bottom: 1em">
-            <div class="col">
-                <h1>게시글</h1>
-            </div>
-
-            <div class="col" style="text-align: end">
-                <div class="d-flex" style="float: right">
-                    <!-- Example single danger button -->
-                    <div class="btn-group" style="height: 38px">
-                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">제목</button>
-                        <!-- 검색 기능 구현 아직 안함 -->
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">제목</a></li>
-                            <li><a class="dropdown-item" href="#">작성자</a></li>
-                        </ul>
+            <h1>전체 게시글</h1>
+            <h3 style="color:cornflowerblue">|</h3>
+            <!-- 게시글 카테고리  style="border:solid black 1px"-->
+            <h4>Posts by Category</h4>
+            <ul class="list-group m-3">
+                <div class="row my-3">
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_notice">공지사항
+                                <span style="float: right">(1)</span>
+                            </li>
+                        </div>
                     </div>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
-                    </form>
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_knowhow">노하우
+                                <span style="float: right">(2)</span>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_study">스터디
+                                <span style="float: right">(3)</span>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_free">자유
+                                <span style="float: right">(4)</span>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_memory">추억
+                                <span style="float: right">(5)</span>
+                            </li>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="col-12">
+                            <li class="list-group-item" id="category_question">질문
+                                <span style="float: right">(6)</span>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+            <!-- 검색과 게시글 추가 버튼 -->
+            <div class="row my-4">
+                <div class="col" style="text-align: end">
+                    <div class="d-flex" style="float: left">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button type="submit" class="btn btn-outline-primary">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col" style="text-align: end">
+                    <button type="submit" class="btn btn-outline-primary" onclick="movePostAddPage()">게시글 추가</button>
                 </div>
             </div>
-
-            <div style="text-align: end">
-                <button type="submit" class="btn btn-outline-primary" onclick="movePostAddPage()">게시글 추가</button>
-            </div>
+            <hr>
         </div>
+        <!-- 게시글 목록 출력 -->
 
         <div id="notice">
             <table class="table">

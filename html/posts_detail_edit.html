@@ -81,7 +81,11 @@
     </div>
 
     <div class="container notice-edit">
-        <h1 style="margin-bottom: 1em">게시글</h1>
+        <h1>게시글</h1>
+        <div style="text-align: end">
+            <button type="submit" class="btn btn-outline-primary" onclick="postEdit()">게시하기</button>
+        </div>
+        <hr>
         <div style="margin-bottom: 1em">
             <div class="notice-title-area">
                 <input type="text" value="제목" id="title" style="width: 1300px" maxlength="20" />
@@ -92,9 +96,6 @@
             <textarea id="content" style="height: 300px; width: 1300px" maxlength="1000">내용을 입력하세요.</textarea>
         </div>
 
-        <div style="text-align: end">
-            <button type="submit" class="btn btn-outline-primary" onclick="postEdit()">게시하기</button>
-        </div>
     </div>
 
     <footer class="footer mt-auto py-3 bg-dark">

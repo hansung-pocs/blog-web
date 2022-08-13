@@ -96,18 +96,13 @@
                     <div>작성자</div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-outline-primary" onclick="gotoNoticeEditPage()">수정하기</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="gotoNoticeEditPage()">수정</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제</button>
                 </div>
             </div>
         </div>
 
         <div class="notice-detail-content" style="margin-bottom: 1em"></div>
-
-        <div style="text-align: center">
-            <button type="button" class="btn btn-outline-primary" onclick="backToList()">목록으로</button>
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">삭제하기</button>
-        </div>
     </div>
 
     <!-- 삭제 경고창 -->

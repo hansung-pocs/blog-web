@@ -81,8 +81,11 @@
     </div>
 
     <div class="container">
-        <h1 style="margin-bottom: 1em">게시글</h1>
-
+        <h1>게시글</h1>
+        <div style="text-align: end">
+            <button type="submit" class="btn btn-outline-primary" onclick="postSubmit()">게시하기</button>
+        </div>
+        <hr>
         <div class="btn-group" style="margin-bottom: 2em">
             <button type="button" id="category-button" class="btn btn-outline-primary dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">게시글 분류</button>
@@ -104,9 +107,6 @@
                 placeholder="내용을 입력하세요."></textarea>
         </div>
 
-        <div style="text-align: end">
-            <button type="submit" class="btn btn-outline-primary" onclick="postSubmit()">게시하기</button>
-        </div>
     </div>
 
     <footer class="footer mt-auto py-3 bg-dark">

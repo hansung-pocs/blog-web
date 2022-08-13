@@ -83,7 +83,11 @@
 
     <!-- 공지사항 추가 페이지  -->
     <div class="container">
-        <h1 style="margin-bottom: 1em">공지사항</h1>
+        <h1>공지사항</h1>
+        <div style="text-align: end">
+            <button type="submit" class="btn btn-outline-primary" onclick="noticeSubmit()">게시하기</button>
+        </div>
+        <hr>
         <div style="margin-bottom: 1em">
             <div class="notice-title-area">
                 <input type="text" id="title" style="width: 1300px" placeholder="제목" />
@@ -94,9 +98,6 @@
             <textarea id="content" style="height: 300px; width: 1300px" placeholder="내용을 입력하세요."></textarea>
         </div>
 
-        <div style="text-align: end">
-            <button type="submit" class="btn btn-outline-primary" onclick="noticeSubmit()">게시하기</button>
-        </div>
     </div>
 
     <footer class="footer mt-auto py-3 bg-dark">
