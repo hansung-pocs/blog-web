@@ -27,9 +27,9 @@ fetch(url)
         else{
             title.innerHTML=
             `
-                ${data.data.userName}님의 정보 수정
+                ${data.data.name}님의 정보 수정
             `
-            userName.value=`${data.data.userName}`;
+            userName.value=`${data.data.name}`;
             email.value=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
             generation.innerHTML=`${data.data.generation}`;
@@ -50,7 +50,7 @@ editForm.addEventListener("submit",async function userEdit(event){
     console.log('edit');
     const sendData={
         password: "password",
-        userName:userName.value,
+        name:userName.value,
         email:email.value,
         github:github.value,
         company:company.value,

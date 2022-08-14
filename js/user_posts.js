@@ -20,7 +20,7 @@ let last=1;
 fetch('http://34.64.161.55:8001/users/'+id)
     .then((response) => response.json())
     .then((userdata) => {
-        title.innerHTML = `${userdata.data.userName}님의 게시글`
+        title.innerHTML = `${userdata.data.name}님의 게시글`
     });
 
 //공지사항 목록 조회
