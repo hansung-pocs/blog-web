@@ -32,7 +32,7 @@ function fetchAdminNotice(){
                 notice_title_second.innerHTML = `<div>${data.data.category}  |</div>
             <div> ${data.data.createdAt}  | </div>
             <div> ${data.data.updatedAt}  | </div>
-            <div> ${data.data.writer.userName} </div>
+            <div> ${data.data.writer.name} </div>
             `;
                 notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;
 

@@ -60,7 +60,7 @@ function drawUserList(Arr) {
                 <tr>
                     <td>${i + 1}</td>
                     <td onclick="window.location.href='user_detail.html?userId=${Arr[i]?.userId}'"
-                        style="cursor:pointer">${Arr[i]?.userName}</td>
+                        style="cursor:pointer">${Arr[i]?.name}</td>
                     <td>${Arr[i]?.generation}</td>
                     <td>${Arr[i]?.studentId}</td>
                     <td>${Arr[i]?.email}</td>  

@@ -16,7 +16,7 @@ fetch(user_url)
             <div class="col" style="text-align: center;">
                 <img src="../img/profile.png" style="width:100px;" class="rounded-pill">
                     <div>
-                        <div id="user_main_userName">${data.data.users[i].userName}</div>
+                        <div id="user_main_userName">${data.data.users[i].name}</div>
                         <div id="user_main_generation">${data.data.users[i].generation}</div>
                     </div>
             </div>

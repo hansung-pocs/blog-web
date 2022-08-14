@@ -101,7 +101,7 @@ function fetchUser() {
                 <tr>
                     <td>${i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].userName}</td>
+                        style="pointer">${data.data.users[i].name}</td>
                     <td>${data.data.users[i].studentId}</td>
                     <td>${data.data.users[i].email}</td>
                 </tr>
