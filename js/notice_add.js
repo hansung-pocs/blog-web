@@ -2,16 +2,6 @@ const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 
 
-notice_title.addEventListener("click", ()=>{
-    notice_title.value="";
-
-});
-
-notice_content.addEventListener("click", ()=>{
-    notice_content.value="";
-});
-
-
 async function noticeSubmit(){
 
     const sendData={
@@ -29,7 +19,7 @@ async function noticeSubmit(){
         body : JSON.stringify(sendData)
     };
 
-    const response = await fetch('https://cors-anywhere.herokuapp.com/http://34.64.161.55:8001/posts', options);
+    const response = await fetch('http://34.64.161.55:8001/posts', options);
     const result = await response.json();
     console.log(result);
 

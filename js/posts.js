@@ -1,22 +1,18 @@
 const url = "http://34.64.161.55:8001/posts";
-
 const notice = document.querySelector("#notice table");
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
-//공지사항 목록, 공지사항 세부목록  container 가져오기
-const notice_list = document.querySelector(".notice-list");
-const notice_detail = document.querySelector(".notice-detail");
 
 let category;
 let notice_Id;
 let userId;
 
 //pagination에 필요한 변수
-let notice_index = [];
+let post_index = [];
 let currentPage = 1;
 let totalPage;
 let first = 0;
-let last;
+let last = 1;
 let cnt = 0;
 
 function getArticleCount() {
@@ -24,31 +20,31 @@ function getArticleCount() {
         .then((response) => response.json())
         .then((data) => {
             for (let i = 0; i < data.data.posts.length; i++) {
-                if (data.data.posts[i].category === "notice") {
+                if (data.data.posts[i].category !== "notice") {
                     cnt++;
-                    notice_index.push(i);
+                    post_index.push(i);
                 }
             }
-            console.log(notice_index);
+            console.log(post_index);
             //마지막페이지 계산
             totalPage = Math.ceil(cnt / 10);
         });
 }
 
 //공지사항 목록 조회
-function fetchNotice() {
+function fetchPost() {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
             thead.innerHTML = `<tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>수정일</th>
-                <th>카테고리</th>
-            </tr>`;
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>수정일</th>
+        <th>카테고리</th>
+    </tr>`;
             tbody.innerHTML = "";
             if (data.data === null) {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
@@ -58,18 +54,18 @@ function fetchNotice() {
                 first = last - 10;
 
                 for (let i = first; i < last; i++) {
-                    if (data.data.posts[notice_index[i]].category === "notice") {
+                    if (data.data.posts[post_index[i]].category !== "notice") {
                         tbody.innerHTML += `
-                <tr>
-                <td>${notice_index.length - i}</td>
-                <td onclick="window.location.href='notices_detail.html?postId=${data.data.posts[notice_index[i]].postId}'"
-                    style="cursor:pointer">${data.data.posts[notice_index[i]].title}</td>
-                <td>${data.data.posts[notice_index[i]].writerName}</td>
-                <td>${data.data.posts[notice_index[i]].createdAt}</td>
-                <td>${data.data.posts[notice_index[i]].updatedAt || ""}</td>
-                <td>${data.data.posts[notice_index[i]].category}</td>
-                </tr>
-                `;
+        <tr>
+        <td>${post_index.length - i}</td>
+        <td  onclick="window.location.href='posts_detail.html?postId=${data.data.posts[post_index[i]].postId}'"
+            style="cursor:pointer">${data.data.posts[post_index[i]].title}</td>
+        <td>${data.data.posts[post_index[i]].writerName}</td>
+        <td>${data.data.posts[post_index[i]].createdAt}</td>
+        <td>${data.data.posts[post_index[i]].updatedAt || ""}</td>
+        <td>${data.data.posts[post_index[i]].category}</td>
+        </tr>
+        `;
                     }
                 }
             }
@@ -97,7 +93,7 @@ function showPagination() {
                     <a class="page-link" href="#" onclick="moveNextPage()">Next</a>
                 </li>`;
 
-    document.querySelector("#notice-pagination-bar").innerHTML = pageHTML;
+    document.querySelector("#post-pagination-bar").innerHTML = pageHTML;
 }
 
 function movePage(pageNum) {
@@ -105,7 +101,7 @@ function movePage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
 
@@ -113,7 +109,7 @@ function moveNextPage() {
     //넘길페이지가 전체 페이지보다 클경우 그냥 return
     if (currentPage >= totalPage) return;
     currentPage++;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
 
@@ -121,19 +117,19 @@ function movePreviousPage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (currentPage <= 1) return;
     currentPage--;
-    fetchNotice();
+    fetchPost();
     showPagination();
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
-function backToList() {
-    window.location.href = "../html/notices.html";
+function backToPostList() {
+    window.location.href = "../html/posts.html";
 }
 
-function moveNoticeAddPage() {
-    window.location.href = "../html/notices_add.html";
+function movePostAddPage() {
+    window.location.href = "../html/posts_add.html";
 }
 
 getArticleCount();
-fetchNotice();
+fetchPost();
 showPagination();

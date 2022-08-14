@@ -12,7 +12,7 @@ fetch(user_url)
         else{
             for(let i=0; i<5; i++){
                 user_main.innerHTML+=
-            `
+                    `
             <div class="col" style="text-align: center;">
                 <img src="../img/profile.png" style="width:100px;" class="rounded-pill">
                     <div>
@@ -20,9 +20,7 @@ fetch(user_url)
                         <div id="user_main_generation">${data.data.users[i].generation}</div>
                     </div>
             </div>
-            `   
+            `
             }
-            
         }
     })
-
