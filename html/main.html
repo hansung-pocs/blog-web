@@ -15,7 +15,7 @@
 <nav class="navbar navbar-expand-sm justify-content-center" style="margin-bottom : 1em;">
     <div class="container">
         <a class="navbar-brand" href="main.html">POCS</a>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" id="navItem">
             <li class="nav-item">
                 <a class='nav-link' href="notices.html">Notice</a>
             </li>
@@ -27,10 +27,10 @@
             </li>
         </ul>
         <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="toggle"  role="button" data-bs-toggle="dropdown">
                 <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu"  id="toggleDetail">
                 <li><a class="dropdown-item" href="#">관리자</a></li>
                 <li><a class="dropdown-item" href="#">Link</a></li>
                 <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
@@ -341,6 +341,7 @@
         crossorigin="anonymous"></script>
 <script src="../js/app.js"></script>
 <script src="../js/user_main.js"></script>
+<script src="../js/common/toggle.js"></script>
 </body>
 
 </html>
