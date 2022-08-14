@@ -3,7 +3,7 @@ const logoutUrl = "http://34.64.161.55:8001/auth/logout";
 const toggle = document.getElementById("toggle");
 const sessionToken = localStorage.getItem("sessionToken");
 const toggleDetail = document.getElementById("toggleDetail");
-//const logoutBtn = document.getElementById("logoutBtn");
+const navItem = document.getElementById("navItem");
 
 async function handleToggle(event){
     event.preventDefault();
@@ -13,9 +13,9 @@ async function handleToggle(event){
     }
 
     if(sessionToken != null){
-        let userId = await handleValidation(sessionToken);
-        if(userId != null){
-            settingToggle(userId);    
+        let user = await handleValidation(sessionToken);
+        if(user.userId != null){
+            settingToggle(user.userId);    
         }
         else{
             console.log("유효하지 않은 토큰입니다.");
@@ -41,8 +41,8 @@ async function handleValidation(token){
     console.log(result);
 
     if(result.status === 200){
-        console.log(result.data.userId);
-        return result.data.userId;
+        console.log(result.data.user);
+        return result.data.user;
     }
     else{
         console.log(result.message);
@@ -89,5 +89,23 @@ async function handleLogout(event){
     }
 }
 
+async function handleNavigation(){
+    if(sessionToken != null){
+        let user = await handleValidation(sessionToken);
+        if(user.type === "admin"){
+            console.log(user.type);
+            const li = document.createElement("li");
+            li.classList = "nav-item";
+            const a = document.createElement("a");
+            a.href="../html/admin.html";
+            a.classList= "nav-link";
+            a.innerText="admin";
+            li.appendChild(a);
+
+            navItem.appendChild(li);    
+        }
+    }
+}
+
+window.addEventListener("load", handleNavigation);
 toggle.addEventListener("click", handleToggle);
-//logoutBtn.addEventListener("click", handleLogout)
