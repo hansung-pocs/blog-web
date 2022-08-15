@@ -4,6 +4,7 @@ const toggle = document.getElementById("toggle");
 const sessionToken = localStorage.getItem("sessionToken");
 const toggleDetail = document.getElementById("toggleDetail");
 const navItem = document.getElementById("navItem");
+const adminBtn = document.getElementById("adminBtn");
 
 async function handleToggle(event){
     event.preventDefault();
@@ -81,8 +82,9 @@ async function handleLogout(event){
 
     if(result.status === 200){
         localStorage.removeItem("sessionToken");
-        alert("로그아웃 되었습니다.")
+        localStorage.removeItem("userId");
         window.location.href = "../html/main.html"
+        alert("로그아웃 되었습니다.")
     }
     else{
         console.log(result.message);
@@ -94,15 +96,24 @@ async function handleNavigation(){
         let user = await handleValidation(sessionToken);
         if(user.type === "admin"){
             console.log(user.type);
-            const li = document.createElement("li");
-            li.classList = "nav-item";
-            const a = document.createElement("a");
-            a.href="../html/admin.html";
-            a.classList= "nav-link";
-            a.innerText="admin";
-            li.appendChild(a);
+            //관리자 메뉴
+            // const li = document.createElement("li");
+            // li.classList = "nav-item";
+            // const a = document.createElement("a");
+            // a.href="../html/admin.html";
+            // a.classList= "nav-link";
+            // a.innerText="Admin";
+            // li.appendChild(a);
+            // navItem.appendChild(li);    
 
-            navItem.appendChild(li);    
+            adminBtn.classList.toggle("hidden");
+            try{
+                const noticeBtn = document.getElementById("noticeBtn");
+                noticeBtn.classList.toggle("hidden");
+            }
+            catch{
+
+            }
         }
     }
 }
