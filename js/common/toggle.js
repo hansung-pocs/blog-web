@@ -115,6 +115,13 @@ async function handleNavigation(){
             catch{
 
             }
+            try{
+                const noticeEditBtn = document.getElementById("noticeEditBtn");
+                noticeEditBtn.classList.toggle("hidden");
+            }
+            catch{
+
+            }
         }
     }
 }
