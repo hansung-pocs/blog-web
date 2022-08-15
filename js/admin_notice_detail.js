@@ -31,7 +31,7 @@ function fetchAdminNotice(){
                 notice_title_first.innerHTML = `<h3>${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `<div>${data.data.category}  |</div>
             <div> ${data.data.createdAt}  | </div>
-            <div> ${data.data.updatedAt}  | </div>
+            <div> ${data.data.updatedAt || ""}  | </div>
             <div> ${data.data.writer.name} </div>
             `;
                 notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;

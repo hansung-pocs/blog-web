@@ -54,12 +54,12 @@ function fetchNotice(){
                 for(let i=first; i<last;i++){
                     tbody.innerHTML +=
                         `
-            <tr>
-            <td>${i}</td>
+            <tr onclick="movePostDetailPage(${data.data.posts[i].postId})">
+            <td>${i+1}</td>
             <td>${data.data.posts[i].title}</td>
             <td>${data.data.posts[i].writerName||""}</td>
             <td>${data.data.posts[i].createdAt}</td>
-            <td>${data.data.posts[i].updatedAt}</td>
+            <td>${data.data.posts[i].updatedAt || ""}</td>
             <td>${data.data.posts[i].category}</td>
             </tr>
             `;
@@ -120,6 +120,10 @@ function movePreviousPage(){
     currentPage--;
     fetchNotice();
     showPagination();
+}
+
+function movePostDetailPage(){
+    window.location.href = `../html/posts_detail.html?postId=${id}`;
 }
 
 fetchNotice();

@@ -83,6 +83,7 @@ async function handleLogout(event){
     if(result.status === 200){
         localStorage.removeItem("sessionToken");
         localStorage.removeItem("userId");
+        localStorage.removeItem("userType");
         window.location.href = "../html/main.html"
         alert("로그아웃 되었습니다.")
     }

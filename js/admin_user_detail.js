@@ -2,13 +2,10 @@ const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
 
-const user_detail_url = new URL('http://34.64.161.55:8001/users/' + id);
+const user_detail_url = new URL('http://34.64.161.55:8001/admin/users/' + id);
 
 const title = document.querySelector("#user_detail_title");
 const editBtn_a = document.querySelector("#user_detail_editBtn a");
-const editBtn = document.querySelector("#user_detail_editBtn");
-const kickBtn = document.querySelector("#user_detail_kickBtn");
-const lookPostBtn = document.querySelector("#user_detail_look_postBtn");
 
 //정보
 const userName = document.querySelector("#user_detail_userName");
@@ -33,11 +30,11 @@ fetch(user_detail_url)
         }
         else{
             title.innerHTML=
-            `
-                ${data.data.name}님의 정보
+                `
+                ${data.data.userName}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
-            userName.innerHTML=`${data.data.name}`;
+            userName.innerHTML=`${data.data.userName}`;
             email.innerHTML=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
             generation.innerHTML=`${data.data.generation}`;
@@ -89,27 +86,6 @@ async function userKick(){
     }
 }
 
-function checktoShowButtons(){
-    let login_id=localStorage.getItem("userId");
-    let user_type = localStorage.getItem("userType");
-    if(user_type==="member"){
-        //본인이 다른유저 정보를 조회할 경우
-        if(login_id!==id){
-            editBtn.classList.add("hidden");
-            kickBtn.classList.add("hidden");
-            lookPostBtn.classList.add("hidden");
-            //버튼들을 없애면 css 맞춰주기 위해 class replace
-            document.querySelector("#user_detail_userName").classList.replace("col-8", "col-10");
-        }
-        //본인이 본인 정보를 조회할 경우
-        else{
-            kickBtn.classList.add("hidden");
-            lookPostBtn.classList.add("hidden");
-        }
-    }
-}
-
 function LookupUserPost(){
-   window.location.href=`../html/user_posts.html?userId=${id}`;
+    window.location.href=`../html/user_posts.html?userId=${id}`;
 }
-checktoShowButtons();
