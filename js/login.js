@@ -29,6 +29,7 @@ async function login(event){
     if(result.status === 200){
         localStorage.setItem("sessionToken", result.data.sessionToken)
         localStorage.setItem("userId", result.data.user.userId);
+        localStorage.setItem("userType", result.data.user.type);
         window.location.href = '../html/main.html';
     }
     else{

@@ -21,8 +21,9 @@ fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
-        if(data.data === null){
-            console.log('존재하지 않는 유저입니다.');
+        if(data.status === 403){
+            title.innerHTML = `${data.message}`;
+            editForm.classList.add("hidden");
         }
         else{
             title.innerHTML=

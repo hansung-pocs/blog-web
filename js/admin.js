@@ -63,7 +63,7 @@ function fetchNotice() {
                     style="cursor:pointer">${post_data[i].title}</td>
                 <td>${post_data[i].writerName}</td>
                 <td>${post_data[i].createdAt}</td>
-                <td>${post_data[i].updatedAt}</td>
+                <td>${post_data[i].updatedAt || ""}</td>
                 <td>${post_data[i].category}</td>
                 </tr>
                 `;
@@ -101,7 +101,7 @@ function fetchUser() {
                 <tr>
                     <td>${i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].name}</td>
+                        style="pointer">${data.data.users[i].userName}</td>
                     <td>${data.data.users[i].studentId}</td>
                     <td>${data.data.users[i].email}</td>
                 </tr>
@@ -218,7 +218,7 @@ function moveNoticeAddPage() {
 }
 
 function moveUserDetailPage(Id) {
-    window.location.href = `../html/user_detail.html?userId=${Id}`;
+    window.location.href = `../html/admin_user_detail.html?userId=${Id}`;
 }
 
 function moveNoticeDetailPage(postId) {

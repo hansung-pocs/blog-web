@@ -59,7 +59,7 @@ function drawUserList(Arr) {
         tbody.innerHTML += `
                 <tr>
                     <td>${i + 1}</td>
-                    <td onclick="window.location.href='user_detail.html?userId=${Arr[i]?.userId}'"
+                    <td onclick="checktoGoDetailPage(${Arr[i]?.userId})"
                         style="cursor:pointer">${Arr[i]?.name}</td>
                     <td>${Arr[i]?.generation}</td>
                     <td>${Arr[i]?.studentId}</td>
@@ -168,6 +168,16 @@ function optionCheck(option) {
         option = "generation";
     } else if (radio2.checked) {
         option = "studentId";
+    }
+}
+
+function checktoGoDetailPage(Id){
+    let user_type = localStorage.getItem("userType");
+    if(user_type===null){
+        alert("블로그 회원만 조회 가능합니다.");
+    }
+    else{
+        window.location.href=`user_detail.html?userId=${Id}`
     }
 }
 radio0.addEventListener("click", onClick);
