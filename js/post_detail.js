@@ -69,6 +69,15 @@ function GotoPostEditPage() {
 function backToPostList() {
     window.location.href = '../html/posts.html';
 }
+//대댓글 hidden/non-hidden
+function commentBtnClick(event) {
+    let replyPath = `#${event.path[4].id} #${event.path[4].id}_replies`;
+    let replyDiv = document.querySelector(replyPath);//'#comment(n) #replies'
+    if (replyDiv.className == 'hidden')
+        replyDiv.className = "non-hidden";
+    else
+        replyDiv.className = "hidden";
+}
 
 PostDetailPage();
 

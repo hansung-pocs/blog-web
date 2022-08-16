@@ -130,6 +130,12 @@ function movePostAddPage() {
     window.location.href = "../html/posts_add.html";
 }
 
+function clickCategory(Category){
+    console.log('클릭시 url 변경 예정:'+Category);
+    //url = "http://34.64.161.55:8001/posts/category~";
+    //fetchPost();
+}
+
 getArticleCount();
 fetchPost();
 showPagination();
