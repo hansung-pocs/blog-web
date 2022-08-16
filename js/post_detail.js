@@ -2,19 +2,21 @@ const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
 
+const posts_buttons = document.querySelector(".posts-buttons");
+let postWriterId;
+
 //게시글 상세페이지 구현
-function PostDetailPage() {
+async function PostDetailPage() {
     const notice_title_first = document.querySelector(".notice-title-first");
     const notice_title_second = document.querySelector(".notice-title-second");
     const notice_detail_content = document.querySelector(".notice-detail-content");
     const d_url = `http://34.64.161.55:8001/posts/${id}`;
 
-    fetch(d_url)
+    await fetch(d_url)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
             if (data.status === 403) {
-                const posts_buttons = document.querySelector(".posts-buttons");
                 notice_title_first.innerHTML = `${data.message}`;
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
@@ -26,18 +28,19 @@ function PostDetailPage() {
             <div> ${data.data.writer.name} </div>
             `;
                 notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;
-                userId = data.data.writer.userId;
+                postWriterId = data.data.writer.userId;
                 present_page_title = data.data.title;
                 present_page_content = data.data.content;
                 category = data.data.category;
             }
         })
+    await checktoShowButtons();
 }
 
 //게시글 삭제하기
 async function DeletePost() {
     const sendData = {
-        userId: userId,
+        userId: postWriterId,
     };
 
     const options = {
@@ -57,6 +60,17 @@ async function DeletePost() {
         backToPostList();
     } else {
         console.log(result.message);
+    }
+}
+
+function checktoShowButtons(){
+    let login_id=localStorage.getItem("userId");
+    let user_type = localStorage.getItem("userType");
+    if(user_type==="member"){
+        //자기가 쓴글이 아닌 게시그을 조회했을 경우
+        if(login_id!==postWriterId){
+            posts_buttons.classList.add("hidden");
+        }
     }
 }
 
