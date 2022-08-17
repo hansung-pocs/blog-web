@@ -16,14 +16,14 @@
     <div class="container">
         <a class="navbar-brand" href="main.html">POCS</a>
         <ul class="navbar-nav" id="navItem">
-            <li class="nav-item">
-                <a class='nav-link' href="notices.html">Notice</a>
+            <li class="nav-item" id="NoticeBtn">
+                <div class='nav-link' onclick="moveNoticePage()" style="cursor: pointer;">Notice</div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="posts.html">Post</a>
+            <li class="nav-item" id="PostBtn">
+                <div class="nav-link" onclick="movePostPage()" style="cursor: pointer;">Post</div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="user.html">User</a>
+            <li class="nav-item" id="UserBtn">
+                <div class="nav-link" onclick="moveUserPage()" style="cursor: pointer;">User</div>
             </li>
             <li class="nav-item hidden" id="adminBtn">
                 <a class="nav-link" href="admin.html">Admin</a>
