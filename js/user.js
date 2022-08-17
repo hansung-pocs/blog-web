@@ -62,7 +62,7 @@ function drawUserList(Arr) {
                     style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
                     <img class="w-50" src="../img/profile.png">
                     <div class="my-1" style="font-size: large"><b>${Arr[i]?.name}</b></div>
-                    <div class="my-1"><b>${Arr[i]?.generation}</b></div>
+                    <div class="my-1"><b>${Arr[i]?.generation}기</b></div>
                     <div class="my-1">${Arr[i]?.studentId}</div>
                     <div class="my-1">
                         <span title="${Arr[i]?.email}" class="me-2">
