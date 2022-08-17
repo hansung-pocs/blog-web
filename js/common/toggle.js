@@ -5,6 +5,15 @@ const sessionToken = localStorage.getItem("sessionToken");
 const toggleDetail = document.getElementById("toggleDetail");
 const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
+const localStorage_userId = localStorage.getItem("userId");
+
+function preventChanginguserId(){
+    window.addEventListener("storage", ()=>{
+        alert("userId값은 변경될수 없습니다!");
+        localStorage.removeItem("userId");
+        localStorage.setItem("userId", localStorage_userId);
+    })
+}
 
 async function handleToggle(event){
     event.preventDefault();
@@ -128,3 +137,4 @@ async function handleNavigation(){
 
 window.addEventListener("load", handleNavigation);
 toggle.addEventListener("click", handleToggle);
+preventChanginguserId();

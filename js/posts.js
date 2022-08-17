@@ -58,7 +58,7 @@ function fetchPost() {
                         tbody.innerHTML += `
         <tr>
         <td>${post_index.length - i}</td>
-        <td  onclick="window.location.href='posts_detail.html?postId=${data.data.posts[post_index[i]].postId}'"
+        <td  onclick="checktoGoDetailPage(${data.data.posts[post_index[i]].postId})"
             style="cursor:pointer">${data.data.posts[post_index[i]].title}</td>
         <td>${data.data.posts[post_index[i]].writerName}</td>
         <td>${data.data.posts[post_index[i]].createdAt}</td>
@@ -119,6 +119,16 @@ function movePreviousPage() {
     currentPage--;
     fetchPost();
     showPagination();
+}
+
+function checktoGoDetailPage(Id){
+    let user_type = localStorage.getItem("userType");
+    if(user_type===null){
+        alert("블로그 회원만 조회 가능합니다.");
+    }
+    else{
+        window.location.href=`posts_detail.html?postId=${Id}`;
+    }
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
