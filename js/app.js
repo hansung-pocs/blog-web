@@ -1,8 +1,9 @@
 let user_type = localStorage.getItem("userType");
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
-function moveNoticePage() {
+function moveNoticePage(event) {
     if(user_type===null){
-        alert("블로그 회원만 조회 가능합니다.");
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
     }
     else{
         window.location.href=`../html/notices.html`;
@@ -11,7 +12,8 @@ function moveNoticePage() {
 
 function movePostPage(){
     if(user_type===null){
-        alert("블로그 회원만 조회 가능합니다.");
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
     }
     else{
         window.location.href=`../html/posts.html`;
@@ -20,11 +22,23 @@ function movePostPage(){
 
 function moveUserPage(){
     if(user_type===null){
-        alert("블로그 회원만 조회 가능합니다.");
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
     }
     else{
         window.location.href=`../html/user.html`;
     }
+}
+
+//alert대신 사용하면 됨(로그인페이지로 이동가능)
+function moveLoginPage(){
+    if(confirm("블로그 회원만 조회 가능합니다.\n로그인하시겠습니까?")){
+        window.location.href=`../html/index.html`;
+    }
+    else{
+        return;
+    }
+
 }
 
 //홈페이지에 공지사항 최근글 3개 불러오기
