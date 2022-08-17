@@ -105,6 +105,7 @@ function checktoShowButtons(){
         else{
             kickBtn.classList.add("hidden");
             lookPostBtn.classList.add("hidden");
+            document.querySelector("#user_detail_userName").classList.replace("col-8", "col-10");
         }
     }
 }
