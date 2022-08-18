@@ -21,13 +21,14 @@ async function PostDetailPage() {
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
             } else {
-                notice_title_first.innerHTML = `<h3>${data.data.title}</h3>`;
-                notice_title_second.innerHTML = `<div>${data.data.category}  |</div>
-            <div> ${data.data.createdAt}  |</div>
-            <div> ${data.data.updatedAt || ""} |</div>
-            <div> ${data.data.writer.name} </div>
+                let category=CategoryEn2Kr(data.data.category);
+                notice_title_first.innerHTML = `<h3>[${category}]${data.data.title}</h3>`;
+                notice_title_second.innerHTML = `
+            <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
+            <div class="me-2"> ${data.data.writer.name} </div>
+            <div>조회수 ${data.data.views}</div>
             `;
-                notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;
+                notice_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
                 postWriterId = data.data.writer.userId;
                 present_page_title = data.data.title;
                 present_page_content = data.data.content;
@@ -82,6 +83,20 @@ function GotoPostEditPage() {
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToPostList() {
     window.location.href = '../html/posts.html';
+}
+//api의 category En을 Kr로 변경
+function CategoryEn2Kr(category){
+    console.log(category);
+    if(category==="knowhow"){
+        return '노하우'
+    }else if(category==="study"){
+        return '스터디'
+    }else if(category==="memory"){
+        return '추억'
+    }else if(category==="reference"){
+        return '질문';
+    }else
+        return "?";
 }
 //대댓글 hidden/non-hidden
 function commentBtnClick(event) {

@@ -1,4 +1,4 @@
-const url = "http://34.64.161.55:8001/posts";
+let url = "http://34.64.161.55:8001/posts";
 const notice = document.querySelector("#notice table");
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
@@ -19,6 +19,7 @@ function getArticleCount() {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
+            post_index = [] //카테고리 선택하고 재 fetch시 []부터 시작하도록
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (data.data.posts[i].category !== "notice") {
                     cnt++;
@@ -55,6 +56,7 @@ function fetchPost() {
 
                 for (let i = first; i < last; i++) {
                     if (data.data.posts[post_index[i]].category !== "notice") {
+                        let category=CategoryEn2Kr(data.data.posts[post_index[i]].category);
                         tbody.innerHTML += `
         <tr>
         <td>${post_index.length - i}</td>
@@ -63,7 +65,7 @@ function fetchPost() {
         <td>${data.data.posts[post_index[i]].writerName}</td>
         <td>${data.data.posts[post_index[i]].createdAt}</td>
         <td>${data.data.posts[post_index[i]].updatedAt || ""}</td>
-        <td>${data.data.posts[post_index[i]].category}</td>
+        <td>${category}</td>
         </tr>
         `;
                     }
@@ -140,6 +142,21 @@ function movePostAddPage() {
     window.location.href = "../html/posts_add.html";
 }
 
+//api의 category En을 Kr로 변경
+function CategoryEn2Kr(category){
+    console.log(category);
+    if(category==="knowhow"){
+        return '노하우'
+    }else if(category==="study"){
+        return '스터디'
+    }else if(category==="memory"){
+        return '추억'
+    }else if(category==="reference"){
+        return '질문';
+    }else
+        return "?";
+}
+//카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
     console.log('클릭시 url 변경 예정:'+Category);
     //url = "http://34.64.161.55:8001/posts/category~";

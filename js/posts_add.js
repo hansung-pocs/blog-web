@@ -32,11 +32,14 @@ async function postSubmit(){
 }
 
 function checkedCategory(e){
-    if(e.target.innerText === "스터디"){
+    if(e.target.innerText === "노하우"){
+        category="knowhow";
+    }else if(e.target.innerText === "스터디"){
         category="study";
-    }
-    else if(e.target.innerText === "동아리 활동"){
+    }else if(e.target.innerText === "추억"){
         category="memory";
+    }else if(e.target.innerText === "질문"){
+        category="reference";
     }
 
     const btnText = document.querySelector("#category-button");
