@@ -12,7 +12,8 @@
 
 <body>
 <!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-sm justify-content-center" style="margin-bottom : 1em;">
+<nav class="navbar navbar-expand-sm bg-light justify-content-center"
+        style="position: sticky; top: 0; height: auto; z-index: 10">
     <div class="container">
         <a class="navbar-brand" href="main.html">POCS</a>
         <ul class="navbar-nav" id="navItem">
@@ -24,6 +25,9 @@
             </li>
             <li class="nav-item" id="UserBtn">
                 <div class="nav-link" onclick="moveUserPage()" style="cursor: pointer;">User</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="qa.html">Q/A</a>
             </li>
             <li class="nav-item hidden" id="adminBtn">
                 <a class="nav-link" href="admin.html">Admin</a>
