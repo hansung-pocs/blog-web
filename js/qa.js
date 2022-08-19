@@ -129,7 +129,8 @@ function backToQaList() {
 // 비회원만 질문 작성 가능
 function moveQaAddPage() {
   const checkUserType = localStorage.getItem("userType");
-  if(checkUserType === "비회원") {
+  console.log(checkUserType);
+  if(checkUserType === "비회원" || checkUserType === null) {
     window.location.href = "../html/qa_add.html";
   } else {
     alert("비회원만 작성할 수 있습니다");

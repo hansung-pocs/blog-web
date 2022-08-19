@@ -5,7 +5,6 @@ const headComment = document.querySelector("#head-comment");
 const childCommentForm = document.querySelector("#child-comment-form");
 const editButton = document.querySelector("#edit-button");
 const deleteForm = document.querySelector("#delete-form");
-const sessionToken = localStorage.getItem("sessionToken");
 const userType = localStorage.getItem("userType");
 
 const qa_buttons = document.querySelector(".qa-buttons");
@@ -53,7 +52,6 @@ async function DeleteQa() {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "x-pocs-session-token": sessionToken,
         },
         body: JSON.stringify(sendData),
     };
@@ -100,5 +98,4 @@ function backToQaList() {
 
 headComment.addEventListener("click", commentBtnClick);
 editButton.addEventListener("click", moveQaEditPage);
-DeleteQa();
 QaDetailPage();

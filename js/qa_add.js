@@ -7,7 +7,6 @@ const login_form = document.querySelector("#login-form");
 const qa_title = document.querySelector("#title");
 const qa_content = document.querySelector("#content");
 const QaForm = document.querySelector("#putQaForm");
-const sessionToken = localStorage.getItem("sessionToken");
 
 if(localStorage.getItem("userType") === "비회원") {
   sign_up_form.innerHTML = "";
@@ -17,8 +16,8 @@ if(localStorage.getItem("userType") === "비회원") {
 async function SignUpNonMember(event) {
     event.preventDefault();
     const sendData = {
-        userName: non_member_id.value,
-        password: non_member_pw.value,
+        userName: sign_up_id.value,
+        password: sign_up_pw.value,
     };
 
     console.log(sendData);
@@ -39,7 +38,7 @@ async function SignUpNonMember(event) {
 
     if (result.status === 201) {
         // localStorage.setItem("sessionToken", result.data.sessionToken)
-        sign_up_form.innerHTML = `<b>${non_member_id.value}님 비회원 등록 완료.</b>`;
+        sign_up_form.innerHTML = `<b>${sign_up_id.value}님 비회원 등록 완료.</b>`;
     } else {
         alert("다시 입력해주세요");
         console.log("비회원 회원가입 실패");
@@ -71,8 +70,7 @@ async function login(event) {
         localStorage.setItem("sessionToken", result.data.sessionToken);
         localStorage.setItem("userId", result.data.user.userId);
         localStorage.setItem("userType", result.data.user.type);
-        console.log("비회원 로그인 성공");
-        login_form.innerHTML = `<b>${login_id.value}님 환영합니다.</b>`;
+        window.location.href = '../html/qa_add.html';
     } else {
         console.log("비회원 로그인 실패");
     }
