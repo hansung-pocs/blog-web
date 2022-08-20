@@ -43,7 +43,7 @@ function moveLoginPage(){
 
 //홈페이지에 공지사항 최근글 3개 불러오기
 const notice_card = document.querySelector(".notice-card");
-const url = "http://34.64.161.55:8001/posts";
+const url = "http://34.64.161.55:8001/posts?id=notice&offset=3&pageNum=1";
 fetch(url)
     .then((response) => response.json())
     .then((data) => {
