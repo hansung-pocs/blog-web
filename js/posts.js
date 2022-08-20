@@ -16,8 +16,9 @@ const first = 0;
 let last = offset;
 let cnt = 0;
 let cntPageNum=0;
+let cateID='id!=notice';
 
-let url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+let url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
@@ -44,6 +45,7 @@ function fetchPost() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
+            console.log(url);
             thead.innerHTML = `<tr>
         <th>번호</th>
         <th>제목</th>
@@ -58,8 +60,8 @@ function fetchPost() {
             } else {
                 cntPageNum=currentPage*15-15;
 
-                for (let i = 0; i < 15; i++) {
-                    let category=CategoryEn2Kr(data.data.posts[post_index[i]].category);
+                for (let i = 0; i < data.data.posts.length; i++) {
+                    let cateKR=CategoryEn2Kr(data.data.posts[i].category);
                     tbody.innerHTML += `
         <tr>
         <td>${cntPageNum+i+1}</td>
@@ -68,7 +70,7 @@ function fetchPost() {
         <td>${data.data.posts[i].writerName || ""}</td>
         <td>${data.data.posts[i].createdAt}</td>
         <td>${data.data.posts[i].updatedAt || ""}</td>
-        <td>${data.data.posts[i].category}</td>
+        <td>${cateKR}</td>
         </tr>
         `;
                 }
@@ -104,14 +106,14 @@ async function movePage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
-    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await fetchPost();
     await showPagination();
 }
 
 async function moveNextPage() {
     currentPage++;
-    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await fetchPost();
     await showPagination();
 }
@@ -120,7 +122,7 @@ async function movePreviousPage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (currentPage <= 1) return;
     currentPage--;
-    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await fetchPost();
     await showPagination();
 }
@@ -146,23 +148,31 @@ function movePostAddPage() {
 
 //api의 category En을 Kr로 변경
 function CategoryEn2Kr(category){
-    console.log(category);
+    //console.log(category);
     if(category==="knowhow"){
         return '노하우'
     }else if(category==="study"){
         return '스터디'
+    }else if(category==="notice"){
+        return '공지'
     }else if(category==="memory"){
         return '추억'
     }else if(category==="reference"){
         return '질문';
+    }else if(category==="QNA"){
+        return 'Q/A';
     }else
         return "?";
 }
 //카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
     console.log('클릭시 url 변경 예정:'+Category);
-    //url = "http://34.64.161.55:8001/posts/category~";
-    //fetchPost();
+    cateID=`id=${Category}`;
+    currentPage=1;
+    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+    getArticleCount();
+    fetchPost();
+    showPagination();
 }
 
 getArticleCount();
