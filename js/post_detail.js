@@ -21,8 +21,9 @@ async function PostDetailPage() {
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
             } else {
-                let category=CategoryEn2Kr(data.data.category);
-                notice_title_first.innerHTML = `<h3>[${category}]${data.data.title}</h3>`;
+                let cateKR=CategoryEn2Kr(data.data.category);
+                console.log(cateKR);
+                notice_title_first.innerHTML = `<h3>[${cateKR}]${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
             <div class="me-2"> ${data.data.writer.name} </div>
@@ -86,15 +87,19 @@ function backToPostList() {
 }
 //api의 category En을 Kr로 변경
 function CategoryEn2Kr(category){
-    console.log(category);
+    //console.log(category);
     if(category==="knowhow"){
         return '노하우'
     }else if(category==="study"){
         return '스터디'
+    }else if(category==="notice"){
+        return '공지'
     }else if(category==="memory"){
         return '추억'
     }else if(category==="reference"){
         return '질문';
+    }else if(category==="QNA"){
+        return 'Q/A';
     }else
         return "?";
 }
