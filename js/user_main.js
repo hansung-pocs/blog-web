@@ -1,8 +1,10 @@
-const user_url = new URL("http://34.64.161.55:8001/users");
+const user_url =`http://34.64.161.55:8001/users?offset=5&pageNum=1`;
+let sessiontoken = localStorage.getItem("sessionToken");
 
 //정보
-const user_main =document.querySelector("#user-main")
-fetch(user_url)
+const user_main =document.querySelector("#user-main");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+fetch(user_url, {headers : header})
     .then((response) => response.json())
     .then((data) => {
         console.log(data);

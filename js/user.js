@@ -1,5 +1,3 @@
-let url = "http://34.64.161.55:8001/users";
-
 const usersDiv = document.querySelector("#usersDiv");
 //const thead = document.querySelector("#user table thead");
 //const tbody = document.querySelector("#user table tbody");
@@ -15,32 +13,21 @@ let userArr;
 let sortOption;
 
 //pagination에 필요한 변수
+const offset=9;
 let currentPage = 1;
-let totalPage;
-let first = 0;
-let last = 1;
+
+let url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 function doFetch() {
-    fetch(url)
+    fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
-            console.log(url);
             console.log(data);
             if (data.data.users === null) {
                 usersDiv.innerHTML = "<div>유저를 추가 하세요.</div>";
             } else {
-                let cnt = 0;
-                data.data.users.forEach((item) => {
-                    //데이터 개수
-                    cnt++;
-                });
-                //마지막페이지 계산
-                totalPage = Math.ceil(cnt / 9);
-
-                //페이지에 10개만 보여주기 위해 변수 설정
-                last = 9 * currentPage;
-                first = last - 9;
-
                 //받은 데이터로 유저 목록 그리기
                 userArr = data.data.users;
 
@@ -55,13 +42,13 @@ function doFetch() {
 /// Arr[i]?.->Uncaught TypeError: Cannot read properties of undefined 에러를 막기 위한 것(Optional Chaining)
 function drawUserList(Arr) {
     usersDiv.innerHTML = "";
-    for (let i = first; i < last; i++) {
+    for (let i = 0; i < 9; i++) {
         if (Arr[i] == undefined) continue;
         usersDiv.innerHTML += `
             <div class="col-3 p-4 m-2" onclick="checktoGoDetailPage(${Arr[i]?.userId})" 
                     style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
                     <img class="w-50" src="../img/profile.png">
-                    <div class="my-1" style="font-size: large"><b>${Arr[i]?.name}</b></div>
+                    <div class="my-1" style="font-size: large"><b>${Arr[i]?.name || "비회원"}</b></div>
                     <div class="my-1"><b>${Arr[i]?.generation}기</b></div>
                     <div class="my-1">${Arr[i]?.studentId}</div>
                     <div class="my-1">
@@ -124,9 +111,6 @@ function showPagination() {
                 </li>`;
     let pageGroup = Math.ceil(currentPage / 5);
     let last_num = pageGroup * 5;
-    if (last_num > totalPage) {
-        last = totalPage;
-    }
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
@@ -140,29 +124,30 @@ function showPagination() {
     document.querySelector("#pagination-bar").innerHTML = pageHTML;
 }
 
-function movePage(pageNum) {
-    if (pageNum > totalPage) return;
+async function movePage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
-    doFetch();
-    showPagination();
+    url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
+    await doFetch();
+    await showPagination();
 }
 
-function moveNextPage() {
+async function moveNextPage() {
     //넘길페이지가 전체 페이지보다 클경우 그냥 return
-    if (currentPage >= totalPage) return;
     currentPage++;
-    doFetch();
-    showPagination();
+    url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
+    await doFetch();
+    await showPagination();
 }
 
-function movePreviousPage() {
+async function movePreviousPage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (currentPage <= 1) return;
     currentPage--;
-    doFetch();
-    showPagination();
+    url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
+    await doFetch();
+    await showPagination();
 }
 //옵션이 선택 될 때 목록 다시 그림
 function onClick(event) {

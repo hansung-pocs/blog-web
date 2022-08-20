@@ -1,4 +1,3 @@
-let url = "http://34.64.161.55:8001/posts";
 const notice = document.querySelector("#notice table");
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
@@ -9,14 +8,21 @@ let userId;
 
 //pagination에 필요한 변수
 let post_index = [];
+const offset=15;
 let currentPage = 1;
+//현재 api데이터가 전체 개수를 주지 않아 전체개수 세는거는 없앰.
 let totalPage;
-let first = 0;
-let last = 1;
+const first = 0;
+let last = offset;
 let cnt = 0;
+let cntPageNum=0;
+
+let url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 function getArticleCount() {
-    fetch(url)
+    fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             post_index = [] //카테고리 선택하고 재 fetch시 []부터 시작하도록
@@ -28,13 +34,13 @@ function getArticleCount() {
             }
             console.log(post_index);
             //마지막페이지 계산
-            totalPage = Math.ceil(cnt / 10);
+            //totalPage = Math.ceil(cnt / 10);
         });
 }
 
 //공지사항 목록 조회
 function fetchPost() {
-    fetch(url)
+    fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -50,25 +56,21 @@ function fetchPost() {
             if (data.data === null) {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                //페이지에 10개만 보여주기 위해 변수 설정
-                last = 10 * currentPage;
-                first = last - 10;
+                cntPageNum=currentPage*15-15;
 
-                for (let i = first; i < last; i++) {
-                    if (data.data.posts[post_index[i]].category !== "notice") {
-                        let category=CategoryEn2Kr(data.data.posts[post_index[i]].category);
-                        tbody.innerHTML += `
+                for (let i = 0; i < 15; i++) {
+                    let category=CategoryEn2Kr(data.data.posts[post_index[i]].category);
+                    tbody.innerHTML += `
         <tr>
-        <td>${post_index.length - i}</td>
-        <td  onclick="checktoGoDetailPage(${data.data.posts[post_index[i]].postId})"
-            style="cursor:pointer">${data.data.posts[post_index[i]].title}</td>
-        <td>${data.data.posts[post_index[i]].writerName}</td>
-        <td>${data.data.posts[post_index[i]].createdAt}</td>
-        <td>${data.data.posts[post_index[i]].updatedAt || ""}</td>
-        <td>${category}</td>
+        <td>${cntPageNum+i+1}</td>
+        <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
+            style="cursor:pointer">${data.data.posts[i].title}</td>
+        <td>${data.data.posts[i].writerName || ""}</td>
+        <td>${data.data.posts[i].createdAt}</td>
+        <td>${data.data.posts[i].updatedAt || ""}</td>
+        <td>${data.data.posts[i].category}</td>
         </tr>
         `;
-                    }
                 }
             }
         });
@@ -98,29 +100,29 @@ function showPagination() {
     document.querySelector("#post-pagination-bar").innerHTML = pageHTML;
 }
 
-function movePage(pageNum) {
-    if (pageNum > totalPage) return;
+async function movePage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
-    fetchPost();
-    showPagination();
+    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    await fetchPost();
+    await showPagination();
 }
 
-function moveNextPage() {
-    //넘길페이지가 전체 페이지보다 클경우 그냥 return
-    if (currentPage >= totalPage) return;
+async function moveNextPage() {
     currentPage++;
-    fetchPost();
-    showPagination();
+    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    await fetchPost();
+    await showPagination();
 }
 
-function movePreviousPage() {
+async function movePreviousPage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (currentPage <= 1) return;
     currentPage--;
-    fetchPost();
-    showPagination();
+    url = `http://34.64.161.55:8001/posts?id!=notice&offset=${offset}&pageNum=${currentPage}`;
+    await fetchPost();
+    await showPagination();
 }
 
 function checktoGoDetailPage(Id){
