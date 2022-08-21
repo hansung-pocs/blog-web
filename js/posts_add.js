@@ -2,6 +2,8 @@ const post_title = document.querySelector("#title");
 const post_content = document.querySelector("#content");
 let category;
 
+let sessiontoken = localStorage.getItem("sessionToken");
+
 async function postSubmit(){
 
     const sendData={
@@ -14,7 +16,8 @@ async function postSubmit(){
     const options = {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

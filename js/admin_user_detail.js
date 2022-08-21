@@ -3,6 +3,8 @@ const arr = Url.split("?userId=");
 const id = arr[1];
 
 const user_detail_url = new URL('http://34.64.161.55:8001/admin/users/' + id);
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 const title = document.querySelector("#user_detail_title");
 const editBtn_a = document.querySelector("#user_detail_editBtn a");
@@ -15,7 +17,7 @@ const generation =document.querySelector("#user_detail_generation");
 const company =document.querySelector("#user_detail_company");
 const github =document.querySelector("#user_detail_github");
 
-fetch(user_detail_url)
+fetch(user_detail_url, {headers : header})
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -71,7 +73,8 @@ async function userKick(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

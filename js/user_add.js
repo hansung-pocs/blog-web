@@ -10,6 +10,8 @@ const github =document.querySelector("#user_detail_edit_github");
 const addBtn = document.querySelector("#addBtn");
 const dataForm = document.querySelector("#dataForm");
 
+let sessiontoken = localStorage.getItem("sessionToken");
+
 const member = "member";
 
 async function addUser(event){
@@ -30,7 +32,8 @@ async function addUser(event){
     const options = {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

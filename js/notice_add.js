@@ -1,5 +1,6 @@
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
+let sessiontoken = localStorage.getItem("sessionToken");
 
 
 async function noticeSubmit(){
@@ -14,7 +15,8 @@ async function noticeSubmit(){
     const options = {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

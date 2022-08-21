@@ -1,5 +1,7 @@
 const post_url = "http://34.64.161.55:8001/admin/posts";
 const user_url = "http://34.64.161.55:8001/admin/users";
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 let post_data;
 
 //공지사항에 필요한 dom
@@ -27,7 +29,7 @@ let User_first = 0;
 let User_last = 1;
 
 function fetchNotice() {
-    fetch(post_url)
+    fetch(post_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -73,7 +75,7 @@ function fetchNotice() {
 }
 
 function fetchUser() {
-    fetch(user_url)
+    fetch(user_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);

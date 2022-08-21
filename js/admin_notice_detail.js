@@ -12,6 +12,8 @@ const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 수정때 쓰일 변수들
 let present_page_title;
@@ -19,7 +21,7 @@ let present_page_content;
 let category;
 
 function fetchAdminNotice(){
-    fetch(d_url)
+    fetch(d_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -65,7 +67,8 @@ async function noticeEdit(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };
@@ -89,7 +92,8 @@ async function DeleteNotice(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };
