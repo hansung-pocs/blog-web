@@ -42,14 +42,12 @@ function moveLoginPage(){
 }
 
 let url;
-let sessiontoken = localStorage.getItem("sessionToken");
-let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //홈페이지에 인기글 최근글 3개 불러오기
 const best_card = document.querySelector(".best-card");
 url = "http://34.64.161.55:8001/posts?id=best&offset=3&pageNum=1";
 
-fetch(url, {headers : header})
+fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -81,7 +79,7 @@ fetch(url, {headers : header})
 //홈페이지에 공지사항 최근글 3개 불러오기
 const notice_card = document.querySelector(".notice-card");
 url = "http://34.64.161.55:8001/posts?id=notice&offset=3&pageNum=1";
-fetch(url, {headers : header})
+fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -114,7 +112,7 @@ fetch(url, {headers : header})
 //홈페이지에 스터디 최근글 3개 불러오기
 const study_card = document.querySelector(".study-card");
 url = "http://34.64.161.55:8001/posts?id=study&offset=3&pageNum=1";
-fetch(url, {headers : header})
+fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -146,7 +144,7 @@ fetch(url, {headers : header})
 //홈페이지에 추억 최근글 3개 불러오기
 const memory_card = document.querySelector(".memory-card");
 url = "http://34.64.161.55:8001/posts?id=memory&offset=3&pageNum=1";
-fetch(url, {headers : header})
+fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -178,7 +176,7 @@ fetch(url, {headers : header})
 //홈페이지에 노하우 최근글 3개 불러오기
 const knowhow_card = document.querySelector(".knowhow-card");
 url = "http://34.64.161.55:8001/posts?id=knowhow&offset=3&pageNum=1";
-fetch(url, {headers : header})
+fetch(url)
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
