@@ -164,7 +164,6 @@ function CategoryEn2Kr(category){
     }else
         return "?";
 }
-
 //카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
     console.log('클릭시 url 변경 예정:'+Category);
@@ -174,139 +173,8 @@ function clickCategory(Category){
     getArticleCount();
     fetchPost();
     showPagination();
-    
-    console.log("실행됨");
 }
 
 getArticleCount();
 fetchPost();
 showPagination();
-
-
-
-function clickCategory2(Category){
-    cateID=`id=${Category}`;
-    currentPage=1;
-    url = `http://34.64.161.55:8001/posts?${cateID}&offset=3&pageNum=1`;
-
-}
-
-//////////////////////////////
-
-
-let user_type = localStorage.getItem("userType");
-//홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
-function moveNoticePage(event) {
-    if(user_type===null){
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
-    }
-    else{
-        window.location.href=`../html/notices.html`;
-    }
-}
-
-function moveStudyPage(event) {
-    // if(user_type===null){
-    //     moveLoginPage();
-    //     //alert("블로그 회원만 조회 가능합니다.");
-    // }
-    // else{
-        window.location.href=`../html/posts.html?posts=1`;
-
-    // }
-}
-
-function movePostPage(){
-    if(user_type===null){
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
-    }
-    else{
-        window.location.href=`../html/posts.html`;
-    }
-}
-
-function moveUserPage(){
-    if(user_type===null){
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
-    }
-    else{
-        window.location.href=`../html/user.html`;
-    }
-}
-
-//alert대신 사용하면 됨(로그인페이지로 이동가능)
-function moveLoginPage(){
-    if(confirm("블로그 회원만 조회 가능합니다.\n로그인하시겠습니까?")){
-        window.location.href=`../html/index.html`;
-    }
-    else{
-        return;
-    }
-
-}
-//홈페이지에 공지사항 최근글 3개 불러오기
-const notice_card = document.querySelector(".notice-card");
-const study_card = document.querySelector(".study-card");
-const memory_card = document.querySelector(".memory-card");
-const knowhow_card = document.querySelector(".knowhow-card");
-
-const Url = `http://34.64.161.55:8001/posts?id=${category}&offset=3&pageNum=1`;
-fetch(Url)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-        notice_card.innerHTML = "";
-        study_card.innerHTML = "";
-        memory_card.innerHTML = "";
-        if (data.data === null) {
-            notice_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
-        } else {
-            let cnt=0;
-            for (let i = 0; i < data.data.posts.length; i++) {
-                if(cnt>2)
-                    break;
-                if(data.data.posts[i].category==="notice"){
-                    notice_card.innerHTML +=
-                        `
-                    <div class="col-xl">
-                        <div class="card">
-                            <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
-                        </div>
-                    </div>
-                     `;
-                    cnt++;
-                }
-                if(data.data.posts[i].category==="study"){
-                    study_card.innerHTML +=
-                        `
-                    <div class="col-xl">
-                        <div class="card">
-                            <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
-                        </div>
-                    </div>
-                     `;
-                    cnt++;
-                }
-                if(data.data.posts[i].category==="memory"){
-                    memory_card.innerHTML +=
-                        `
-                    <div class="col-xl">
-                        <div class="card">
-                            <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
-                        </div>
-                    </div>
-                     `;
-                    cnt++;
-                }
-            }
-        }
-    })
