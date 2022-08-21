@@ -3,6 +3,9 @@ const arr = Url.split("?userId=");
 const id = arr[1];
 const user_posts_url = new URL('http://34.64.161.55:8001/admin/posts/' + id);
 
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
 const notice = document.querySelector("#notice table");
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
@@ -17,7 +20,7 @@ let first=0;
 let last=1;
 
 //제목에 이름을 표시하기 위한 명령어
-fetch('http://34.64.161.55:8001/users/'+id)
+fetch('http://34.64.161.55:8001/users/'+id, {headers : header})
     .then((response) => response.json())
     .then((userdata) => {
         title.innerHTML = `${userdata.data.name}님의 게시글`
@@ -25,7 +28,7 @@ fetch('http://34.64.161.55:8001/users/'+id)
 
 //공지사항 목록 조회
 function fetchNotice(){
-    fetch(user_posts_url)
+    fetch(user_posts_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);

@@ -5,6 +5,9 @@ const id = arr[1];
 const posts_buttons = document.querySelector(".posts-buttons");
 let postWriterId;
 
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
 //게시글 상세페이지 구현
 async function PostDetailPage() {
     const notice_title_first = document.querySelector(".notice-title-first");
@@ -12,7 +15,7 @@ async function PostDetailPage() {
     const notice_detail_content = document.querySelector(".notice-detail-content");
     const d_url = `http://34.64.161.55:8001/posts/${id}`;
 
-    await fetch(d_url)
+    await fetch(d_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -48,7 +51,8 @@ async function DeletePost() {
     const options = {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body: JSON.stringify(sendData)
     };
