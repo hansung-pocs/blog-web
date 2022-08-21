@@ -70,7 +70,7 @@ async function DeletePost() {
 }
 
 function checktoShowButtons(){
-    let login_id=localStorage.getItem("userId");
+    let login_id=parseInt(localStorage.getItem("userId"));
     let user_type = localStorage.getItem("userType");
     if(user_type==="member"){
         //자기가 쓴글이 아닌 게시그을 조회했을 경우

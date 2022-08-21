@@ -3,13 +3,14 @@ const post_content = document.querySelector("#content");
 let category;
 
 let sessiontoken = localStorage.getItem("sessionToken");
+const userId = localStorage.getItem("userId");
 
 async function postSubmit(){
 
     const sendData={
         title : post_title.value,
         content: post_content.value,
-        userId: 1,
+        userId: userId,
         category : category
     };
 
