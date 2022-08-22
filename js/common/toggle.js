@@ -7,6 +7,10 @@ const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
 
+if(sessionToken === null && window.location.href.match("qa") === null){
+    window.location.href="../html/qa.html"
+}
+
 function preventChanginguserId(){
     window.addEventListener("storage", ()=>{
         alert("userId값은 변경될수 없습니다!");
@@ -93,7 +97,7 @@ async function handleLogout(event){
         localStorage.removeItem("sessionToken");
         localStorage.removeItem("userId");
         localStorage.removeItem("userType");
-        window.location.href = "../html/main.html"
+        window.location.href = "../html/qa.html"
         alert("로그아웃 되었습니다.")
     }
     else{
