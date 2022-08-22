@@ -19,8 +19,8 @@ async function PostDetailPage() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            if (data.status === 403) {
-                notice_title_first.innerHTML = `${data.message}`;
+            if (data.status === 403 || data.status === 404 || data.status === 500) {
+                notice_title_first.innerHTML = "삭제되었거나 없는 게시글입니다.";
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
             } else {

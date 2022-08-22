@@ -33,10 +33,10 @@ fetch(user_detail_url, {headers : header})
         else{
             title.innerHTML=
                 `
-                ${data.data.userName}님의 정보
+                ${data.data.name}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
-            userName.innerHTML=`${data.data.userName}`;
+            userName.innerHTML=`${data.data.name}`;
             email.innerHTML=`${data.data.email}`;
             studentId.innerHTML=`${data.data.studentId}`;
             generation.innerHTML=`${data.data.generation}`;
