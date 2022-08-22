@@ -10,6 +10,7 @@ const notice_detail_content = document.querySelector(".notice-detail-content");
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
+const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
 
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -27,8 +28,9 @@ function fetchAdminNotice(){
         .then((data) => {
             console.log(data);
 
-            if(data.status===404){
+            if(data.status===404 || data.status===500){
                 notice_title_first.innerHTML =`삭제된 게시글입니다.`
+                admin_notice_buttons.classList.add("hidden");
             }
             else{
                 notice_title_first.innerHTML = `<h3>${data.data.title}</h3>`;
