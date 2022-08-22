@@ -30,7 +30,13 @@ async function login(event){
         localStorage.setItem("sessionToken", result.data.sessionToken)
         localStorage.setItem("userId", result.data.user.userId);
         localStorage.setItem("userType", result.data.user.type);
-        window.location.href = '../html/main.html';
+        if(result.data.user.type==="비회원"){
+            window.location.href = '../html/qa.html';    
+        }
+        else{
+            window.location.href = '../html/main.html';
+        }
+        
     }
     else{
         console.log("로그인 실패");

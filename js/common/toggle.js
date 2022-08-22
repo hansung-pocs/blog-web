@@ -6,8 +6,9 @@ const toggleDetail = document.getElementById("toggleDetail");
 const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
+let user_type = localStorage.getItem("userType");
 
-if(sessionToken === null && window.location.href.match("qa") === null){
+if((sessionToken === null || user_type === "비회원") && window.location.href.match("qa") === null){
     window.location.href="../html/qa.html"
 }
 
@@ -142,3 +143,56 @@ async function handleNavigation(){
 window.addEventListener("load", handleNavigation);
 toggle.addEventListener("click", handleToggle);
 preventChanginguserId();
+
+
+//네비게이션 공통
+function moveMainPage(event) {
+    if (user_type === null || user_type === "비회원") {
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
+    }
+    else {
+        window.location.href = `../html/main.html`;
+    }
+}
+
+//홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
+function moveNoticePage(event) {
+    if (user_type === null || user_type === "비회원") {
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
+    }
+    else {
+        window.location.href = `../html/notices.html`;
+    }
+}
+
+function movePostPage() {
+    if (user_type === null || user_type === "비회원") {
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
+    }
+    else {
+        window.location.href = `../html/posts.html`;
+    }
+}
+
+function moveUserPage() {
+    if (user_type === null || user_type === "비회원") {
+        moveLoginPage();
+        //alert("블로그 회원만 조회 가능합니다.");
+    }
+    else {
+        window.location.href = `../html/user.html`;
+    }
+}
+
+//alert대신 사용하면 됨(로그인페이지로 이동가능)
+function moveLoginPage() {
+    if (confirm("블로그 회원만 조회 가능합니다.\n로그인하시겠습니까?")) {
+        window.location.href = `../html/index.html`;
+    }
+    else {
+        return;
+    }
+}
