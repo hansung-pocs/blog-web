@@ -1,14 +1,14 @@
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 let sessiontoken = localStorage.getItem("sessionToken");
-
+const userId = localStorage.getItem("userId");
 
 async function noticeSubmit(){
 
     const sendData={
         title : notice_title.value,
         content: notice_content.value,
-        userId: 1,
+        userId: userId,
         category : "notice"
     };
 

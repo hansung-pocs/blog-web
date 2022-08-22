@@ -13,6 +13,7 @@ const notice_content = document.querySelector("#content");
 
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
+const userId = localStorage.getItem("userId");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 수정때 쓰일 변수들
@@ -60,7 +61,7 @@ async function noticeEdit(){
     const sendData={
         title : notice_title.value,
         content: notice_content.value,
-        userId: 1,
+        userId: userId,
         category : category
     };
 
@@ -86,7 +87,7 @@ async function noticeEdit(){
 //공지사항 삭제하기
 async function DeleteNotice(){
     const sendData={
-        userId : 1,
+        userId : userId,
     };
 
     const options = {

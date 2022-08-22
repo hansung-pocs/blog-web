@@ -1,5 +1,3 @@
-const post_url = "http://34.64.161.55:8001/admin/posts";
-const user_url = "http://34.64.161.55:8001/admin/users";
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
 let post_data;
@@ -15,11 +13,8 @@ const user_thead = document.querySelector("#user table thead");
 const user_tbody = document.querySelector("#user table tbody");
 
 //공지사항 pagination에 필요한 변수
-let Notice_cnt = 0;
 let Notice_currentPage = 1;
-let Notice_totalPage;
-let Notice_first;
-let Notice_last = 1;
+let Notice_cntPageNum=0;
 
 //유저목록 pagination에 필요한 변수
 let User_cnt;
@@ -27,6 +22,10 @@ let User_currentPage = 1;
 let User_totalPage;
 let User_first = 0;
 let User_last = 1;
+const offset=15;
+
+let post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
+let user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
 
 function fetchNotice() {
     fetch(post_url, {headers : header})
@@ -34,12 +33,6 @@ function fetchNotice() {
         .then((data) => {
             console.log(data);
             post_data = data.data.posts;
-
-            //데이터 개수
-            Notice_cnt = data.data.posts.length;
-            //마지막페이지 계산
-            Notice_totalPage = Math.ceil(Notice_cnt / 10);
-
             notice_thead.innerHTML = `<tr>
                 <th>번호</th>
                 <th>제목</th>
@@ -53,17 +46,15 @@ function fetchNotice() {
             if (data.data === null) {
                 notice_tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                //페이지에 10개만 보여주기 위해 변수 설정
-                Notice_last = 10 * Notice_currentPage;
-                Notice_first = Notice_last - 10;
+                Notice_cntPageNum= 15*Notice_currentPage-15;
 
-                for (let i = Notice_first; i < Notice_last; i++) {
+                for (let i = 0; i < 15; i++) {
                     notice_tbody.innerHTML += `
                 <tr>
-                <td>${i + 1}</td>
+                <td>${Notice_cntPageNum+i + 1}</td>
                 <td onclick="moveNoticeDetailPage(${post_data[i].postId})"
                     style="cursor:pointer">${post_data[i].title}</td>
-                <td>${post_data[i].writerName}</td>
+                <td>${post_data[i].writerName || "비회원"}</td>
                 <td>${post_data[i].createdAt}</td>
                 <td>${post_data[i].updatedAt || ""}</td>
                 <td>${post_data[i].category}</td>
@@ -121,9 +112,6 @@ function showNoticePagination() {
                 </li>`;
     let pageGroup = Math.ceil(Notice_currentPage / 5);
     let last_num = pageGroup * 5;
-    if (last_num > Notice_totalPage) {
-        Notice_last = Notice_totalPage;
-    }
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
@@ -138,18 +126,17 @@ function showNoticePagination() {
 }
 
 function moveNoticePage(pageNum) {
-    if (pageNum > Notice_totalPage) return;
     //이동할 페이지가 이미 그 페이지라면
     if (Notice_currentPage === pageNum) return;
     Notice_currentPage = pageNum;
+    post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
     fetchNotice();
     showNoticePagination();
 }
 
 function moveNextNoticePage() {
-    //넘길페이지가 전체 페이지보다 클경우 그냥 return
-    if (Notice_currentPage >= Notice_totalPage) return;
     Notice_currentPage++;
+    post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
     fetchNotice();
     showNoticePagination();
 }
@@ -158,6 +145,7 @@ function movePreviousNoticePage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (Notice_currentPage <= 1) return;
     Notice_currentPage--;
+    post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
     fetchNotice();
     showNoticePagination();
 }
