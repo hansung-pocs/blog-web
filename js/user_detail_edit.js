@@ -12,6 +12,7 @@ const cancelBtn = document.querySelector("#user_detail_edit_cancelBtn");
 
 //정보
 const userName = document.querySelector("#user_detail_edit_userName");
+const password = document.querySelector("#user_detail_edit_password");
 const email = document.querySelector("#user_detail_edit_email");
 const studentId =document.querySelector("#user_detail_edit_studentId");
 const generation =document.querySelector("#user_detail_edit_generation");
@@ -44,7 +45,6 @@ fetch(url, {headers : header})
             if(data.data.company==null ||data.data.company=='undefined') 
                 github.value=`-`;
             else github.value=`${data.data.github}`;
-
         }
     })
 
@@ -53,7 +53,7 @@ editForm.addEventListener("submit",async function userEdit(event){
     event.preventDefault();
     console.log('edit');
     const sendData={
-        password: "password",
+        password: password.value,
         name:userName.value,
         email:email.value,
         github:github.value,

@@ -35,8 +35,6 @@ function fetchNotice(){
             if(data.status===404){
                 alert("데이터가 없습니다!");
                 currentPage=1;
-                user_posts_url = `http://34.64.161.55:8001/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
-                fetchNotice();
                 showPagination();
                 return;
             }

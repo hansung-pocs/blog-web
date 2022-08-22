@@ -100,7 +100,7 @@ function showNoticePagination() {
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
-        pageHTML += `<li class="page-item ${Notice_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveNoticePage(${i})">${i}</a></li>`;
+        pageHTML += `<li class="page-item ${Notice_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveAdminNoticePage(${i})">${i}</a></li>`;
     }
 
     pageHTML += `<li class="page-item">
@@ -110,7 +110,7 @@ function showNoticePagination() {
     document.querySelector("#notice-pagination-bar").innerHTML = pageHTML;
 }
 
-function moveNoticePage(pageNum) {
+function moveAdminNoticePage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (Notice_currentPage === pageNum) return;
     Notice_currentPage = pageNum;
@@ -146,7 +146,7 @@ function showUserPagination() {
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
-        pageHTML += `<li class="page-item ${User_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveUserPage(${i})">${i}</a></li>`;
+        pageHTML += `<li class="page-item ${User_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveAdminUserPage(${i})">${i}</a></li>`;
     }
 
     pageHTML += `<li class="page-item">
@@ -156,7 +156,7 @@ function showUserPagination() {
     document.querySelector("#user-pagination-bar").innerHTML = pageHTML;
 }
 
-function moveUserPage(pageNum) {
+function moveAdminUserPage(pageNum) {
     //이동할 페이지가 이미 그 페이지라면
     if (User_currentPage === pageNum) return;
     User_currentPage = pageNum;
