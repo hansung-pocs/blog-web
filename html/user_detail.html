@@ -15,16 +15,16 @@
     <nav class="navbar navbar-expand-sm bg-light justify-content-center"
         style="position: sticky; top: 0; height: auto; z-index: 10">
         <div class="container">
-            <a class="navbar-brand" href="main.html">POCS</a>
+            <div class="navbar-brand nav-link" onclick="moveMainPage()">POCS</div>
             <ul class="navbar-nav" id="navItem">
-                <li class="nav-item">
-                    <a class="nav-link" href="notices.html">Notice</a>
+                <li class="nav-item" id="NoticeBtn">
+                    <div class='nav-link' onclick="moveNoticePage()" style="cursor: pointer;">Notice</div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="posts.html">Post</a>
+                <li class="nav-item" id="PostBtn">
+                    <div class="nav-link" onclick="movePostPage()" style="cursor: pointer;">Post</div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="user.html">User</a>
+                <li class="nav-item" id="UserBtn">
+                    <div class="nav-link" onclick="moveUserPage()" style="cursor: pointer;">User</div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="qa.html">Q/A</a>
@@ -35,16 +35,17 @@
             </ul>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="toggle" role="button" data-bs-toggle="dropdown">
-                    <img src="../img/logo.png" style="width: 40px" class="rounded-pill" />
+                    <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
                 </a>
                 <ul class="dropdown-menu" id="toggleDetail">
+                    <li><a class="dropdown-item" href="#">관리자</a></li>
+                    <li><a class="dropdown-item" href="#">Link</a></li>
                     <li><a class="dropdown-item" href="#">내 정보 수정</a></li>
                     <li><a class="dropdown-item" href="#">로그아웃</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
     <div class="container">
         <h1 id="user_detail_title"><b>ooo님의 정보</b></h1>
         <hr />
@@ -58,7 +59,8 @@
                         </a>
                     </div>
                     <div class="m-1 text-center" id="user_detail_kickBtn">
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">탈퇴</button>
                     </div>
                 </div>
             </div>
