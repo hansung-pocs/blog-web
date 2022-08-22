@@ -1,5 +1,5 @@
 let sessiontoken = localStorage.getItem("sessionToken");
-let header = new Headers({'x-pocs-session-token' : sessiontoken});
+let header = new Headers({'x-pocs-session-token': sessiontoken});
 let post_data;
 
 //공지사항에 필요한 dom
@@ -14,21 +14,19 @@ const user_tbody = document.querySelector("#user table tbody");
 
 //공지사항 pagination에 필요한 변수
 let Notice_currentPage = 1;
-let Notice_cntPageNum=0;
+let Notice_cntPageNum = 0;
 
 //유저목록 pagination에 필요한 변수
-let User_cnt;
+let User_cntPageNum = 0;
 let User_currentPage = 1;
-let User_totalPage;
-let User_first = 0;
-let User_last = 1;
-const offset=15;
+
+const offset = 15;
 
 let post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
 let user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
 
 function fetchNotice() {
-    fetch(post_url, {headers : header})
+    fetch(post_url, {headers: header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -46,12 +44,12 @@ function fetchNotice() {
             if (data.data === null) {
                 notice_tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                Notice_cntPageNum= 15*Notice_currentPage-15;
+                Notice_cntPageNum = 15 * Notice_currentPage - 15;
 
                 for (let i = 0; i < 15; i++) {
                     notice_tbody.innerHTML += `
                 <tr>
-                <td>${Notice_cntPageNum+i + 1}</td>
+                <td>${Notice_cntPageNum + i + 1}</td>
                 <td onclick="moveNoticeDetailPage(${post_data[i].postId})"
                     style="cursor:pointer">${post_data[i].title}</td>
                 <td>${post_data[i].writerName || "비회원"}</td>
@@ -66,37 +64,24 @@ function fetchNotice() {
 }
 
 function fetchUser() {
-    fetch(user_url, {headers : header})
+    fetch(user_url, {headers: header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            User_cnt = 0;
-            data.data.users.forEach((item) => {
-                //데이터 개수
-                User_cnt++;
-            });
-
-            //마지막페이지 계산
-            User_totalPage = Math.ceil(User_cnt / 10);
-
-            //페이지에 10개만 보여주기 위해 변수 설정
-            User_last = 10 * User_currentPage;
-
-            User_first = User_last - 10;
-
             user_thead.innerHTML = "<tr><td>번호</td><td>성명</td><td>학번</td><td>e-mail</td></tr>";
             user_tbody.innerHTML = "";
             if (data.data.users === null) {
                 user_tbody.innerHTML = "<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
             } else {
-                for (let i = User_first; i < User_last; i++) {
+                for (let i = 0; i < data.data.users.length; i++) {
+                    User_cntPageNum = 15 * User_currentPage - 15;
                     user_tbody.innerHTML += `
                 <tr>
-                    <td>${i + 1}</td>
+                    <td>${User_cntPageNum + i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].userName}</td>
-                    <td>${data.data.users[i].studentId}</td>
-                    <td>${data.data.users[i].email}</td>
+                        style="pointer">${data.data.users[i].name || "비회원"}</td>
+                    <td>${data.data.users[i].studentId || ""}</td>
+                    <td>${data.data.users[i].email || ""}</td>
                 </tr>
                 `;
                 }
@@ -158,9 +143,6 @@ function showUserPagination() {
                 </li>`;
     let pageGroup = Math.ceil(User_currentPage / 5);
     let last_num = pageGroup * 5;
-    if (last_num > User_totalPage) {
-        User_last = User_totalPage;
-    }
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
@@ -175,18 +157,17 @@ function showUserPagination() {
 }
 
 function moveUserPage(pageNum) {
-    if (pageNum > User_totalPage) return;
     //이동할 페이지가 이미 그 페이지라면
     if (User_currentPage === pageNum) return;
     User_currentPage = pageNum;
+    user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
     fetchUser();
     showUserPagination();
 }
 
 function moveNextUserPage() {
-    //넘길페이지가 전체 페이지보다 클경우 그냥 return
-    if (User_currentPage >= User_totalPage) return;
     User_currentPage++;
+    user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
     fetchUser();
     showUserPagination();
 }
@@ -195,6 +176,7 @@ function movePreviousUserPage() {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (User_currentPage <= 1) return;
     User_currentPage--;
+    user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
     fetchUser();
     showUserPagination();
 }
