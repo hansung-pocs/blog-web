@@ -12,7 +12,7 @@ async function qaSubmit(event) {
         title: qa_title.value,
         content: qa_content.value,
         userId: user_id,
-        category: "QNA",
+        category: "qna",
     };
 
     const options = {
