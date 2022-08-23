@@ -36,20 +36,20 @@ fetch(user_detail_url, {headers : header})
         else{
             title.innerHTML=
             `
-                ${data.data.name}님의 정보
+                ${data.data.defaultInfo.name}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
-            userName.innerHTML=`${data.data.name}`;
-            email.innerHTML=`${data.data.email}`;
-            studentId.innerHTML=`${data.data.studentId}`;
-            generation.innerHTML=`${data.data.generation}`;
+            userName.innerHTML=`${data.data.defaultInfo.name}`;
+            email.innerHTML=`${data.data.defaultInfo.email}`;
+            studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
+            generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.company==null ||data.data.company=='undefined')
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 company.innerHTML=``;
-            else company.innerHTML=`${data.data.company}`;
-            if(data.data.company==null ||data.data.company=='undefined')
+            else company.innerHTML=`${data.data.defaultInfo.company}`;
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 github.innerHTML='';
-            else github.innerHTML=`${data.data.github}`;
+            else github.innerHTML=`${data.data.defaultInfo.github}`;
 
         }
     })

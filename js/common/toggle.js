@@ -160,7 +160,7 @@ function moveMainPage(event) {
 
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
 function moveNoticePage(event) {
-    if (user_type === null || user_type === "비회원") {
+    if (user_type === null || user_type === "anonymous") {
         moveLoginPage();
         //alert("블로그 회원만 조회 가능합니다.");
     }
@@ -170,7 +170,7 @@ function moveNoticePage(event) {
 }
 
 function movePostPage() {
-    if (user_type === null || user_type === "비회원") {
+    if (user_type === null || user_type === "anonymous") {
         moveLoginPage();
         //alert("블로그 회원만 조회 가능합니다.");
     }
@@ -180,7 +180,7 @@ function movePostPage() {
 }
 
 function moveUserPage() {
-    if (user_type === null || user_type === "비회원") {
+    if (user_type === null || user_type === "anonymous") {
         moveLoginPage();
         //alert("블로그 회원만 조회 가능합니다.");
     }

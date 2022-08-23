@@ -25,7 +25,7 @@ fetch(url, { headers: header })
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
                             <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
+                           <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
                      `;
@@ -50,14 +50,14 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "notice") {
+                if (data.data.posts[i].category === "공지사항") {
                     notice_card.innerHTML +=
                         `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
                             <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
+                           <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
                      `;
@@ -83,14 +83,14 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "study") {
+                if (data.data.posts[i].category === "스터디") {
                     study_card.innerHTML +=
                         `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
                             <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
+                           <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
                      `;
@@ -115,14 +115,14 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "memory") {
+                if (data.data.posts[i].category === "추억") {
                     memory_card.innerHTML +=
                         `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
                             <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
+                           <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
                      `;
@@ -147,14 +147,14 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "knowhow") {
+                if (data.data.posts[i].category === "노하우") {
                     knowhow_card.innerHTML +=
                         `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
                             <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.posts[i].content}</div>
+                           <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
                      `;
@@ -181,8 +181,8 @@ fetch(url, { headers: header })
             <div class="col" style="text-align: center;">
                 <img src="../img/profile.png" style="width:100px;" class="rounded-pill">
                     <div>
-                        <div id="user_main_userName">${data.data.users[i].name}</div>
-                        <div id="user_main_generation">${data.data.users[i].generation}</div>
+                        <div id="user_main_userName">${data.data.users[i].defaultInfo.name}</div>
+                        <div id="user_main_generation">${data.data.users[i].defaultInfo.generation}</div>
                     </div>
             </div>
             `
