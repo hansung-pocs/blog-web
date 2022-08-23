@@ -29,7 +29,7 @@ async function QaEdit() {
         userId: user_Id,
         title: qa_title.value,
         content: qa_content.value,
-        category: "QNA",
+        category: "qna",
     };
 
     const options = {

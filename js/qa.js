@@ -14,7 +14,7 @@ let currentPage = 1;
 let cnt = 0;
 let cntPageNum=0;
 
-let url = `http://34.64.161.55:8001/posts?id=QNA&offset=${offset}&pageNum=${currentPage}`;
+let url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
 
 function getArticleCount() {
     fetch(url, {headers : header})
@@ -91,14 +91,14 @@ function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://34.64.161.55:8001/posts?id=QNA&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }
 
 function moveNextPage() {
   currentPage++;
-  url = `http://34.64.161.55:8001/posts?id=QNA&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }
@@ -107,7 +107,7 @@ function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://34.64.161.55:8001/posts?id=QNA&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }

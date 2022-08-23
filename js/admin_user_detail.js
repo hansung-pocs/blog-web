@@ -30,10 +30,20 @@ fetch(user_detail_url, {headers : header})
             company.innerHTML="";
             github.innerHTML="";
         }
+        else if(data.type="anonymous"){
+            user_detail_editBtn.classList.add("hidden");
+            title.innerHTML=`해당 회원은  비회원입니다.`
+            userName.innerHTML=`비회원${data.data.userId}`;
+            email.innerHTML="";
+            studentId.innerHTML="";
+            generation.innerHTML="";
+            company.innerHTML="";
+            github.innerHTML="";
+        }
         else{
             title.innerHTML=
                 `
-                ${data.data.name}님의 정보
+                ${data.data.name || `비회원${data.data.userId}`}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
             userName.innerHTML=`${data.data.name}`;
