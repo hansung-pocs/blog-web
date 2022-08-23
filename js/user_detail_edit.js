@@ -32,19 +32,19 @@ fetch(url, {headers : header})
         else{
             title.innerHTML=
             `
-                ${data.data.name}님의 정보 수정
+                ${data.data.defaultInfo.name}님의 정보 수정
             `
-            userName.value=`${data.data.name}`;
-            email.value=`${data.data.email}`;
-            studentId.innerHTML=`${data.data.studentId}`;
-            generation.innerHTML=`${data.data.generation}`;
+            userName.value=`${data.data.defaultInfo.name}`;
+            email.value=`${data.data.defaultInfo.email}`;
+            studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
+            generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 company.value=`-`;
             else company.value=`${data.data.company}`;
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 github.value=`-`;
-            else github.value=`${data.data.github}`;
+            else github.value=`${data.data.defaultInfo.github}`;
         }
     })
 
