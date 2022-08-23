@@ -52,7 +52,7 @@ function fetchNotice() {
                 <td>${Notice_cntPageNum + i + 1}</td>
                 <td onclick="moveNoticeDetailPage(${post_data[i].postId})"
                     style="cursor:pointer">${post_data[i].title}</td>
-                <td>${post_data[i].writerName || "비회원"}</td>
+                <td>${post_data[i].writerName || "익명"}</td>
                 <td>${post_data[i].createdAt}</td>
                 <td>${post_data[i].updatedAt || ""}</td>
                 <td>${post_data[i].category}</td>
@@ -79,9 +79,9 @@ function fetchUser() {
                 <tr>
                     <td>${User_cntPageNum + i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].name || `비회원${data.data.users[i].userId}`}</td>
-                    <td>${data.data.users[i].studentId || ""}</td>
-                    <td>${data.data.users[i].email || ""}</td>
+                        style="pointer">${data.data.users[i].defaultInfo.name || `익명${data.data.users[i].userId}`}</td>
+                    <td>${data.data.users[i].defaultInfo.studentId || ""}</td>
+                    <td>${data.data.users[i].defaultInfo.email || ""}</td>
                 </tr>
                 `;
                 }
