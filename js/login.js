@@ -3,10 +3,10 @@ const url = "http://34.64.161.55:8001/auth/login";
 const username = document.getElementById("floatingInput");
 const password = document.getElementById("floatingPassword");
 const loginForm = document.getElementById("loginForm");
-const flexCheckDefault = document.getElementById("flexCheckDefault");
+const anonymous_checkbox = document.getElementById("anonymous-checkbox");
 
-flexCheckDefault.addEventListener("click", ()=>{
-    if(flexCheckDefault.checked===true){
+anonymous_checkbox.addEventListener("click", ()=>{
+    if(anonymous_checkbox.checked===true){
         loginForm.addEventListener("submit", register_anonymous);
     }
 })
