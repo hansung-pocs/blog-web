@@ -1,17 +1,19 @@
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
+// 댓글 dom
 const addCommentForm = document.querySelector("#add-comment-form");
 const replyCommentForm = document.querySelector("#reply-comment-form");
 const commentDiv = document.querySelector("#comments_div");
 const commentValue = document.querySelector("#comment-value");
+// 질문 수정, 삭제 dom
 const editButton = document.querySelector("#edit-button");
 const deleteForm = document.querySelector("#delete-form");
 const userType = localStorage.getItem("userType");
+
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
-const qa_buttons = document.querySelector(".qa-buttons");
 let qaWriterId;
 let commentWriterId;
 
@@ -78,6 +80,7 @@ async function DeleteQa() {
 
 async function CommentShow() {
     const url = `http://34.64.161.55:8001/comments/${id}`;
+    const commentCount = document.querySelector("#comment_count");
     // innerHTML로 추가할 parent-comment, child-comment div 태그 dom 제어 변수
     let parentComment;
     let childComment;
@@ -94,6 +97,9 @@ async function CommentShow() {
             if (data.status == 403) {
                 commentsDiv.innerHTML = "";
             } else {
+                // 댓글 개수
+                commentCount.innerHTML = `(${data.data.comments.length})`
+                // 댓글 조회
                 data.data.comments.map((comments) => {
                     commentWriterId = comments.writer.userId;
                     if (comments.commentId == comments.parentId) {
@@ -154,7 +160,7 @@ async function CommentShow() {
                         parentEditInput = document.querySelector("#parent-edit-input");
                         childComment = document.querySelector("#child-comment");
                         childCommentInput = document.querySelector("#child-comment-input");
-                        // parentComment와 childComment의 id값을 각 댓글에 해당하는 commentId 값으로 변경
+                        // id값을 각 댓글에 해당하는 commentId 값으로 변경
                         parentComment.setAttribute("id", `commentId${comments.commentId}`);
                         parentEditForm.setAttribute("id", `commentId${comments.commentId}Edit`);
                         parentEditInput.setAttribute("id", `commentId${comments.commentId}EditInput`);
@@ -163,7 +169,6 @@ async function CommentShow() {
                     } else {
                         // 대댓글이 있는경우
                         if ((comments.commentId != comments.parentId) != false && parentComment.id === `commentId${comments.parentId}`) {
-                            console.log("대댓글 있음");
                             childComment.innerHTML += `
                             <div id="comment_reply" class="row px-3" style="border-bottom: solid lightgray 1px">
                                 <div style="font-size: small">${comments.writer.name}</div>
@@ -212,7 +217,8 @@ async function CommentShow() {
                 });
             }
         });
-        await checktoShowButtons2();
+        // 댓글 수정, 삭제 버튼 hidden / non-hidden
+        await checktoShowButtons2(); 
 }
 
 // 댓글 추가
@@ -269,7 +275,6 @@ async function addChildComment(parentid) {
     console.log(result.status);
 
     if (result.status === 201) {
-        console.log("대댓글 추가 성공");
         window.location.href = `../html/qa_detail.html?postId=${id}`;
     } else {
         console.log(result.message);
@@ -338,16 +343,17 @@ async function editComment(commentId) {
         alert("본인이 작성한 댓글만 수정 가능합니다");
     }
 }
-
+// 게시물 수정, 삭제 버튼 hidden/non-hidden
 function checktoShowButtons() {
     let login_id = localStorage.getItem("userId");
+    const qa_buttons = document.querySelector(".qa-buttons");
     if (login_id != qaWriterId) {
         qa_buttons.classList.add("hidden");
     } else {
         qa_buttons.classList.add("non-hidden");
     }
 }
-
+// 댓글 수정, 삭제 버튼 hidden/non-hidden
 function checktoShowButtons2() {
     let login_id = localStorage.getItem("userId");
     let commentButtons = document.querySelector("#comment-buttons")
@@ -357,18 +363,16 @@ function checktoShowButtons2() {
         commentButtons.classList.add("non-hidden");
     }
 }
-
 //대댓글 hidden/non-hidden
 function commentBtnClick(parentId) {
     let childComment = document.querySelector(`#commentId${parentId}Child`);
-    console.log(childComment);
     if (childComment.style.display == "none") {
         childComment.style.display = "block";
     } else {
         childComment.style.display = "none";
     }
 }
-
+// 대댓글 수정 form hidden/non-hidden
 function showEditCommentForm(commentId) {
     let editForm = document.querySelector(`#commentId${commentId}Edit`);
     if(editForm.style.display == "none") {
@@ -377,17 +381,14 @@ function showEditCommentForm(commentId) {
         editForm.style.display = "none";
     }
 }
-
 //질문 수정 페이지
 function moveQaEditPage() {
     window.location.href = `../html/qa_detail_edit.html?postId=${id}`;
 }
-
-//목록으로 버튼을 누르면 다시 목록으로 복귀
+//목록으로 복귀
 function backToQaList() {
     window.location.href = "../html/qa.html";
 }
-
 //api의 category En을 Kr로 변경
 function CategoryEn2Kr(category) {
     //console.log(category);
@@ -395,7 +396,6 @@ function CategoryEn2Kr(category) {
         return "Q/A";
     } else return "?";
 }
-
 editButton.addEventListener("click", moveQaEditPage);
 addCommentForm.addEventListener("submit", addComment);
 QaDetailPage();
