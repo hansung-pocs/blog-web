@@ -42,7 +42,7 @@ function checkedCategory(e){
         category="study";
     }else if(e.target.innerText === "추억"){
         category="memory";
-    }else if(e.target.innerText === "질문"){
+    }else if(e.target.innerText === "추천"){
         category="reference";
     }
 

@@ -46,6 +46,7 @@ function fetchPost() {
         .then((data) => {
             console.log(data);
             console.log(url);
+            categoryPostCountCheck(data.data.categories);
             thead.innerHTML = `<tr>
         <th>번호</th>
         <th>제목</th>
@@ -61,7 +62,6 @@ function fetchPost() {
                 cntPageNum=currentPage*15-15;
 
                 for (let i = 0; i < data.data.posts.length; i++) {
-                    let cateKR=CategoryEn2Kr(data.data.posts[i].category);
                     tbody.innerHTML += `
         <tr>
         <td>${cntPageNum+i+1}</td>
@@ -70,7 +70,7 @@ function fetchPost() {
         <td>${data.data.posts[i].writerName || ""}</td>
         <td>${data.data.posts[i].createdAt}</td>
         <td>${data.data.posts[i].updatedAt || ""}</td>
-        <td>${cateKR}</td>
+        <td>${data.data.posts[i].category}</td>
         </tr>
         `;
                 }
@@ -158,7 +158,7 @@ function CategoryEn2Kr(category){
     }else if(category==="memory"){
         return '추억'
     }else if(category==="reference"){
-        return '질문';
+        return '추천';
     }else if(category==="QNA"){
         return 'Q/A';
     }else
@@ -166,13 +166,25 @@ function CategoryEn2Kr(category){
 }
 //카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
-    console.log('클릭시 url 변경 예정:'+Category);
     cateID=`id=${Category}`;
     currentPage=1;
     url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     getArticleCount();
     fetchPost();
     showPagination();
+}
+//카테고리 별 게시글 수 표시:
+// 카테고리에 변경 있을시 인덱스를 직접 수정해주어야함(카테고리명으로 인덱싱하는방법?)
+function categoryPostCountCheck(Cdata){
+    //stduy:0 memory:2 reference:3 knowhow:4
+    const c_study = document.querySelector(".category #study_count");
+    const c_memory = document.querySelector(".category #memory_count");
+    const c_reference = document.querySelector(".category #reference_count");
+    const c_knowhow = document.querySelector(".category #knowhow_count");
+    c_study.innerHTML=`(${Cdata[1].count})`;
+    c_memory.innerHTML=`(${Cdata[2].count})`;
+    c_reference.innerHTML=`(${Cdata[3].count})`;
+    c_knowhow.innerHTML=`(${Cdata[4].count})`;
 }
 
 getArticleCount();
