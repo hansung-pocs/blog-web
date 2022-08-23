@@ -70,7 +70,7 @@ function settingToggle(userId){
         toggleDetail.innerHTML = `<li><a class="dropdown-item" href="../html/index.html">로그인</a></li>`;
     }
     else{
-        if(user_type==="비회원"){
+        if(user_type==="anonymous"){
             toggleDetail.innerHTML =
                 `
             <li><a class="dropdown-item" href="#" onclick="handleLogout()">로그아웃</a></li>
@@ -169,13 +169,15 @@ function moveNoticePage(event) {
     }
 }
 
-function movePostPage() {
+function movePostPage(category) {
     if (user_type === null || user_type === "anonymous") {
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
+        if(category==="study")
+            window.location.href = `../html/posts.html?category=${category}`;
+        else
+            moveLoginPage();
     }
     else {
-        window.location.href = `../html/posts.html`;
+        window.location.href = `../html/posts.html?category=${category}`;
     }
 }
 

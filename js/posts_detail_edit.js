@@ -28,6 +28,15 @@ function PostEditPage(){
 
 //게시글 수정하기 버튼 눌렀을때 호출되는 함수
 async function postEdit(){
+    if(category==="추억")
+        category= "memory";
+    else if(category==="추천")
+        category="reference";
+    else if(category==="스터디")
+        category="study";
+    else if(category==="노하우")
+        category="knowhow";
+
     const sendData={
         userId: user_Id,
         title : notice_title.value,

@@ -30,7 +30,7 @@ fetch(user_detail_url, {headers : header})
             company.innerHTML="";
             github.innerHTML="";
         }
-        else if(data.type="anonymous"){
+        else if(data.data.type="anonymous"){
             user_detail_editBtn.classList.add("hidden");
             title.innerHTML=`해당 회원은 비회원입니다.`
             userName.innerHTML=`익명${data.data.userId}`;

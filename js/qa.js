@@ -55,7 +55,7 @@ function fetchQa() {
       <td>${cntPageNum+i+1}</td>
       <td onclick="goQaDetailPage(${data.data.posts[i].postId})"
           style="cursor:pointer">${data.data.posts[i].title}</td>
-      <td>비회원</td>
+      <td>익명</td>
       <td>${data.data.posts[i].createdAt}</td>
       <td>${data.data.posts[i].updatedAt || ""}</td>
       <td>${data.data.posts[i].category}</td>
@@ -124,7 +124,7 @@ function backToQaList() {
 function moveQaAddPage() {
   const checkUserType = localStorage.getItem("userType");
   console.log(checkUserType);
-  if(checkUserType === "비회원" || checkUserType === null) {
+  if(checkUserType === "anonymous" || checkUserType === null) {
     window.location.href = "../html/qa_add.html";
   } else {
     alert("비회원만 작성할 수 있습니다");

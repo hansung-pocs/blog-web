@@ -3,20 +3,15 @@ const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
 
 let category;
-let notice_Id;
 let userId;
 
 //pagination에 필요한 변수
 let post_index = [];
 const offset=15;
 let currentPage = 1;
-//현재 api데이터가 전체 개수를 주지 않아 전체개수 세는거는 없앰.
-let totalPage;
-const first = 0;
-let last = offset;
 let cnt = 0;
 let cntPageNum=0;
-let cateID='id!=notice';
+let cateID='';
 
 let url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -86,9 +81,6 @@ function showPagination() {
                 </li>`;
     let pageGroup = Math.ceil(currentPage / 5);
     let last_num = pageGroup * 5;
-    if (last_num > totalPage) {
-        last = totalPage;
-    }
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
@@ -181,12 +173,34 @@ function categoryPostCountCheck(Cdata){
     const c_memory = document.querySelector(".category #memory_count");
     const c_reference = document.querySelector(".category #reference_count");
     const c_knowhow = document.querySelector(".category #knowhow_count");
-    c_study.innerHTML=`(${Cdata[1].count})`;
+    c_study.innerHTML=`(${Cdata[0].count})`;
     c_memory.innerHTML=`(${Cdata[2].count})`;
     c_reference.innerHTML=`(${Cdata[3].count})`;
     c_knowhow.innerHTML=`(${Cdata[4].count})`;
 }
 
-getArticleCount();
-fetchPost();
-showPagination();
+function ShowPostsByCategory(){
+    const Url = window.location.href;
+    const arr = Url.split("?category=");
+    let get_category_from_url
+    if(arr.length<2)
+        get_category_from_url="undefined"
+    else{
+        get_category_from_url = arr[1];
+    }
+
+    if(get_category_from_url==="undefined"){
+        cateID="";
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        fetchPost();
+        showPagination();
+    }
+    else{
+        cateID=`id=${get_category_from_url}`;
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        fetchPost();
+        showPagination();
+    }
+}
+
+ShowPostsByCategory();
