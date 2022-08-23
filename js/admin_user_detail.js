@@ -3,6 +3,8 @@ const arr = Url.split("?userId=");
 const id = arr[1];
 
 const user_detail_url = new URL('http://34.64.161.55:8001/admin/users/' + id);
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 const title = document.querySelector("#user_detail_title");
 const editBtn_a = document.querySelector("#user_detail_editBtn a");
@@ -15,7 +17,7 @@ const generation =document.querySelector("#user_detail_generation");
 const company =document.querySelector("#user_detail_company");
 const github =document.querySelector("#user_detail_github");
 
-fetch(user_detail_url)
+fetch(user_detail_url, {headers : header})
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -28,23 +30,33 @@ fetch(user_detail_url)
             company.innerHTML="";
             github.innerHTML="";
         }
+        else if(data.type="anonymous"){
+            user_detail_editBtn.classList.add("hidden");
+            title.innerHTML=`해당 회원은 비회원입니다.`
+            userName.innerHTML=`익명${data.data.userId}`;
+            email.innerHTML="";
+            studentId.innerHTML="";
+            generation.innerHTML="";
+            company.innerHTML="";
+            github.innerHTML="";
+        }
         else{
             title.innerHTML=
                 `
-                ${data.data.userName}님의 정보
+                ${data.data.name || `익명${data.data.userId}`}님의 정보
             `
             editBtn_a.href='user_detail_edit.html?userId='+id;
-            userName.innerHTML=`${data.data.userName}`;
-            email.innerHTML=`${data.data.email}`;
-            studentId.innerHTML=`${data.data.studentId}`;
-            generation.innerHTML=`${data.data.generation}`;
+            userName.innerHTML=`${data.data.defaultInfo.name}`;
+            email.innerHTML=`${data.data.defaultInfo.email}`;
+            studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
+            generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.company==null ||data.data.company=='undefined')
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 company.innerHTML=``;
-            else company.innerHTML=`${data.data.company}`;
-            if(data.data.company==null ||data.data.company=='undefined')
+            else company.innerHTML=`${data.data.defaultInfo.company}`;
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 github.innerHTML='';
-            else github.innerHTML=`${data.data.github}`;
+            else github.innerHTML=`${data.data.defaultInfo.github}`;
 
         }
     })
@@ -71,7 +83,8 @@ async function userKick(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

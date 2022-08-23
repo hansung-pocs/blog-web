@@ -2,19 +2,23 @@ const post_title = document.querySelector("#title");
 const post_content = document.querySelector("#content");
 let category;
 
+let sessiontoken = localStorage.getItem("sessionToken");
+const userId = localStorage.getItem("userId");
+
 async function postSubmit(){
 
     const sendData={
         title : post_title.value,
         content: post_content.value,
-        userId: 1,
+        userId: userId,
         category : category
     };
 
     const options = {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };
@@ -38,7 +42,7 @@ function checkedCategory(e){
         category="study";
     }else if(e.target.innerText === "추억"){
         category="memory";
-    }else if(e.target.innerText === "질문"){
+    }else if(e.target.innerText === "추천"){
         category="reference";
     }
 

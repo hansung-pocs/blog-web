@@ -15,7 +15,7 @@
 <nav class="navbar navbar-expand-sm bg-light justify-content-center"
         style="position: sticky; top: 0; height: auto; z-index: 10">
     <div class="container">
-        <a class="navbar-brand" href="main.html">POCS</a>
+        <div class="navbar-brand nav-link" onclick="moveMainPage()">POCS</div>
         <ul class="navbar-nav" id="navItem">
             <li class="nav-item" id="NoticeBtn">
                 <div class='nav-link' onclick="moveNoticePage()" style="cursor: pointer;">Notice</div>
@@ -91,7 +91,6 @@
     </button>
 </div>
 
-
 <!-- 인기글 -->
 <div class="p-1 container" style="margin-bottom: 100px;">
     <div class="row" style="margin-bottom: 1em;">
@@ -100,12 +99,12 @@
         </div>
         <div class="col">
             <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveNoticePage()">더보기</button>
+                <button type="button" class="btn btn-outline-primary" onclick=movePostPage()>더보기</button>
             </div>
         </div>
     </div>
 
-    <div class="row notice-card0">
+    <div class="row best-card">
         <div class="col-xl">
             <div class="card">
                 <div class="card-header">제목입니다.</div>
@@ -190,12 +189,12 @@
         </div>
         <div class="col">
             <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveNoticePage()">더보기</button>
+                <button type="button" class="btn btn-outline-primary" onclick=movePostPage()>더보기</button>
             </div>
         </div>
     </div>
 
-    <div class="row notice-card">
+    <div class="row study-card">
         <div class="col-xl">
             <div class="card">
                 <div class="card-header">제목입니다.</div>
@@ -235,12 +234,12 @@
         </div>
         <div class="col">
             <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveNoticePage()">더보기</button>
+                <button type="button" class="btn btn-outline-primary" onclick=movePostPage()>더보기</button>
             </div>
         </div>
     </div>
 
-    <div class="row notice-card">
+    <div class="row memory-card">
         <div class="col-xl">
             <div class="card">
                 <div class="card-header">제목입니다.</div>
@@ -281,12 +280,12 @@
         </div>
         <div class="col">
             <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveNoticePage()">더보기</button>
+                <button type="button" class="btn btn-outline-primary" onclick=movePostPage()>더보기</button>
             </div>
         </div>
     </div>
 
-    <div class="row notice-card">
+    <div class="row knowhow-card">
         <div class="col-xl">
             <div class="card">
                 <div class="card-header">제목입니다.</div>
@@ -326,7 +325,7 @@
         </div>
         <div class="col">
             <div style="text-align: end;">
-                <button type="button" class="btn btn-outline-primary" onclick="moveUserPage()">더보기</button>
+                <button type="button" class="btn btn-outline-primary" onclick=moveUserPage()>더보기</button>
             </div>
         </div>
     </div>
@@ -357,7 +356,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="../js/app.js"></script>
-<script src="../js/user_main.js"></script>
 <script src="../js/common/toggle.js"></script>
 </body>
 

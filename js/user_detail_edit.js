@@ -3,12 +3,16 @@ const arr = Url.split("?userId=");
 const id = arr[1];
 const url = new URL('http://34.64.161.55:8001/users/' + id);
 
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
 const title = document.querySelector("#user_detail_edit_title");
 const saveBtn = document.querySelector("#user_detail_edit_saveBtn"); //[Login]로그인 정보와 유저 정보가 같아야 보이도록
 const cancelBtn = document.querySelector("#user_detail_edit_cancelBtn");
 
 //정보
 const userName = document.querySelector("#user_detail_edit_userName");
+const password = document.querySelector("#user_detail_edit_password");
 const email = document.querySelector("#user_detail_edit_email");
 const studentId =document.querySelector("#user_detail_edit_studentId");
 const generation =document.querySelector("#user_detail_edit_generation");
@@ -17,7 +21,7 @@ const github =document.querySelector("#user_detail_edit_github");
 const editForm =document.querySelector("#editForm");
 
 
-fetch(url)
+fetch(url, {headers : header})
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -28,20 +32,19 @@ fetch(url)
         else{
             title.innerHTML=
             `
-                ${data.data.name}님의 정보 수정
+                ${data.data.defaultInfo.name}님의 정보 수정
             `
-            userName.value=`${data.data.name}`;
-            email.value=`${data.data.email}`;
-            studentId.innerHTML=`${data.data.studentId}`;
-            generation.innerHTML=`${data.data.generation}`;
+            userName.value=`${data.data.defaultInfo.name}`;
+            email.value=`${data.data.defaultInfo.email}`;
+            studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
+            generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 company.value=`-`;
             else company.value=`${data.data.company}`;
-            if(data.data.company==null ||data.data.company=='undefined') 
+            if(data.data.defaultInfo.company==null ||data.data.defaultInfo.company=='undefined')
                 github.value=`-`;
-            else github.value=`${data.data.github}`;
-
+            else github.value=`${data.data.defaultInfo.github}`;
         }
     })
 
@@ -50,7 +53,7 @@ editForm.addEventListener("submit",async function userEdit(event){
     event.preventDefault();
     console.log('edit');
     const sendData={
-        password: "password",
+        password: password.value,
         name:userName.value,
         email:email.value,
         github:github.value,
@@ -60,7 +63,8 @@ editForm.addEventListener("submit",async function userEdit(event){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

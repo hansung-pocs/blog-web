@@ -10,8 +10,12 @@ const notice_detail_content = document.querySelector(".notice-detail-content");
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
+const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
 
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
+let sessiontoken = localStorage.getItem("sessionToken");
+const userId = localStorage.getItem("userId");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 수정때 쓰일 변수들
 let present_page_title;
@@ -19,13 +23,14 @@ let present_page_content;
 let category;
 
 function fetchAdminNotice(){
-    fetch(d_url)
+    fetch(d_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
 
-            if(data.status===404){
+            if(data.status===404 || data.status===500){
                 notice_title_first.innerHTML =`삭제된 게시글입니다.`
+                admin_notice_buttons.classList.add("hidden");
             }
             else{
                 notice_title_first.innerHTML = `<h3>${data.data.title}</h3>`;
@@ -58,14 +63,15 @@ async function noticeEdit(){
     const sendData={
         title : notice_title.value,
         content: notice_content.value,
-        userId: 1,
+        userId: userId,
         category : category
     };
 
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };
@@ -83,13 +89,14 @@ async function noticeEdit(){
 //공지사항 삭제하기
 async function DeleteNotice(){
     const sendData={
-        userId : 1,
+        userId : userId,
     };
 
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

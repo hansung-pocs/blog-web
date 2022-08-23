@@ -1,36 +1,38 @@
-const url = "http://34.64.161.55:8001/posts";
+
 const qa = document.querySelector("#qa table");
 const thead = document.querySelector("#qa table thead");
 const tbody = document.querySelector("#qa table tbody");
 const userType = localStorage.getItem("userType");
 
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
 //pagination에 필요한 변수
 let post_index = [];
+const offset=15;
 let currentPage = 1;
-let totalPage;
-let first = 0;
-let last = 1;
 let cnt = 0;
+let cntPageNum=0;
+
+let url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
 
 function getArticleCount() {
-    fetch(url)
+    fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
-            for (let i = 0; i < data.data.postsAll.length; i++) {
+            /*for (let i = 0; i < data.data.postsAll.length; i++) {
                 if (data.data.postsAll[i].category === "QNA") {
                     cnt++;
                     post_index.push(i);
                 }
-            }
-            console.log(post_index);
-            //마지막페이지 계산
-            totalPage = Math.ceil(cnt / 10);
+            }*/
+           //console.log(post_index);
         });
 }
 
 //공지사항 목록 조회
 function fetchQa() {
-  fetch(url)
+  fetch(url ,{headers : header})
       .then((response) => response.json())
       .then((data) => {
           console.log(data);
@@ -46,24 +48,19 @@ function fetchQa() {
           if (data.data === null) {
               tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
           } else {
-              //페이지에 10개만 보여주기 위해 변수 설정
-              last = 10 * currentPage;
-              first = last - 10;
-
-              for (let i = first; i < last; i++) {
-                  if (data.data.postsAll[post_index[i]].category === "QNA") {
-                      tbody.innerHTML += `
+              cntPageNum=15*currentPage-15;
+              for (let i = 0; i < data.data.posts.length; i++) {
+                  tbody.innerHTML += `
       <tr>
-      <td>${post_index.length - i}</td>
-      <td onclick="goQaDetailPage(${data.data.postsAll[post_index[i]].postId})"
-          style="cursor:pointer">${data.data.postsAll[post_index[i]].title}</td>
+      <td>${cntPageNum+i+1}</td>
+      <td onclick="goQaDetailPage(${data.data.posts[i].postId})"
+          style="cursor:pointer">${data.data.posts[i].title}</td>
       <td>비회원</td>
-      <td>${data.data.postsAll[post_index[i]].createdAt}</td>
-      <td>${data.data.postsAll[post_index[i]].updatedAt || ""}</td>
-      <td>${data.data.postsAll[post_index[i]].category}</td>
+      <td>${data.data.posts[i].createdAt}</td>
+      <td>${data.data.posts[i].updatedAt || ""}</td>
+      <td>${data.data.posts[i].category}</td>
       </tr>
       `;
-                  }
               }
           }
       });
@@ -77,9 +74,6 @@ function showPagination() {
               </li>`;
   let pageGroup = Math.ceil(currentPage / 5);
   let last_num = pageGroup * 5;
-  if (last_num > totalPage) {
-      last = totalPage;
-  }
 
   let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
   for (let i = first_num; i <= last_num; i++) {
@@ -94,19 +88,18 @@ function showPagination() {
 }
 
 function movePage(pageNum) {
-  if (pageNum > totalPage) return;
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  fetchPost();
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  fetchQa();
   showPagination();
 }
 
 function moveNextPage() {
-  //넘길페이지가 전체 페이지보다 클경우 그냥 return
-  if (currentPage >= totalPage) return;
   currentPage++;
-  fetchPost();
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  fetchQa();
   showPagination();
 }
 
@@ -114,7 +107,8 @@ function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  fetchPost();
+  url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  fetchQa();
   showPagination();
 }
 

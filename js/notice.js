@@ -35,7 +35,7 @@ function fetchNotice() {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
                 cntPageNum=currentPage*15-15;
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     tbody.innerHTML += `
                 <tr>
                 <td>${cntPageNum+i+1}</td>

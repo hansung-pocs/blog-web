@@ -2,6 +2,8 @@ const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
 const url = `http://34.64.161.55:8001/posts/${id}`;
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
@@ -11,7 +13,7 @@ let user_Id;
 let category;
 
 function PostEditPage(){
-    fetch(url)
+    fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -36,7 +38,8 @@ async function postEdit(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };

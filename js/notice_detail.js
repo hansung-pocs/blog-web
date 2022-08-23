@@ -3,6 +3,9 @@ const arr = Url.split("?postId=");
 const id = arr[1];
 console.log(id);
 
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
 //공지사항 상세페이지 구현
 function NoticeDetailPage() {
     const notice_title_first = document.querySelector(".notice-title-first");
@@ -10,7 +13,7 @@ function NoticeDetailPage() {
     const notice_detail_content = document.querySelector(".notice-detail-content");
     const d_url = `http://34.64.161.55:8001/posts/${id}`;
 
-    fetch(d_url)
+    fetch(d_url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -34,7 +37,8 @@ async function DeleteNotice(){
     const options = {
         method : 'PATCH',
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'x-pocs-session-token' : sessionToken
         },
         body : JSON.stringify(sendData)
     };
