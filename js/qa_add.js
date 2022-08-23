@@ -7,10 +7,13 @@ const login_form = document.querySelector("#login-form");
 const qa_title = document.querySelector("#title");
 const qa_content = document.querySelector("#content");
 const QaForm = document.querySelector("#putQaForm");
+let sessiontoken = localStorage.getItem("sessionToken");
+let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
+// 페이지 로드시 비회원 로그인이 되어있으면 비회원 등록, 로그인 form 없애기
 if(localStorage.getItem("userType") === "비회원") {
-  sign_up_form.innerHTML = "";
-  login_form.innerHTML = "";
+    sign_up_form.innerHTML = "";
+    login_form.innerHTML = "";
 }
 
 async function SignUpNonMember(event) {
@@ -26,7 +29,7 @@ async function SignUpNonMember(event) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            // 'x-pocs-device-type' : 'web'
+            //"x-pocs-session-token" : sessiontoken
         },
         body: JSON.stringify(sendData),
     };
@@ -37,7 +40,6 @@ async function SignUpNonMember(event) {
     console.log(result);
 
     if (result.status === 201) {
-        // localStorage.setItem("sessionToken", result.data.sessionToken)
         sign_up_form.innerHTML = `<b>${sign_up_id.value}님 비회원 등록 완료.</b>`;
     } else {
         alert("다시 입력해주세요");
