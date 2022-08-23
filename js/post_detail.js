@@ -74,11 +74,13 @@ function checktoShowButtons(){
     let login_id=parseInt(localStorage.getItem("userId"));
     let user_type = localStorage.getItem("userType");
     if(user_type==="member"){
-        //자기가 쓴글이 아닌 게시그을 조회했을 경우
+        //자기가 쓴글이 아닌 게시글을 조회했을 경우
         if(login_id!==postWriterId){
             posts_buttons.classList.add("hidden");
         }
     }
+    else if(user_type==="anonymous")
+        posts_buttons.classList.add("hidden");
 }
 
 //공지사항 수정 페이지
