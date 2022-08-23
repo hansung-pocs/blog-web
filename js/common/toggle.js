@@ -8,8 +8,8 @@ const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
 let user_type = localStorage.getItem("userType");
 
-if((sessionToken === null || user_type === "비회원") && window.location.href.match("qa") === null){
-    window.location.href="../html/qa.html"
+if(sessionToken === null){
+    window.location.href="../html/index.html"
 }
 
 function preventChanginguserId(){
@@ -70,11 +70,19 @@ function settingToggle(userId){
         toggleDetail.innerHTML = `<li><a class="dropdown-item" href="../html/index.html">로그인</a></li>`;
     }
     else{
-        toggleDetail.innerHTML = 
-        `
+        if(user_type==="비회원"){
+            toggleDetail.innerHTML =
+                `
+            <li><a class="dropdown-item" href="#" onclick="handleLogout()">로그아웃</a></li>
+        `;
+        }
+        else{
+            toggleDetail.innerHTML =
+                `
             <li><a class="dropdown-item" href="../html/user_detail_edit.html?userId=${userId}">내 정보 수정</a></li>
             <li><a class="dropdown-item" href="#" onclick="handleLogout()">로그아웃</a></li>
         `;
+        }
     }
 }
 
@@ -98,7 +106,7 @@ async function handleLogout(event){
         localStorage.removeItem("sessionToken");
         localStorage.removeItem("userId");
         localStorage.removeItem("userType");
-        window.location.href = "../html/qa.html"
+        window.location.href = "../html/index.html"
         alert("로그아웃 되었습니다.")
     }
     else{
@@ -147,13 +155,7 @@ preventChanginguserId();
 
 //네비게이션 공통
 function moveMainPage(event) {
-    if (user_type === null || user_type === "비회원") {
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
-    }
-    else {
-        window.location.href = `../html/main.html`;
-    }
+    window.location.href = `../html/main.html`;
 }
 
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
