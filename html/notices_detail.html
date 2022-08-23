@@ -113,6 +113,23 @@
         </div>
 
         <div class="notice-detail-content" style="margin-bottom: 1em"></div>
+        <hr>
+        <!--        댓글-->
+        <div id="comments" class="row mb-4">
+            <h5 class="mb-4">댓글<span id="comments_count"></span></h5>
+            <div class="row mb-3">
+                <div class="col">
+                    <input id="comment_input" class="form-control me-2" type="text" placeholder="댓글" aria-label="Comment" />
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn btn-primary w-100" onclick="AddComment()">등록</button>
+                </div>
+            </div>
+            <!-- 댓글 api 받은 것으로  -->
+            <div id="comments_div">
+
+            </div>
+        </div>
     </div>
 
     <!-- 삭제 경고창 -->
