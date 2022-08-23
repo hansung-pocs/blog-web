@@ -66,8 +66,14 @@
                 <label class="form-check-label" for="inlineRadio2">학번</label>
             </div>
             <div class="d-flex" id="user_search">
-                <input class="form-control" type="text" />
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+                <input class="form-control" type="text" id="searchUser"/>
+                <button class="btn btn-outline-primary" onclick="btnClick()">Search</button>
+                <script type="text/javascript">
+                    function btnClick() {
+                        const name = document.getElementById("searchUser").value;
+                        searchName(name)
+                    }
+                </script>
             </div>
         </div>
         <hr />
