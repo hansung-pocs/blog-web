@@ -120,13 +120,7 @@ async function movePreviousPage() {
 }
 
 function checktoGoDetailPage(Id){
-    let user_type = localStorage.getItem("userType");
-    if(user_type===null){
-        alert("블로그 회원만 조회 가능합니다.");
-    }
-    else{
-        window.location.href=`posts_detail.html?postId=${Id}`;
-    }
+    window.location.href=`posts_detail.html?postId=${Id}`;
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
@@ -158,12 +152,19 @@ function CategoryEn2Kr(category){
 }
 //카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
-    cateID=`id=${Category}`;
-    currentPage=1;
-    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
-    getArticleCount();
-    fetchPost();
-    showPagination();
+    //비회원은 스터디게시글만 보여주게 함
+    let userType = localStorage.getItem("userType");
+    if(userType==="anonymous" && Category!=='study'){
+        alert("비회원은 스터디 글만 볼수 있습니다.")
+    }
+    else{
+        cateID=`id=${Category}`;
+        currentPage=1;
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        getArticleCount();
+        fetchPost();
+        showPagination();
+    }
 }
 //카테고리 별 게시글 수 표시:
 // 카테고리에 변경 있을시 인덱스를 직접 수정해주어야함(카테고리명으로 인덱싱하는방법?)
@@ -203,4 +204,12 @@ function ShowPostsByCategory(){
     }
 }
 
+function checktoShowPostAddButton(){
+    const post_add_button = document.getElementById("post-add-button");
+    let userType= localStorage.getItem("userType");
+    if(userType==="anonymous")
+        post_add_button.classList.add("hidden");
+}
+
 ShowPostsByCategory();
+checktoShowPostAddButton();
