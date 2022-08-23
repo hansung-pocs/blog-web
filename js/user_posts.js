@@ -23,7 +23,7 @@ let user_posts_url = `http://34.64.161.55:8001/admin/posts/${id}?offset=${offset
 fetch('http://34.64.161.55:8001/users/'+id, {headers : header})
     .then((response) => response.json())
     .then((userdata) => {
-        title.innerHTML = `${userdata.data.name}님의 게시글`
+        title.innerHTML = `${userdata.data.name || `비회원${id}`}님의 게시글`
     });
 
 //공지사항 목록 조회

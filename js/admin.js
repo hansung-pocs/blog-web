@@ -79,7 +79,7 @@ function fetchUser() {
                 <tr>
                     <td>${User_cntPageNum + i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].name || "비회원"}</td>
+                        style="pointer">${data.data.users[i].name || `비회원${data.data.users[i].userId}`}</td>
                     <td>${data.data.users[i].studentId || ""}</td>
                     <td>${data.data.users[i].email || ""}</td>
                 </tr>
