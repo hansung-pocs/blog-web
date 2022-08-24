@@ -24,7 +24,7 @@ fetch(url, { headers: header })
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                            <div class="card-body">${data.data.posts[i].writerName || "익명"} - ${data.data.posts[i].createdAt}</div>
                            <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ fetch(url, { headers: header })
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                            <div class="card-body">${data.data.posts[i].writerName || "익명"} - ${data.data.posts[i].createdAt}</div>
                            <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ fetch(url, { headers: header })
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                            <div class="card-body">${data.data.posts[i].writerName || "익명"} - ${data.data.posts[i].createdAt}</div>
                            <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@ fetch(url, { headers: header })
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                            <div class="card-body">${data.data.posts[i].writerName || "익명"} - ${data.data.posts[i].createdAt}</div>
                            <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
@@ -146,7 +146,7 @@ fetch(url, { headers: header })
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
-                            <div class="card-body">${data.data.posts[i].writerName} - ${data.data.posts[i].createdAt}</div>
+                            <div class="card-body">${data.data.posts[i].writerName || "익명"} - ${data.data.posts[i].createdAt}</div>
                            <div class="card-footer">${data.data.posts[i].content.length > 30 ? data.data.posts[i].content.substring(0,30) + "..." : data.data.posts[i].content}</div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@ fetch(url, { headers: header })
             <div class="col" style="text-align: center;">
                 <img src="../img/profile.png" style="width:100px;" class="rounded-pill">
                     <div>
-                        <div id="user_main_userName">${data.data.users[i].defaultInfo.name}</div>
+                        <div id="user_main_userName">${data.data.users[i].defaultInfo.name || "익명"}</div>
                         <div id="user_main_generation">${data.data.users[i].defaultInfo.generation}</div>
                     </div>
             </div>
