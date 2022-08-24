@@ -62,7 +62,7 @@ function fetchPost() {
         <td>${cntPageNum+i+1}</td>
         <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
             style="cursor:pointer">${data.data.posts[i].title}</td>
-        <td>${data.data.posts[i].writerName || ""}</td>
+        <td>${data.data.posts[i].writerName || "익명"}</td>
         <td>${data.data.posts[i].createdAt}</td>
         <td>${data.data.posts[i].updatedAt || ""}</td>
         <td>${data.data.posts[i].category}</td>
