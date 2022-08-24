@@ -50,9 +50,8 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "공지사항") {
-                    notice_card.innerHTML +=
-                        `
+                notice_card.innerHTML +=
+                    `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
@@ -61,8 +60,7 @@ fetch(url, { headers: header })
                         </div>
                     </div>
                      `;
-                    cnt++;
-                }
+                cnt++;
             }
         }
     })
@@ -83,9 +81,8 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "스터디") {
-                    study_card.innerHTML +=
-                        `
+                study_card.innerHTML +=
+                    `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
@@ -94,8 +91,7 @@ fetch(url, { headers: header })
                         </div>
                     </div>
                      `;
-                    cnt++;
-                }
+                cnt++;
             }
         }
     })
@@ -115,9 +111,8 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "추억") {
-                    memory_card.innerHTML +=
-                        `
+                memory_card.innerHTML +=
+                    `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
@@ -126,8 +121,7 @@ fetch(url, { headers: header })
                         </div>
                     </div>
                      `;
-                    cnt++;
-                }
+                cnt++;
             }
         }
     })
@@ -147,9 +141,8 @@ fetch(url, { headers: header })
             for (let i = 0; i < data.data.posts.length; i++) {
                 if (cnt > 2)
                     break;
-                if (data.data.posts[i].category === "노하우") {
-                    knowhow_card.innerHTML +=
-                        `
+                knowhow_card.innerHTML +=
+                    `
                     <div class="col-xl">
                         <div class="card">
                             <div class="card-header">${data.data.posts[i].title}</div>
@@ -158,8 +151,7 @@ fetch(url, { headers: header })
                         </div>
                     </div>
                      `;
-                    cnt++;
-                }
+                cnt++;
             }
         }
     })
