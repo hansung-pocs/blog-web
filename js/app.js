@@ -14,14 +14,7 @@ fetch(url, {headers: header})
         if (data.data === null) {
             best_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            let cnt;
-            //데이터가 3개미만일때
-            if (data.data.length < 3) {
-                cnt = data.data.posts[i].length;
-            } else
-                cnt = offset;
-
-            if (cnt === 0) {
+            if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-best-button").classList.add("hidden");
                 best_card.innerHTML += `
@@ -35,7 +28,7 @@ fetch(url, {headers: header})
         </div>`;
             }
             else{
-                for (let i = 0; i < cnt; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     best_card.innerHTML +=
                         `
                     <div class="col-xl">
@@ -62,13 +55,7 @@ fetch(url, {headers: header})
         if (data.data === null) {
             notice_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            let cnt;
-            //데이터가 3개미만일때
-            if (data.data.length < 3) {
-                cnt = data.data.posts[i].length;
-            } else
-                cnt = offset;
-            if (cnt === 0) {
+            if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-notice-button").classList.add("hidden");
                 best_card.innerHTML += `
@@ -82,7 +69,7 @@ fetch(url, {headers: header})
         </div>`;
             }
             else{
-                for (let i = 0; i < cnt; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     notice_card.innerHTML +=
                         `
                     <div class="col-xl">
@@ -93,7 +80,6 @@ fetch(url, {headers: header})
                         </div>
                     </div>
                      `;
-                    cnt++;
                 }
             }
         }
@@ -111,13 +97,7 @@ fetch(url, {headers: header})
         if (data.data === null) {
             study_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            let cnt;
-            //데이터가 3개미만일때
-            if (data.data.length < 3) {
-                cnt = data.data.posts[i].length;
-            } else
-                cnt = offset;
-            if (cnt === 0) {
+            if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-study-button").classList.add("hidden");
                 best_card.innerHTML += `
@@ -131,7 +111,7 @@ fetch(url, {headers: header})
         </div>`;
             }
             else{
-                for (let i = 0; i < cnt; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     study_card.innerHTML +=
                         `
                     <div class="col-xl">
@@ -142,7 +122,6 @@ fetch(url, {headers: header})
                         </div>
                     </div>
                      `;
-                    cnt++;
                 }
             }
         }
@@ -159,13 +138,7 @@ fetch(url, {headers: header})
         if (data.data === null) {
             memory_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            let cnt;
-            //데이터가 3개미만일때
-            if (data.data.length < 3) {
-                cnt = data.data.posts[i].length;
-            } else
-                cnt = offset;
-            if (cnt === 0) {
+            if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-memory-button").classList.add("hidden");
                 best_card.innerHTML += `
@@ -179,7 +152,7 @@ fetch(url, {headers: header})
         </div>`;
             }
             else{
-                for (let i = 0; i < cnt; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     memory_card.innerHTML +=
                         `
                     <div class="col-xl">
@@ -190,7 +163,6 @@ fetch(url, {headers: header})
                         </div>
                     </div>
                      `;
-                    cnt++;
                 }
             }
         }
@@ -207,13 +179,7 @@ fetch(url, {headers: header})
         if (data.data === null) {
             knowhow_card.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
         } else {
-            let cnt;
-            //데이터가 3개미만일때
-            if (data.data.length < 3) {
-                cnt = data.data.posts[i].length;
-            } else
-                cnt = offset;
-            if (cnt === 0) {
+            if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-knowhow-button").classList.add("hidden");
                 best_card.innerHTML += `
@@ -227,7 +193,7 @@ fetch(url, {headers: header})
         </div>`;
             }
             else{
-                for (let i = 0; i < cnt; i++) {
+                for (let i = 0; i < data.data.posts.length; i++) {
                     knowhow_card.innerHTML +=
                         `
                     <div class="col-xl">
@@ -238,7 +204,6 @@ fetch(url, {headers: header})
                         </div>
                     </div>
                      `;
-                    cnt++;
                 }
             }
         }
