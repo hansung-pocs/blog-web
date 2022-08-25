@@ -118,31 +118,24 @@ async function handleNavigation(){
     if(sessionToken != null){
         let user = await handleValidation(sessionToken);
         if(user.type === "admin"){
-            console.log(user.type);
-            //관리자 메뉴
-            // const li = document.createElement("li");
-            // li.classList = "nav-item";
-            // const a = document.createElement("a");
-            // a.href="../html/admin.html";
-            // a.classList= "nav-link";
-            // a.innerText="Admin";
-            // li.appendChild(a);
-            // navItem.appendChild(li);    
+            console.log(user.type);   
 
             adminBtn.classList.toggle("hidden");
-            try{
+
+            if(window.location.href.match("notices.html") != null){
                 const noticeBtn = document.getElementById("noticeBtn");
                 noticeBtn.classList.toggle("hidden");
             }
-            catch{
-
-            }
-            try{
+            else if(window.location.href.match("notices_detail.html") != null){
                 const noticeEditBtn = document.getElementById("noticeEditBtn");
                 noticeEditBtn.classList.toggle("hidden");
             }
-            catch{
+        }
 
+        if (window.location.href.match("main") != null) {
+            if (user.type === "admin" || user.type === "member") {
+                const userList = document.getElementById("userList");
+                userList.classList.toggle("hidden");
             }
         }
     }
