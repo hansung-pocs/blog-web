@@ -9,17 +9,17 @@ let w_header = new Headers({'x-pocs-session-token' : w_sessiontoken});
 const c_url = `http://34.64.161.55:8001/comments/${W_id}`;
 
 async function checkComments(c_url){
-    const comments = document.querySelector("#comments");
     const comments_count = document.querySelector("#comments_count");
-    const comments_div = document.querySelector("#comments_div");
+    const comments_div = document.querySelector("#comments_div");//댓글
+    const comment_input = document.querySelector("#comment_input"); //댓글 입력
     await fetch(c_url, {headers : w_header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
             comments_count.innerHTML=`(${data.data.comments.length})`;
             comments_div.innerHTML=``;
+            comment_input.value='';
             if(data.data.comments.length!=0){
-                //comments.innerHTML
                 for(let i=0;i<data.data.comments.length;i++){
                     console.log(data.data.comments[i]);
                     if(data.data.comments[i].canceledAt!==null){  //삭제된 댓글인데 답글이 있을 때
@@ -102,7 +102,7 @@ async function checkComments(c_url){
 
                         const replyDIV = document.querySelector(`#comment${pid} .reply`);
                         replyDIV.innerHTML+=`
-                            <div id="reply${cid}" class="row px-3" style="border-bottom: solid lightgray 1px">
+                            <div id="reply${cid}" class="row px-3">
                                 <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
@@ -133,7 +133,7 @@ async function checkComments(c_url){
                                     </svg>
                                     <div class="me-3" style="font-size: smaller">${data.data.comments[i].updatedAt || data.data.comments[i].createdAt}</div>
                                 </div>
-                            </div>
+                                <hr>
                             </div>
                         `;
                     }
