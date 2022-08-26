@@ -29,7 +29,7 @@ function checkNonMember(input_type="comment"){
 
 async function checkComments(c_url){
     const comments_count = document.querySelector("#comments_count");
-    const comments_div = document.querySelector("#comments_div");
+    const comments_div = document.querySelector("#comments_div");//댓글
     const comment_input = document.querySelector("#comment_input"); //댓글 입력
     await fetch(c_url, {headers : w_header})
         .then((response) => response.json())
@@ -37,6 +37,7 @@ async function checkComments(c_url){
             console.log(data);
             comments_count.innerHTML=`(${data.data.comments.length})`;
             comments_div.innerHTML=``;
+            comment_input.value='';
             if(data.data.comments.length!=0){
                 //comments.innerHTML
                 for(let i=0;i<data.data.comments.length;i++){
@@ -122,7 +123,7 @@ async function checkComments(c_url){
                         if(replyDIV==null) //댓글에러 임시로 막음-에러있는 댓글 안보이게
                             continue;
                         replyDIV.innerHTML+=`
-                            <div id="reply${cid}" class="row px-3" style="border-bottom: solid lightgray 1px">
+                            <div id="reply${cid}" class="row px-3">
                                 <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
@@ -153,7 +154,7 @@ async function checkComments(c_url){
                                     </svg>
                                     <div class="me-3" style="font-size: smaller">${data.data.comments[i].updatedAt || data.data.comments[i].createdAt}</div>
                                 </div>
-                            </div>
+                                <hr>
                             </div>
                         `;
                     }

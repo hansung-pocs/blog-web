@@ -2,6 +2,7 @@ const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
+const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
 async function noticeSubmit(){
 
@@ -9,6 +10,7 @@ async function noticeSubmit(){
         title : notice_title.value,
         content: notice_content.value,
         userId: userId,
+        onlyMember: flexCheckDefault.checked,
         category : "notice"
     };
 

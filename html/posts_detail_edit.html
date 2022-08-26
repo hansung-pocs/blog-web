@@ -89,8 +89,16 @@
 
     <div class="container notice-edit">
         <h1>게시글</h1>
-        <div style="text-align: end">
-            <button type="submit" class="btn btn-outline-primary" onclick="postEdit()">게시하기</button>
+        <div id="title-below-area">
+            <div class="form-check" style="padding-top : 10px;">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                <label class="form-check-label" for="flexCheckDefault">
+                    회원들에게만 게시
+                </label>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-primary" onclick="postEdit()">게시하기</button>
+            </div>
         </div>
         <hr>
         <div style="margin-bottom: 1em">

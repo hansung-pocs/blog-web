@@ -11,6 +11,7 @@ const notice_detail_content = document.querySelector(".notice-detail-content");
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
+const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -75,6 +76,7 @@ async function noticeEdit(){
         title : notice_title.value,
         content: notice_content.value,
         userId: writerId,
+        onlyMember: flexCheckDefault.checked,
         category : category
     };
 

@@ -15,13 +15,14 @@ let sortOption;
 //pagination에 필요한 변수
 const offset=9;
 let currentPage = 1;
+let totalPage;
 
 let url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
-function doFetch() {
-    fetch(url, {headers : header})
+async function doFetch() {
+    await fetch(url, {headers : header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -30,13 +31,14 @@ function doFetch() {
             } else {
                 //받은 데이터로 유저 목록 그리기
                 userArr = data.data.users;
-
+                totalPage = Math.ceil(data.data.countAllUsers/9);
                 optionCheck(sortOption);
                 sortArr(userArr, sortOption);
                 drawUserList(userArr);
-                userNum.innerHTML=`(${data.data.users.length})`;
+                userNum.innerHTML=`(${data.data.countAllUsers})`;
             }
         });
+    await showPagination();
 }
 //유저 목록 그리기
 /// Arr[i]?.->Uncaught TypeError: Cannot read properties of undefined 에러를 막기 위한 것(Optional Chaining)
@@ -110,10 +112,14 @@ function showPagination() {
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true" onclick="movePreviousPage()">Previous</a>
                 </li>`;
     let pageGroup = Math.ceil(currentPage / 5);
-    let last_num = pageGroup * 5;
+    let last = pageGroup * 5;
+    if (last > totalPage) {
+        // 마지막 그룹이 5개 이하이면
+        last = totalPage;
+    }
 
-    let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
-    for (let i = first_num; i <= last_num; i++) {
+    let first_num = last - 4 <= 0 ? 1 : last - 4;
+    for (let i = first_num; i <= last; i++) {
         pageHTML += `<li class="page-item ${currentPage == i ? "active" : ""}"><a class="page-link" onclick="movePage(${i})">${i}</a></li>`;
     }
 
@@ -125,6 +131,8 @@ function showPagination() {
 }
 
 async function movePage(pageNum) {
+    if(pageNum > totalPage)
+        return;
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
@@ -134,6 +142,8 @@ async function movePage(pageNum) {
 }
 
 async function moveNextPage() {
+    if(currentPage >= totalPage)
+        return;
     //넘길페이지가 전체 페이지보다 클경우 그냥 return
     currentPage++;
     url = `http://34.64.161.55:8001/users?offset=${offset}&pageNum=${currentPage}`;
@@ -187,4 +197,4 @@ async function searchName(name){
 }
 
 doFetch();
-showPagination();
+
