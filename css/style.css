@@ -45,4 +45,8 @@ nav {
     border-color : white;
 }
 
-
+#title-below-area{
+    display: flex;
+    justify-content: space-between;
+    algien-items : center;
+}

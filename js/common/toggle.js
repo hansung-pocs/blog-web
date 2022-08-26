@@ -123,7 +123,7 @@ async function handleNavigation(){
             adminBtn.classList.toggle("hidden");
 
             if(window.location.href.match("notices.html") != null){
-                const noticeBtn = document.getElementById("noticeBtn");
+                const noticeBtn = document.getElementById("noticeAddBtn");
                 noticeBtn.classList.toggle("hidden");
             }
             else if(window.location.href.match("notices_detail.html") != null){
@@ -153,13 +153,13 @@ function moveMainPage(event) {
 
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
 function moveNoticePage(event) {
-    if (user_type === null || user_type === "anonymous") {
+   /* if (user_type === null || user_type === "anonymous") {
         moveLoginPage();
         //alert("블로그 회원만 조회 가능합니다.");
     }
-    else {
+    else {*/
         window.location.href = `../html/notices.html`;
-    }
+    //}
 }
 
 function movePostPage(category) {
