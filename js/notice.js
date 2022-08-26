@@ -10,12 +10,13 @@ let userId;
 const offset=15;
 let currentPage = 1;
 const first = 0;
-let cntPageNum=0;
 let totalPage;
 
 let url = `http://34.64.161.55:8001/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
+
+const userType = localStorage.getItem("userType");
 
 //공지사항 목록 조회
 async function fetchNotice() {
@@ -37,7 +38,20 @@ async function fetchNotice() {
             } else {
                 totalPage = Math.ceil(data.data.categories[1].count/15);
                 for (let i = 0; i < data.data.posts.length; i++) {
-                    tbody.innerHTML += `
+                    if(data.data.posts[i].onlyMember && userType ==="anonymous"){
+                        tbody.innerHTML += `
+                <tr>
+                <td>${data.data.posts[i].postId}</td>
+                <td>비공개</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                </tr>
+                `;
+                    }
+                   else{
+                        tbody.innerHTML += `
                 <tr>
                 <td>${data.data.posts[i].postId}</td>
                 <td onclick="window.location.href='notices_detail.html?postId=${data.data.posts[i].postId}'"
@@ -48,6 +62,7 @@ async function fetchNotice() {
                 <td>${data.data.posts[i].category}</td>
                 </tr>
                 `;
+                    }
                 }
             }
         });
