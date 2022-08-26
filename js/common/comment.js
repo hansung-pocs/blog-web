@@ -11,18 +11,20 @@ const c_url = `http://34.64.161.55:8001/comments/${W_id}`;
 async function checkComments(c_url){
     const comments = document.querySelector("#comments");
     const comments_count = document.querySelector("#comments_count");
+    const comments_div = document.querySelector("#comments_div");
     await fetch(c_url, {headers : w_header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
             comments_count.innerHTML=`(${data.data.comments.length})`;
-
+            comments_div.innerHTML=``;
             if(data.data.comments.length!=0){
+                //comments.innerHTML
                 for(let i=0;i<data.data.comments.length;i++){
                     console.log(data.data.comments[i]);
                     if(data.data.comments[i].canceledAt!==null){  //삭제된 댓글인데 답글이 있을 때
                         const cid=data.data.comments[i].commentId;
-                        comments.innerHTML+=`
+                        comments_div.innerHTML+=`
                             <div id="comment${cid}" class="row p-2" >
                                 <div style="font-size: small"></div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
@@ -43,7 +45,7 @@ async function checkComments(c_url){
                     `
                     }else if(data.data.comments[i].commentId===data.data.comments[i].parentId){
                         const cid=data.data.comments[i].commentId;
-                        comments.innerHTML+=`
+                        comments_div.innerHTML+=`
                             <div id="comment${cid}" class="row p-2">
                                 <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
@@ -166,7 +168,7 @@ async function AddComment(pId=null,type="comment") {
     console.log(result,response);
     alert('댓글이 등록되었습니다');
     //result 404면 중복 금지
-    window.location.href = Url;
+    checkComments(c_url);
 }
 //수정 버튼 클릭후 댓글내용을 입력창으로 변경
 function clickEditCommentBtn(id,type="comment"){
@@ -204,7 +206,7 @@ async function EditComment(id,type="comment") {
 
     //수정전 확인 한번 더 필요함
     alert('댓글이 수정되었습니다');
-    window.location.href = Url;
+    checkComments(c_url);
 }
 //댓글 삭제
 async function DeleteComment(id) {
@@ -221,7 +223,7 @@ async function DeleteComment(id) {
 
     //삭제전 확인 한번 더 필요함
     alert('댓글이 삭제되었습니다');
-    window.location.href = Url;
+    checkComments(c_url);
 }
 //답글 hidden/non-hidden
 function commentBtnClick(id) {
@@ -233,6 +235,5 @@ function commentBtnClick(id) {
         replyDiv.classList.replace('non-hidden','hidden');
 }
 
-//PostDetailPage();
 checkComments(c_url);
 
