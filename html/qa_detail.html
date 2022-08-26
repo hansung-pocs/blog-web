@@ -113,21 +113,23 @@
         <div id="qa-detail-content" style="margin-bottom: 2em">어떤 활동을 하나요?</div>
         <hr />
         <!--        댓글-->
-        <div class="row mb-4">
-            <h5 class="mb-4">댓글<span id="comment_count">(3)</span></h5>
-            <form class="row mb-3" id="add-comment-form">
+        <div id="comments" class="row mb-4">
+            <h5 class="mb-4">댓글<span id="comments_count"></span></h5>
+            <div class="row mb-3">
                 <div class="col">
-                    <input id="comment-value" class="form-control me-2" type="text" placeholder="댓글" aria-label="Comment" />
+                    <input id="comment_input" class="form-control me-2" type="text" placeholder="댓글" aria-label="Comment" />
                 </div>
                 <div class="col-1">
-                    <button type="submit" class="btn btn-primary w-100" onclick="">등록</button>
+                    <button type="button" class="btn btn-primary w-100" onclick="AddComment()">등록</button>
                 </div>
-            </form>
+            </div>
             <!-- 댓글 api 받은 것으로  -->
-            <div id="comments_div"></div>
+            <div id="comments_div">
+
+            </div>
         </div>
     </div>
-        
+
 
     <!-- 삭제 경고창 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -163,6 +165,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script src="../js/qa_detail.js"></script>
+    <script src="../js/common/comment.js"></script>
     <script src="../js/common/toggle.js"></script>
 </body>
 
