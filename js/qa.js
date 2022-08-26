@@ -48,11 +48,10 @@ function fetchQa() {
           if (data.data === null) {
               tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
           } else {
-              cntPageNum=15*currentPage-15;
               for (let i = 0; i < data.data.posts.length; i++) {
                   tbody.innerHTML += `
       <tr>
-      <td>${cntPageNum+i+1}</td>
+      <td>${data.data.posts[i].postId}</td>
       <td onclick="goQaDetailPage(${data.data.posts[i].postId})"
           style="cursor:pointer">${data.data.posts[i].title}</td>
       <td>익명</td>
