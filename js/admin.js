@@ -14,7 +14,6 @@ const user_tbody = document.querySelector("#user table tbody");
 
 //공지사항 pagination에 필요한 변수
 let Notice_currentPage = 1;
-let Notice_cntPageNum = 0;
 
 //유저목록 pagination에 필요한 변수
 let User_cntPageNum = 0;
@@ -44,12 +43,10 @@ function fetchNotice() {
             if (data.data === null) {
                 notice_tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                Notice_cntPageNum = 15 * Notice_currentPage - 15;
-
                 for (let i = 0; i < 15; i++) {
                     notice_tbody.innerHTML += `
                 <tr>
-                <td>${Notice_cntPageNum + i + 1}</td>
+                <td>${data.data.posts[i].postId}</td>
                 <td onclick="moveNoticeDetailPage(${post_data[i].postId})"
                     style="cursor:pointer">${post_data[i].title}</td>
                 <td>${post_data[i].writerName || "익명"}</td>
@@ -74,11 +71,10 @@ function fetchUser() {
                 user_tbody.innerHTML = "<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
             } else {
                 for (let i = 0; i < data.data.users.length; i++) {
-                    User_cntPageNum = 15 * User_currentPage - 15;
                     if(data.data.users[i].type==="anonymous"){
                         user_tbody.innerHTML += `
                 <tr>
-                    <td>${User_cntPageNum + i + 1}</td>
+                    <td>${data.data.users[i].userId}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
                         style="pointer">익명${data.data.users[i].userId}</td>
                     <td>${""}</td>
@@ -89,7 +85,7 @@ function fetchUser() {
                     else{
                         user_tbody.innerHTML += `
                 <tr>
-                    <td>${User_cntPageNum + i + 1}</td>
+                    <td>${data.data.users[i].userId}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
                         style="pointer">${data.data.users[i].defaultInfo.name || `익명${data.data.users[i].userId}`}</td>
                     <td>${data.data.users[i].defaultInfo.studentId || ""}</td>
