@@ -8,6 +8,25 @@ let w_header = new Headers({'x-pocs-session-token' : w_sessiontoken});
 
 const c_url = `http://34.64.161.55:8001/comments/${W_id}`;
 
+//회원인지 비회원인지 체크(qna게시판은 상관x)-타입에 따라 다른 html구성
+function checkNonMember(input_type="comment"){
+    const userType = localStorage.getItem("userType");
+    const comment_input = document.querySelector("#comment_input");
+    const comment_input_btn = document.querySelector("#comment_input_btn");
+    const reply_input = document.querySelector(".reply_input");
+    const reply_input_btn = document.querySelector(".reply_input_btn");
+    const category = document.querySelector("#title_category"); //html을 통해서 카테고리 정보 가져옴
+    if(category.innerHTML=="Q/A")
+        return;
+    if (userType === "anonymous") {// && Category !== 'qna'|| Category !== 'qna') {
+        comment_input.placeholder = '회원만 작성할 수 있습니다.';
+        comment_input_btn.classList.add('hidden');
+        reply_input.placeholder = '회원만 작성할 수 있습니다.';
+        reply_input_btn.classList.add('hidden');
+    }
+}
+
+
 async function checkComments(c_url){
     const comments_count = document.querySelector("#comments_count");
     const comments_div = document.querySelector("#comments_div");//댓글
@@ -20,8 +39,8 @@ async function checkComments(c_url){
             comments_div.innerHTML=``;
             comment_input.value='';
             if(data.data.comments.length!=0){
+                //comments.innerHTML
                 for(let i=0;i<data.data.comments.length;i++){
-                    console.log(data.data.comments[i]);
                     if(data.data.comments[i].canceledAt!==null){  //삭제된 댓글인데 답글이 있을 때
                         const cid=data.data.comments[i].commentId;
                         comments_div.innerHTML+=`
@@ -87,10 +106,10 @@ async function checkComments(c_url){
                                 <div class="hidden reply">
                                     <div class="row mb-3 mx-1">
                                         <div class="col">
-                                            <input id="reply_input" class="form-control me-2" type="text" placeholder="답글" aria-label="Comment" />
+                                            <input class="form-control me-2 reply_input" type="text" placeholder="답글" aria-label="Comment" />
                                         </div>
                                         <div class="col-1">
-                                            <button type="button" class="btn btn-primary w-100" onclick="AddComment(${cid},'reply')">등록</button>
+                                            <button type="button" class="reply_input_btn btn btn-primary w-100" onclick="AddComment(${cid},'reply')">등록</button>
                                         </div>
                                     </div>
                                 </div>
@@ -101,6 +120,8 @@ async function checkComments(c_url){
                         const pid=data.data.comments[i].parentId;
 
                         const replyDIV = document.querySelector(`#comment${pid} .reply`);
+                        if(replyDIV==null) //댓글에러 임시로 막음-에러있는 댓글 안보이게
+                            continue;
                         replyDIV.innerHTML+=`
                             <div id="reply${cid}" class="row px-3">
                                 <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
@@ -140,6 +161,7 @@ async function checkComments(c_url){
                 }
             }
         })
+        checkNonMember(); //댓글 html이 만들어진 후 회원 타입에 따라 html 수정
 }
 
 //댓글,답글 추가
@@ -148,7 +170,7 @@ async function AddComment(pId=null,type="comment") {
     if(type==="comment")
         input= document.querySelector(`#${type}_input`);
     else
-        input= document.querySelector(`#comment${pId} #${type}_input`);
+        input= document.querySelector(`#comment${pId} .${type}_input`);
     const sendData = {
         postId: Number(id),
         content: input.value,
