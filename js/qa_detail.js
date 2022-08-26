@@ -29,7 +29,7 @@ async function QaDetailPage() {
             } else {
                 let cateKR = CategoryEn2Kr(data.data.category);
                 console.log(cateKR);
-                qa_title_first.innerHTML = `<h3>[${cateKR}]${data.data.title}</h3>`;
+                qa_title_first.innerHTML = `<h3>[<span id="title_category">${cateKR}</span>]${data.data.title}</h3>`;
                 qa_title_second.innerHTML = `
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
             <div class="me-2"> 익명 </div>

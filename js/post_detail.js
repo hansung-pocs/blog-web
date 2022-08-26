@@ -24,7 +24,7 @@ async function PostDetailPage() {
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
             } else {
-                notice_title_first.innerHTML = `<h3>[${data.data.category}]${data.data.title}</h3>`;
+                notice_title_first.innerHTML = `<h3>[<span id="title_category">${data.data.category}</span>]${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
             <div class="me-2"> ${data.data.writer.name || `익명`} </div>
