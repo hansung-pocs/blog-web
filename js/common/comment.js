@@ -257,5 +257,5 @@ function commentBtnClick(id) {
         replyDiv.classList.replace('non-hidden','hidden');
 }
 
-checkComments(c_url);
+window.setTimeout(()=>{checkComments(c_url)},200);
 
