@@ -14,11 +14,13 @@ let cateID = '';
 
 let url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
-let header = new Headers({'x-pocs-session-token': sessiontoken});
+let header = new Headers({ 'x-pocs-session-token': sessiontoken });
+
+const userType = localStorage.getItem("userType");
 
 //공지사항 목록 조회
 function fetchPost() {
-    fetch(url, {headers: header})
+    fetch(url, { headers: header })
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -37,17 +39,28 @@ function fetchPost() {
                 tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
                 for (let i = 0; i < data.data.posts.length; i++) {
-                    tbody.innerHTML += `
-        <tr>
-        <td>${data.data.posts[i].postId}</td>
-        <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
-            style="cursor:pointer">${data.data.posts[i].title}</td>
-        <td>${data.data.posts[i].writerName || "익명"}</td>
-        <td>${data.data.posts[i].createdAt}</td>
-        <td>${data.data.posts[i].updatedAt || ""}</td>
-        <td>${data.data.posts[i].category}</td>
-        </tr>
-        `;
+                    if(data.data.posts[i].onlyMember && userType ==="anonymous"){
+                        tbody.innerHTML += `<tr>
+                        <td>${data.data.posts[i].postId}</td>
+                        <td>비공개</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>`;
+                    }else{
+                        tbody.innerHTML += `
+                        <tr>
+                        <td>${data.data.posts[i].postId}</td>
+                        <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
+                            style="cursor:pointer">${data.data.posts[i].title}</td>
+                        <td>${data.data.posts[i].writerName || "익명"}</td>
+                        <td>${data.data.posts[i].createdAt}</td>
+                        <td>${data.data.posts[i].updatedAt || ""}</td>
+                        <td>${data.data.posts[i].category}</td>
+                        </tr>
+                        `;
+                    }
                 }
             }
         });
@@ -78,7 +91,7 @@ function showPagination() {
 }
 
 async function movePage(pageNum) {
-    if(pageNum > totalPage)
+    if (pageNum > totalPage)
         return;
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
@@ -91,7 +104,7 @@ async function movePage(pageNum) {
 }
 
 async function moveNextPage() {
-    if(currentPage >= totalPage)
+    if (currentPage >= totalPage)
         return;
     currentPage++;
     url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
@@ -160,24 +173,24 @@ async function clickCategory(Category) {
     }
 }
 
-async function getCategoriesCount(category){
-    await fetch(url, {headers: header})
+async function getCategoriesCount(category) {
+    await fetch(url, { headers: header })
         .then((response) => response.json())
-        .then((data) =>{
-            if(category==="study")
-                totalPage = Math.ceil(data.data.categories[0].count/15);
-            else if(category==="memory")
-                totalPage = Math.ceil(data.data.categories[2].count/15);
-            else if(category==="reference")
-                totalPage = Math.ceil(data.data.categories[3].count/15);
-            else if(category==="knowhow")
-                totalPage = Math.ceil(data.data.categories[4].count/15);
-            else if(category==="qna")
-                totalPage = Math.ceil(data.data.categories[5].count/15);
+        .then((data) => {
+            if (category === "study")
+                totalPage = Math.ceil(data.data.categories[0].count / 15);
+            else if (category === "memory")
+                totalPage = Math.ceil(data.data.categories[2].count / 15);
+            else if (category === "reference")
+                totalPage = Math.ceil(data.data.categories[3].count / 15);
+            else if (category === "knowhow")
+                totalPage = Math.ceil(data.data.categories[4].count / 15);
+            else if (category === "qna")
+                totalPage = Math.ceil(data.data.categories[5].count / 15);
             else
-                totalPage =  Math.ceil((data.data.categories[0].count+data.data.categories[1].count+
-                    data.data.categories[2].count+ data.data.categories[3].count + data.data.categories[4].count+
-                    data.data.categories[5].count)/15);
+                totalPage = Math.ceil((data.data.categories[0].count + data.data.categories[1].count +
+                    data.data.categories[2].count + data.data.categories[3].count + data.data.categories[4].count +
+                    data.data.categories[5].count) / 15);
 
         });
     console.log(totalPage);

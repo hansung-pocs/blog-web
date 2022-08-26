@@ -163,15 +163,15 @@ function moveNoticePage(event) {
 }
 
 function movePostPage(category) {
-    if (user_type === null || user_type === "anonymous") {
-        if(category==="study")
-            window.location.href = `../html/posts.html?category=${category}`;
-        else
-            moveLoginPage();
-    }
-    else {
+    // if (user_type === null || user_type === "anonymous") {
+    //     if(category==="study")
+    //         window.location.href = `../html/posts.html?category=${category}`;
+    //     else
+    //         moveLoginPage();
+    // }
+    // else {
         window.location.href = `../html/posts.html?category=${category}`;
-    }
+    //}
 }
 
 function moveUserPage() {

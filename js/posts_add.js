@@ -1,7 +1,7 @@
 const post_title = document.querySelector("#title");
 const post_content = document.querySelector("#content");
+const flexCheckDefault = document.querySelector("#flexCheckDefault");
 let category;
-
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
 
@@ -11,6 +11,7 @@ async function postSubmit(){
         title : post_title.value,
         content: post_content.value,
         userId: userId,
+        onlyMember: flexCheckDefault.checked,
         category : category
     };
 
