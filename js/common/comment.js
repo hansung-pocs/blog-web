@@ -6,6 +6,9 @@ const W_id = arr[1];
 let w_sessiontoken = localStorage.getItem("sessionToken");
 let w_header = new Headers({'x-pocs-session-token' : w_sessiontoken});
 
+const checkUserType = localStorage.getItem("userType");
+const checkUserId = localStorage.getItem("userId");
+
 const c_url = `http://34.64.161.55:8001/comments/${W_id}`;
 
 //회원인지 비회원인지 체크(qna게시판은 상관x)-타입에 따라 다른 html구성
@@ -64,19 +67,20 @@ async function checkComments(c_url){
                     `
                     }else if(data.data.comments[i].commentId===data.data.comments[i].parentId){
                         const cid=data.data.comments[i].commentId;
+                        const cwid = data.data.comments[i].writer.userId;
                         comments_div.innerHTML+=`
                             <div id="comment${cid}" class="row p-2">
                                 <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
                                     <div class="mx-5">
-                                        <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button id="editDelBtn${cid}" type="button" class="hidden btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                                             </svg>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cid})">수정</a></li>
+                                            <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cwid}, ${cid})">수정</a></li>
                                             <li><a class="dropdown-item" onclick="DeleteComment(${cid})">삭제</a></li>
                                         </ul>
                                     </div>
@@ -114,10 +118,12 @@ async function checkComments(c_url){
                                     </div>
                                 </div>
                             </div>
-                    `
+                    `;
+                    commentEditDelBtn(cwid, cid);
                     }else{
                         const cid=data.data.comments[i].commentId;
                         const pid=data.data.comments[i].parentId;
+                        const cwid = data.data.comments[i].writer.userId;
 
                         const replyDIV = document.querySelector(`#comment${pid} .reply`);
                         if(replyDIV==null) //댓글에러 임시로 막음-에러있는 댓글 안보이게
@@ -128,13 +134,13 @@ async function checkComments(c_url){
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
                                     <div class="mx-5">
-                                        <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button id="editDelBtn${cid}" type="button" class="hidden btn btn-light" data-bs-toggle="dropdown" aria-expanded="false">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                                             </svg>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cid},'reply')">수정</a></li>
+                                            <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cwid},${cid},'reply')">수정</a></li>
                                             <li><a class="dropdown-item" onclick="DeleteComment(${cid},'reply')">삭제</a></li>
                                         </ul>
                                     </div>
@@ -157,6 +163,7 @@ async function checkComments(c_url){
                                 <hr>
                             </div>
                         `;
+                        commentEditDelBtn(cwid, cid);
                     }
                 }
             }
@@ -193,13 +200,18 @@ async function AddComment(pId=null,type="comment") {
     checkComments(c_url);
 }
 //수정 버튼 클릭후 댓글내용을 입력창으로 변경
-function clickEditCommentBtn(id,type="comment"){
-    console.log(`#${type}${id} .content`);
-    const content= document.querySelector(`#${type}${id} .content`);
-    const contentEdit= document.querySelector(`#${type}${id} .contentEdit`);
-    content.classList.replace('non-hidden','hidden');
-    content.classList.replace('d-flex','d-flexN');
-    contentEdit.classList.replace('hidden','non-hidden');
+// 댓글 작성자만 수정 가능
+function clickEditCommentBtn(writerId, commentId, type = "comment") {
+    if (checkUserId == writerId) {
+        console.log(`#${type}${commentId} .content`);
+        const content = document.querySelector(`#${type}${commentId} .content`);
+        const contentEdit = document.querySelector(`#${type}${commentId} .contentEdit`);
+        content.classList.replace("non-hidden", "hidden");
+        content.classList.replace("d-flex", "d-flexN");
+        contentEdit.classList.replace("hidden", "non-hidden");
+    } else {
+        alert("댓글 작성자만 수정 가능합니다");
+    }
 }
 //댓글 수정
 async function EditComment(id,type="comment") {
@@ -222,13 +234,18 @@ async function EditComment(id,type="comment") {
     const result = await response.json();
     console.log(result);
 
-    content.classList.replace('hidden','non-hidden');
-    content.classList.replace('d-flexN','d-flex');
-    contentEdit.classList.replace('non-hidden','hidden');
+    if(result.status === 200) {
+        content.classList.replace('hidden','non-hidden');
+        content.classList.replace('d-flexN','d-flex');
+        contentEdit.classList.replace('non-hidden','hidden');
+    
+        //수정전 확인 한번 더 필요함
+        alert(result.message);
+        checkComments(c_url);        
+    } else {
+        alert(result.message);
+    }
 
-    //수정전 확인 한번 더 필요함
-    alert('댓글이 수정되었습니다');
-    checkComments(c_url);
 }
 //댓글 삭제
 async function DeleteComment(id) {
@@ -243,9 +260,14 @@ async function DeleteComment(id) {
     const result = await response.json();
     console.log(result);
 
-    //삭제전 확인 한번 더 필요함
-    alert('댓글이 삭제되었습니다');
-    checkComments(c_url);
+    if(result.status === 201) {
+        //삭제전 확인 한번 더 필요함
+        alert(result.message);
+        checkComments(c_url);    
+    } else {
+        alert(result.message);
+    }
+    
 }
 //답글 hidden/non-hidden
 function commentBtnClick(id) {
@@ -255,6 +277,18 @@ function commentBtnClick(id) {
         replyDiv.classList.replace('hidden','non-hidden');
     else
         replyDiv.classList.replace('non-hidden','hidden');
+}
+// 관리자와 댓글 작성자에게만 수정, 삭제 버튼 보이게함
+function commentEditDelBtn(writerId, commentId) {
+    const editDelBtn = document.querySelector(`#editDelBtn${commentId}`);
+    if (checkUserType == "admin" || checkUserId == writerId) {
+        //console.log(editDelBtn);
+        editDelBtn.classList.replace("hidden", "non-hidden");
+    } else {
+        // 버튼이 보였다가 관리자나 작성자 본인이 아닌 아이디로 로그인한 경우
+        // 로그인 후에 새로고침으로 인해 다시 hidden 으로 돌아가므로 따로 처리 x
+        //console.log("관리자, 작성자 본인 아님");
+    }
 }
 
 window.setTimeout(()=>{checkComments(c_url)},200);
