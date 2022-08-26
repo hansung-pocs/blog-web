@@ -12,6 +12,7 @@ let category;
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
+const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
 function NoticeEditPage(){
     fetch(url, {headers : header})
@@ -32,6 +33,7 @@ async function noticeEdit(){
         userId: user_Id,
         title : notice_title.value,
         content: notice_content.value,
+        onlyMember: flexCheckDefault.checked,
         category : category
     };
 
