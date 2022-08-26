@@ -38,7 +38,7 @@ async function QaDetailPage() {
                 qa_title_first.innerHTML = `<h3>[${cateKR}]${data.data.title}</h3>`;
                 qa_title_second.innerHTML = `
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
-            <div class="me-2"> 비회원 </div>
+            <div class="me-2"> 익명 </div>
             <div>조회수 ${data.data.views}</div>
             `;
                 qa_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
@@ -105,7 +105,7 @@ async function CommentShow() {
                     if (comments.commentId == comments.parentId) {
                         commentDiv.innerHTML += `
                     <div id="parent-comment" class="row p-2">
-                        <div style="font-size: small">${comments.writer.name}</div>
+                        <div style="font-size: small">${comments.writer.name || `익명`}</div>
                         <div class="d-flex justify-content-between my-2" >
                             <div>${comments.content}</div>
                             <div id="comment-buttons" class="mx-5">
@@ -171,7 +171,7 @@ async function CommentShow() {
                         if ((comments.commentId != comments.parentId) != false && parentComment.id === `commentId${comments.parentId}`) {
                             childComment.innerHTML += `
                             <div id="comment_reply" class="row px-3" style="border-bottom: solid lightgray 1px">
-                                <div style="font-size: small">${comments.writer.name}</div>
+                                <div style="font-size: small">${comments.writer.name ||`익명`}</div>
                                 <div class="d-flex justify-content-between my-2" >
                                     <div>${comments.content}</div>
                                     <div id="comment-buttons" class="mx-5">

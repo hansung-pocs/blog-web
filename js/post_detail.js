@@ -20,7 +20,7 @@ async function PostDetailPage() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            if (data.status === 403 || data.status === 404 || data.status === 500) {
+            if (data.status === 403 || data.status === 404) {
                 notice_title_first.innerHTML = "삭제되었거나 없는 게시글입니다.";
                 notice_title_second.innerHTML="";
                 posts_buttons.classList.add("hidden");
@@ -28,7 +28,7 @@ async function PostDetailPage() {
                 notice_title_first.innerHTML = `<h3>[${data.data.category}]${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
-            <div class="me-2"> ${data.data.writer.name} </div>
+            <div class="me-2"> ${data.data.writer.name || `익명`} </div>
             <div>조회수 ${data.data.views}</div>
             `;
                 notice_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
@@ -74,11 +74,13 @@ function checktoShowButtons(){
     let login_id=parseInt(localStorage.getItem("userId"));
     let user_type = localStorage.getItem("userType");
     if(user_type==="member"){
-        //자기가 쓴글이 아닌 게시그을 조회했을 경우
+        //자기가 쓴글이 아닌 게시글을 조회했을 경우
         if(login_id!==postWriterId){
             posts_buttons.classList.add("hidden");
         }
     }
+    else if(user_type==="anonymous")
+        posts_buttons.classList.add("hidden");
 }
 
 //공지사항 수정 페이지
@@ -126,7 +128,7 @@ async function checkComments(c_url){
                         const cid=data.data.comments[i].commentId;
                         comments.innerHTML+=`
                             <div id="comment${cid}" class="row p-2">
-                                <div style="font-size: small">${data.data.comments[i].writer.name}</div>
+                                <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
                                     <div class="mx-5">
@@ -185,7 +187,7 @@ async function checkComments(c_url){
                         const replyDIV = document.querySelector(`#comment${pid} .reply`);
                         replyDIV.innerHTML+=`
                             <div id="reply${cid}" class="row px-3" style="border-bottom: solid lightgray 1px">
-                                <div style="font-size: small">${data.data.comments[i].writer.name}</div>
+                                <div style="font-size: small">${data.data.comments[i].writer.name || `익명`}</div>
                                 <div class="non-hidden content d-flex justify-content-between my-2">
                                     <div>${data.data.comments[i].content}</div>
                                     <div class="mx-5">

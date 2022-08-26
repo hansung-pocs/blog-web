@@ -70,7 +70,7 @@ function settingToggle(userId){
         toggleDetail.innerHTML = `<li><a class="dropdown-item" href="../html/index.html">로그인</a></li>`;
     }
     else{
-        if(user_type==="비회원"){
+        if(user_type==="anonymous"){
             toggleDetail.innerHTML =
                 `
             <li><a class="dropdown-item" href="#" onclick="handleLogout()">로그아웃</a></li>
@@ -118,31 +118,24 @@ async function handleNavigation(){
     if(sessionToken != null){
         let user = await handleValidation(sessionToken);
         if(user.type === "admin"){
-            console.log(user.type);
-            //관리자 메뉴
-            // const li = document.createElement("li");
-            // li.classList = "nav-item";
-            // const a = document.createElement("a");
-            // a.href="../html/admin.html";
-            // a.classList= "nav-link";
-            // a.innerText="Admin";
-            // li.appendChild(a);
-            // navItem.appendChild(li);    
+            console.log(user.type);   
 
             adminBtn.classList.toggle("hidden");
-            try{
+
+            if(window.location.href.match("notices.html") != null){
                 const noticeBtn = document.getElementById("noticeBtn");
                 noticeBtn.classList.toggle("hidden");
             }
-            catch{
-
-            }
-            try{
+            else if(window.location.href.match("notices_detail.html") != null){
                 const noticeEditBtn = document.getElementById("noticeEditBtn");
                 noticeEditBtn.classList.toggle("hidden");
             }
-            catch{
+        }
 
+        if (window.location.href.match("main") != null) {
+            if (user.type === "admin" || user.type === "member") {
+                const userList = document.getElementById("userList");
+                userList.classList.toggle("hidden");
             }
         }
     }
@@ -169,13 +162,15 @@ function moveNoticePage(event) {
     }
 }
 
-function movePostPage() {
+function movePostPage(category) {
     if (user_type === null || user_type === "anonymous") {
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
+        if(category==="study")
+            window.location.href = `../html/posts.html?category=${category}`;
+        else
+            moveLoginPage();
     }
     else {
-        window.location.href = `../html/posts.html`;
+        window.location.href = `../html/posts.html?category=${category}`;
     }
 }
 

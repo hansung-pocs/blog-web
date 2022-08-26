@@ -3,20 +3,15 @@ const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
 
 let category;
-let notice_Id;
 let userId;
 
 //pagination에 필요한 변수
 let post_index = [];
 const offset=15;
 let currentPage = 1;
-//현재 api데이터가 전체 개수를 주지 않아 전체개수 세는거는 없앰.
-let totalPage;
-const first = 0;
-let last = offset;
 let cnt = 0;
 let cntPageNum=0;
-let cateID='id!=notice';
+let cateID='';
 
 let url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -67,7 +62,7 @@ function fetchPost() {
         <td>${cntPageNum+i+1}</td>
         <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
             style="cursor:pointer">${data.data.posts[i].title}</td>
-        <td>${data.data.posts[i].writerName || ""}</td>
+        <td>${data.data.posts[i].writerName || "익명"}</td>
         <td>${data.data.posts[i].createdAt}</td>
         <td>${data.data.posts[i].updatedAt || ""}</td>
         <td>${data.data.posts[i].category}</td>
@@ -86,9 +81,6 @@ function showPagination() {
                 </li>`;
     let pageGroup = Math.ceil(currentPage / 5);
     let last_num = pageGroup * 5;
-    if (last_num > totalPage) {
-        last = totalPage;
-    }
 
     let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
     for (let i = first_num; i <= last_num; i++) {
@@ -128,13 +120,7 @@ async function movePreviousPage() {
 }
 
 function checktoGoDetailPage(Id){
-    let user_type = localStorage.getItem("userType");
-    if(user_type===null){
-        alert("블로그 회원만 조회 가능합니다.");
-    }
-    else{
-        window.location.href=`posts_detail.html?postId=${Id}`;
-    }
+    window.location.href=`posts_detail.html?postId=${Id}`;
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
@@ -166,12 +152,19 @@ function CategoryEn2Kr(category){
 }
 //카테고리 클릭시 해당하는 게시글 목록을 보여줌
 function clickCategory(Category){
-    cateID=`id=${Category}`;
-    currentPage=1;
-    url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
-    getArticleCount();
-    fetchPost();
-    showPagination();
+    //비회원은 스터디게시글만 보여주게 함
+    let userType = localStorage.getItem("userType");
+    if(userType==="anonymous" && Category!=='study'){
+        alert("비회원은 스터디 글만 볼수 있습니다.")
+    }
+    else{
+        cateID=`id=${Category}`;
+        currentPage=1;
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        getArticleCount();
+        fetchPost();
+        showPagination();
+    }
 }
 //카테고리 별 게시글 수 표시:
 // 카테고리에 변경 있을시 인덱스를 직접 수정해주어야함(카테고리명으로 인덱싱하는방법?)
@@ -181,12 +174,42 @@ function categoryPostCountCheck(Cdata){
     const c_memory = document.querySelector(".category #memory_count");
     const c_reference = document.querySelector(".category #reference_count");
     const c_knowhow = document.querySelector(".category #knowhow_count");
-    c_study.innerHTML=`(${Cdata[1].count})`;
+    c_study.innerHTML=`(${Cdata[0].count})`;
     c_memory.innerHTML=`(${Cdata[2].count})`;
     c_reference.innerHTML=`(${Cdata[3].count})`;
     c_knowhow.innerHTML=`(${Cdata[4].count})`;
 }
 
-getArticleCount();
-fetchPost();
-showPagination();
+function ShowPostsByCategory(){
+    const Url = window.location.href;
+    const arr = Url.split("?category=");
+    let get_category_from_url
+    if(arr.length<2)
+        get_category_from_url="undefined"
+    else{
+        get_category_from_url = arr[1];
+    }
+
+    if(get_category_from_url==="undefined"){
+        cateID="";
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        fetchPost();
+        showPagination();
+    }
+    else{
+        cateID=`id=${get_category_from_url}`;
+        url = `http://34.64.161.55:8001/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+        fetchPost();
+        showPagination();
+    }
+}
+
+function checktoShowPostAddButton(){
+    const post_add_button = document.getElementById("post-add-button");
+    let userType= localStorage.getItem("userType");
+    if(userType==="anonymous")
+        post_add_button.classList.add("hidden");
+}
+
+ShowPostsByCategory();
+checktoShowPostAddButton();

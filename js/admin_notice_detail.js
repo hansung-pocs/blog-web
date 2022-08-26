@@ -15,6 +15,7 @@ const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
 const d_url = `http://34.64.161.55:8001/posts/${notice_Id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
+let writerId;
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 수정때 쓰일 변수들
@@ -28,7 +29,7 @@ function fetchAdminNotice(){
         .then((data) => {
             console.log(data);
 
-            if(data.status===404 || data.status===500){
+            if(data.status===404){
                 notice_title_first.innerHTML =`삭제된 게시글입니다.`
                 admin_notice_buttons.classList.add("hidden");
             }
@@ -37,13 +38,14 @@ function fetchAdminNotice(){
                 notice_title_second.innerHTML = `<div>${data.data.category}  |</div>
             <div> ${data.data.createdAt}  | </div>
             <div> ${data.data.updatedAt || ""}  | </div>
-            <div> ${data.data.writer.name} </div>
+            <div> ${data.data.writer.name || "익명"} </div>
             `;
                 notice_detail_content.innerHTML = `<div>${data.data.content}</div>`;
 
                 present_page_title = data.data.title;
                 present_page_content = data.data.content;
                 category = data.data.category;
+                writerId = data.data.writer.userId;
             }
         })
 }
@@ -60,10 +62,19 @@ function noticeEditPage(){
 
 //공지사항 수정하기 버튼 눌렀을때 호출되는 함수
 async function noticeEdit(){
+    if(category==="추억")
+        category= "memory";
+    else if(category==="추천")
+        category="reference";
+    else if(category==="스터디")
+        category="study";
+    else if(category==="노하우")
+        category="knowhow";
+
     const sendData={
         title : notice_title.value,
         content: notice_content.value,
-        userId: userId,
+        userId: writerId,
         category : category
     };
 

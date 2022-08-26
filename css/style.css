@@ -38,4 +38,11 @@ nav {
     border-color : white;
 }
 
+#card-area{
+    text-align: center;
+    height : 200px;
+    font-size: 40px;
+    border-color : white;
+}
+
 

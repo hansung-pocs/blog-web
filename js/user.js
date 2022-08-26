@@ -181,5 +181,10 @@ radio0.addEventListener("click", onClick);
 radio1.addEventListener("click", onClick);
 radio2.addEventListener("click", onClick);
 
+async function searchName(name){
+    url = `http://34.64.161.55:8001/users?search=${name}&offset=${offset}&pageNum=${currentPage}`;
+    await doFetch();
+}
+
 doFetch();
 showPagination();

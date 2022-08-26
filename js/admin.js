@@ -75,7 +75,19 @@ function fetchUser() {
             } else {
                 for (let i = 0; i < data.data.users.length; i++) {
                     User_cntPageNum = 15 * User_currentPage - 15;
-                    user_tbody.innerHTML += `
+                    if(data.data.users[i].type==="anonymous"){
+                        user_tbody.innerHTML += `
+                <tr>
+                    <td>${User_cntPageNum + i + 1}</td>
+                    <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
+                        style="pointer">익명${data.data.users[i].userId}</td>
+                    <td>${""}</td>
+                    <td>${""}</td>
+                </tr>
+                `;
+                    }
+                    else{
+                        user_tbody.innerHTML += `
                 <tr>
                     <td>${User_cntPageNum + i + 1}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
@@ -84,6 +96,7 @@ function fetchUser() {
                     <td>${data.data.users[i].defaultInfo.email || ""}</td>
                 </tr>
                 `;
+                    }
                 }
             }
         });
