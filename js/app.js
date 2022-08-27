@@ -58,7 +58,7 @@ fetch(url, {headers: header})
             if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-notice-button").classList.add("hidden");
-                best_card.innerHTML += `
+                notice_card.innerHTML += `
                 <div class="card" id="card-area">
             <div class="card-body">
                 <img src="../img/Pencil_icon.png" style="width : 100px;">
@@ -100,7 +100,7 @@ fetch(url, {headers: header})
             if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-study-button").classList.add("hidden");
-                best_card.innerHTML += `
+                study_card.innerHTML += `
                 <div class="card" id="card-area">
             <div class="card-body">
                 <img src="../img/Pencil_icon.png" style="width : 100px;">
@@ -141,7 +141,7 @@ fetch(url, {headers: header})
             if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-memory-button").classList.add("hidden");
-                best_card.innerHTML += `
+                memory_card.innerHTML += `
                 <div class="card" id="card-area">
             <div class="card-body">
                 <img src="../img/Pencil_icon.png" style="width : 100px;">
@@ -182,7 +182,7 @@ fetch(url, {headers: header})
             if (data.data.posts.length === 0) {
                 //더보기 버튼 삭제
                 document.getElementById("category-knowhow-button").classList.add("hidden");
-                best_card.innerHTML += `
+                knowhow_card.innerHTML += `
                 <div class="card" id="card-area">
             <div class="card-body">
                 <img src="../img/Pencil_icon.png" style="width : 100px;">
