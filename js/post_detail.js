@@ -26,6 +26,7 @@ async function PostDetailPage() {
             } else {
                 notice_title_first.innerHTML = `<h3>[<span id="title_category">${data.data.category}</span>]${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `
+                <div class="me-2">${data.data.onlyMember ? "회원 전용 | " : ""}</div>
             <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
             <div class="me-2"> ${data.data.writer.name || `익명`} </div>
             <div>조회수 ${data.data.views}</div>

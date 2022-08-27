@@ -24,10 +24,11 @@ async function NoticeDetailPage() {
             } else {
                 notice_title_first.innerHTML = `<h3>[<span id="title_category">${data.data.category}</span>]${data.data.title}</h3>`;
                 notice_title_second.innerHTML = `
-            <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
-            <div class="me-2"> ${data.data.writer.name} </div>
-            <div>조회수 ${data.data.views}</div>
-            `;
+                <div class="me-2">${data.data.onlyMember ? "회원 전용 | " : ""}</div>
+                <div class="me-2">${data.data.updatedAt || data.data.createdAt}</div>
+                <div class="me-2"> ${data.data.writer.name} </div>
+                <div>조회수 ${data.data.views}</div>
+                `;
                 notice_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
                 userId = data.data.writer.userId;
             }
