@@ -21,7 +21,7 @@ function NoticeEditPage(){
             console.log(data);
             notice_title.value = `${data.data.title}`;
             notice_content.value = `${data.data.content}`;
-
+            flexCheckDefault.checked = data.data.onlyMember;
             user_Id = data.data.writer.userId;
             category = data.data.category;
             console.log(user_Id);
