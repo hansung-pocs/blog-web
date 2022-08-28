@@ -19,13 +19,16 @@ function checkNonMember(input_type="comment"){
     const reply_input = document.querySelector(".reply_input");
     const reply_input_btn = document.querySelector(".reply_input_btn");
     const category = document.querySelector("#title_category"); //html을 통해서 카테고리 정보 가져옴
-    if(category.innerHTML=="Q/A")
+    const checkPostWriter = qaWriterId; //qa_detail.js로부터 받아온 정보
+    if(category.innerHTML=="Q/A" && checkUserId==checkPostWriter)//&&자기 자신의 qna 게시글은 댓글 등록 허용
         return;
     if (userType === "anonymous") {// && Category !== 'qna'|| Category !== 'qna') {
         comment_input.placeholder = '회원만 작성할 수 있습니다.';
         comment_input_btn.classList.add('hidden');
-        reply_input.placeholder = '회원만 작성할 수 있습니다.';
-        reply_input_btn.classList.add('hidden');
+        if(reply_input!=null){ //답글이 있을때
+            reply_input.placeholder = '회원만 작성할 수 있습니다.';
+            reply_input_btn.classList.add('hidden');
+        }
     }
 }
 
