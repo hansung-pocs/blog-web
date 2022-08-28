@@ -28,11 +28,11 @@ function fetchPost() {
             categoryPostCountCheck(data.data.categories);
             thead.innerHTML = `<tr>
         <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일</th>
-        <th>수정일</th>
-        <th>카테고리</th>
+        <th class="text-center">제목</th>
+        <th class="text-center">작성자</th>
+        <th class="text-center">작성일</th>
+        <th class="text-center">수정일</th>
+        <th class="text-center">카테고리</th>
     </tr>`;
             tbody.innerHTML = "";
             if (data.data === null) {
@@ -51,13 +51,13 @@ function fetchPost() {
                     }else{
                         tbody.innerHTML += `
                         <tr>
-                        <td>${data.data.posts[i].postId}</td>
-                        <td  onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
-                            style="cursor:pointer">${data.data.posts[i].title}</td>
-                        <td>${data.data.posts[i].writerName || "익명"}</td>
-                        <td>${data.data.posts[i].createdAt}</td>
-                        <td>${data.data.posts[i].updatedAt || ""}</td>
-                        <td>${data.data.posts[i].category}</td>
+                        <td class="text-muted w-10">${data.data.posts[i].postId}</td>
+                        <td onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
+                            style="cursor:pointer; width:50%">${data.data.posts[i].title}</td>
+                        <td class="text-muted w-10 text-center">${data.data.posts[i].writerName || "익명"}</td>
+                        <td class="text-muted w-10 text-center">${data.data.posts[i].createdAt}</td>
+                        <td class="text-muted w-10 text-center">${data.data.posts[i].updatedAt || ""}</td>
+                        <td class="text-muted w-10 text-center">${data.data.posts[i].category}</td>
                         </tr>
                         `;
                     }
