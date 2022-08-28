@@ -4,6 +4,7 @@ const id = arr[1];
 const url = `http://34.64.161.55:8001/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({'x-pocs-session-token' : sessiontoken});
+const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
 //공지사항 제목, 공지사항 내용 가져오기
 const qa_title = document.querySelector("#title");
@@ -17,6 +18,7 @@ function QaEditPage() {
             console.log(data);
             qa_title.value = `${data.data.title}`;
             qa_content.value = `${data.data.content}`;
+            flexCheckDefault.checked = data.data.onlyMember;
             user_Id = data.data.writer.userId;
             // category = data.data.category;
             console.log(user_Id);
@@ -29,6 +31,7 @@ async function QaEdit() {
         userId: user_Id,
         title: qa_title.value,
         content: qa_content.value,
+        onlyMember: flexCheckDefault.checked,
         category: "qna",
     };
 

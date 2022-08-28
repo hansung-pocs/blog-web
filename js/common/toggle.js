@@ -138,6 +138,12 @@ async function handleNavigation(){
                 userList.classList.toggle("hidden");
             }
         }
+        else if(window.location.href.match("qa_add") != null){
+            if (user.type != "anonymous") {
+                const onlyMemberCheckBox = document.getElementById("title-below-area");
+                onlyMemberCheckBox.classList.toggle("hidden");
+            }
+        }
     }
 }
 
