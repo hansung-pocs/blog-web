@@ -26,11 +26,11 @@ async function fetchNotice() {
             console.log(data);
             thead.innerHTML = `<tr>
                 <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>수정일</th>
-                <th>카테고리</th>
+                <th class="text-center">제목</th>
+                <th class="text-center">작성자</th>
+                <th class="text-center">작성일</th>
+                <th class="text-center">수정일</th>
+                <th class="text-center">카테고리</th>
             </tr>`;
             tbody.innerHTML = "";
             if (data.data === null) {
@@ -53,13 +53,13 @@ async function fetchNotice() {
                    else{
                         tbody.innerHTML += `
                 <tr>
-                <td>${data.data.posts[i].postId}</td>
+                <td class="text-muted w-10">${data.data.posts[i].postId}</td>
                 <td onclick="window.location.href='notices_detail.html?postId=${data.data.posts[i].postId}'"
-                    style="cursor:pointer">${data.data.posts[i].title}</td>
-                <td>${data.data.posts[i].writerName}</td>
-                <td>${data.data.posts[i].createdAt}</td>
-                <td>${data.data.posts[i].updatedAt || ""}</td>
-                <td>${data.data.posts[i].category}</td>
+                    style="cursor:pointer; width:50%"">${data.data.posts[i].title}</td>
+                <td class="text-muted w-10 text-center">${data.data.posts[i].writerName}</td>
+                <td class="text-muted w-10 text-center">${data.data.posts[i].createdAt}</td>
+                <td class="text-muted w-10 text-center">${data.data.posts[i].updatedAt || ""}</td>
+                <td class="text-muted w-10 text-center">${data.data.posts[i].category}</td>
                 </tr>
                 `;
                     }
