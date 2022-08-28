@@ -81,7 +81,7 @@ async function checkComments(c_url){
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cwid}, ${cid})">수정</a></li>
-                                            <li><a class="dropdown-item" onclick="DeleteComment(${cid})">삭제</a></li>
+                                            <li><a class="dropdown-item" onclick="DeleteComment(${cwid}, ${cid})">삭제</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@ async function checkComments(c_url){
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" onclick="clickEditCommentBtn(${cwid},${cid},'reply')">수정</a></li>
-                                            <li><a class="dropdown-item" onclick="DeleteComment(${cid},'reply')">삭제</a></li>
+                                            <li><a class="dropdown-item" onclick="DeleteComment(${cwid}, ${cid},'reply')">삭제</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -194,15 +194,20 @@ async function AddComment(pId=null,type="comment") {
     console.log(sendData);
     const response = await fetch(`http://34.64.161.55:8001/comments`, options);
     const result = await response.json();
-    console.log(result,response);
-    alert('댓글이 등록되었습니다');
-    //result 404면 중복 금지
-    checkComments(c_url);
+    console.log(result);
+
+    if(result.status === 201) {
+        alert(result.message);
+        //result 404면 중복 금지
+        checkComments(c_url);
+    } else {
+        alert(result.message);
+    }
 }
 //수정 버튼 클릭후 댓글내용을 입력창으로 변경
 // 댓글 작성자만 수정 가능
 function clickEditCommentBtn(writerId, commentId, type = "comment") {
-    if (checkUserId == writerId) {
+    if (checkUserId === writerId) {
         console.log(`#${type}${commentId} .content`);
         const content = document.querySelector(`#${type}${commentId} .content`);
         const contentEdit = document.querySelector(`#${type}${commentId} .contentEdit`);
@@ -248,26 +253,30 @@ async function EditComment(id,type="comment") {
 
 }
 //댓글 삭제
-async function DeleteComment(id) {
-    const options = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-pocs-session-token' : sessionToken
-        }
-    };
-    const response = await fetch(`http://34.64.161.55:8001/comments/${id}/delete`, options);
-    const result = await response.json();
-    console.log(result);
-
-    if(result.status === 201) {
-        //삭제전 확인 한번 더 필요함
-        alert(result.message);
-        checkComments(c_url);    
-    } else {
-        alert(result.message);
-    }
+// 댓글 삭제는 관리자, 댓글 작성자만 삭제 가능
+async function DeleteComment(writerId, commentId) {
+    if(checkUserType === "admin" || checkUserId === writerId) {
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-pocs-session-token' : sessionToken
+            }
+        };
+        const response = await fetch(`http://34.64.161.55:8001/comments/${commentId}/delete`, options);
+        const result = await response.json();
+        console.log(result);
     
+        if(result.status === 201) {
+            //삭제전 확인 한번 더 필요함
+            alert(result.message);
+            checkComments(c_url);    
+        } else {
+            alert(result.message);
+        }
+    } else {
+        alert("댓글 작성자만 삭제 가능합니다");
+    }
 }
 //답글 hidden/non-hidden
 function commentBtnClick(id) {
@@ -281,7 +290,7 @@ function commentBtnClick(id) {
 // 관리자와 댓글 작성자에게만 수정, 삭제 버튼 보이게함
 function commentEditDelBtn(writerId, commentId) {
     const editDelBtn = document.querySelector(`#editDelBtn${commentId}`);
-    if (checkUserType == "admin" || checkUserId == writerId) {
+    if (checkUserType === "admin" || checkUserId === writerId) {
         //console.log(editDelBtn);
         editDelBtn.classList.replace("hidden", "non-hidden");
     } else {
