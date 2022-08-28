@@ -119,15 +119,11 @@ function backToQaList() {
   window.location.href = "../html/qa.html";
 }
 
-// 비회원만 질문 작성 가능
+// 모든 회원이 질문 작성 가능
 function moveQaAddPage() {
   const checkUserType = localStorage.getItem("userType");
   console.log(checkUserType);
-  if(checkUserType === "anonymous" || checkUserType === null) {
-    window.location.href = "../html/qa_add.html";
-  } else {
-    alert("비회원만 작성할 수 있습니다");
-  }
+  window.location.href = "../html/qa_add.html";
 }
 
 getArticleCount();
