@@ -59,23 +59,23 @@
 <body class="text-center">
     <main class="form-signin">
         <form id="loginForm">
-            <img class="mb-4" src="../img/pocs.jpg" alt="" width="72" height="57">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+            <!-- <img class="mb-4" src="../img/pocs.jpg" alt="" width="72" height="57"> -->
+            <p class="mb-5 fw-bold" style="font-size: 58px;">Pocs Blog</p>
             <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-                <label for="floatingInput">ID</label>
+                <label for="floatingInput">아이디</label>
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-                <label for="floatingPassword">Password</label>
+                <label for="floatingPassword">비밀번호</label>
             </div>
-            <div style="margin-bottom : 1em;">
+            <button id="loginBtn" class="w-100 btn btn-lg btn-primary p-1 mb-1 fs-6" type="submit">로그인</button>
+
+            <button class="w-100 btn btn-lg btn-secondary p-1 opacity-50 fs-6" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">비회원 등록</button>
+            <!-- <div style="margin-bottom : 1em;">
                 <a href="" class="link-primary" data-bs-toggle="modal"
                    data-bs-target="#exampleModal">비회원 등록</a>
-            </div>
-
-            <button id="loginBtn" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            </div> -->
             <p class="mt-5 mb-3 text-muted">©POCS</p>
         </form>
 
