@@ -31,16 +31,66 @@ fetch(url, {headers: header})
         }
         else {
             for (let i = 0; i < data.data.bestPosts.length; i++) {
-                best_card.innerHTML +=
-                    `
-                    <div class="col-xl">
+                if (data.data.bestPosts[i].content.length > 30) {
+                    if(data.data.bestPosts[i].category === "notice"){
+                        best_card.innerHTML +=
+                        `
+                        <div class="col-xl">
                         <div class="card">
-                            <div class="card-header">${data.data.bestPosts[i].title}</div>
-                            <div class="card-body">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</div>
-                           <div class="card-footer">${data.data.bestPosts[i].content.length > 30 ? data.data.bestPosts[i].content.substring(0, 30) + "..." : data.data.bestPosts[i].content}</div>
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.bestPosts[i].content.substring(0, 30) + "..."}<a href="notices_detail.html?postId=${data.data.bestPosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
                         </div>
-                    </div>
-                     `;
+                        </div>
+                         `;
+                    }
+                    else{
+                        best_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.bestPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.bestPosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                    }
+                }
+                else{
+                    if(data.data.bestPosts[i].category === "notice"){
+                        best_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.bestPosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                    }
+                    else{
+                        best_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.bestPosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                    }
+                }
             }
         }
 
@@ -60,17 +110,40 @@ fetch(url, {headers: header})
         }
         else {
             for (let i = 0; i < data.data.noticePosts.length; i++) {
-                notice_card.innerHTML +=
-                    `
-                <div class="col-xl">
-                    <div class="card">
-                        <div class="card-header">${data.data.noticePosts[i].title}</div>
-                        <div class="card-body">${data.data.noticePosts[i].writerName || "익명"} - ${data.data.noticePosts[i].createdAt}</div>
-                       <div class="card-footer">${data.data.noticePosts[i].content.length > 30 ? data.data.noticePosts[i].content.substring(0, 30) + "..." : data.data.noticePosts[i].content}</div>
-                    </div>
-                </div>
-                 `;
+                if (data.data.noticePosts[i].content.length > 30) {
+                    
+                    notice_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} - ${data.data.noticePosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.noticePosts[i].content.substring(0, 30) + "..."}<a href="notices_detail.html?postId=${data.data.noticePosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                    
+                }
+                else{
+                    notice_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} - ${data.data.noticePosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.noticePosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                }
             }
+
+
+            
         }
 
         //studyPosts
@@ -89,16 +162,34 @@ fetch(url, {headers: header})
         }
         else {
             for (let i = 0; i < data.data.studyPosts.length; i++) {
-                study_card.innerHTML +=
-                    `
-                <div class="col-xl">
-                    <div class="card">
-                        <div class="card-header">${data.data.studyPosts[i].title}</div>
-                        <div class="card-body">${data.data.studyPosts[i].writerName || "익명"} - ${data.data.studyPosts[i].createdAt}</div>
-                       <div class="card-footer">${data.data.studyPosts[i].content.length > 30 ? data.data.studyPosts[i].content.substring(0, 30) + "..." : data.data.studyPosts[i].content}</div>
-                    </div>
-                </div>
-                 `;
+                if (data.data.studyPosts[i].content.length > 30) {
+                    study_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} - ${data.data.studyPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.studyPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.studyPosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                }
+                else{
+                    study_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} - ${data.data.studyPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.studyPosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;   
+                }
             }
         }
 
@@ -118,16 +209,34 @@ fetch(url, {headers: header})
         }
         else{
             for (let i = 0; i < data.data.memoryPosts.length; i++) {
-                memory_card.innerHTML +=
-                    `
-                <div class="col-xl">
-                    <div class="card">
-                        <div class="card-header">${data.data.memoryPosts[i].title}</div>
-                        <div class="card-body">${data.data.memoryPosts[i].writerName || "익명"} - ${data.data.memoryPosts[i].createdAt}</div>
-                       <div class="card-footer">${data.data.memoryPosts[i].content.length > 30 ? data.data.memoryPosts[i].content.substring(0, 30) + "..." : data.data.memoryPosts[i].content}</div>
-                    </div>
-                </div>
-                 `;
+                if (data.data.memoryPosts[i].content.length > 30) {
+                    memory_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} - ${data.data.memoryPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.memoryPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.memoryPosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                }
+                else{
+                    memory_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} - ${data.data.memoryPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.memoryPosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;   
+                }
             }
         }
 
@@ -147,16 +256,34 @@ fetch(url, {headers: header})
         }
         else{
             for (let i = 0; i < data.data.knowhowPosts.length; i++) {
-                knowhow_card.innerHTML +=
-                    `
-                <div class="col-xl">
-                    <div class="card">
-                        <div class="card-header">${data.data.knowhowPosts[i].title}</div>
-                        <div class="card-body">${data.data.knowhowPosts[i].writerName || "익명"} - ${data.data.knowhowPosts[i].createdAt}</div>
-                       <div class="card-footer">${data.data.knowhowPosts[i].content.length > 30 ? data.data.knowhowPosts[i].content.substring(0, 30) + "..." : data.data.knowhowPosts[i].content}</div>
-                    </div>
-                </div>
-                 `;
+                if (data.data.knowhowPosts[i].content.length > 30) {
+                    knowhow_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} - ${data.data.knowhowPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.knowhowPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.knowhowPosts[i].postId}" class="card-link">더보기</a></p>
+                          </div>
+                        </div>
+                        </div>
+                         `;
+                }
+                else{
+                    knowhow_card.innerHTML +=
+                        `
+                        <div class="col-xl">
+                        <div class="card">
+                          <div class="card-body">
+                            <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} - ${data.data.knowhowPosts[i].createdAt}</h6>
+                            <p class="card-text">${data.data.knowhowPosts[i].content}</p>
+                          </div>
+                        </div>
+                        </div>
+                         `;   
+                }
             }
         }
     })
