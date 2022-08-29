@@ -26,6 +26,7 @@ function fetchPost() {
             console.log(data);
             console.log(url);
             categoryPostCountCheck(data.data.categories);
+            drawCategoryColor(cateID);
             thead.innerHTML = `<tr>
         <th>번호</th>
         <th class="text-center">제목</th>
@@ -171,6 +172,17 @@ async function clickCategory(Category) {
         await fetchPost();
         await showPagination();
     }
+}
+
+function drawCategoryColor(CateId){
+    if(CateId==null || CateId=='')
+        return;
+    let Category = (CateId.split('='))[1];
+    const categories= document.querySelectorAll(`.category .list-group-item`);
+    const category= document.querySelector(`.category #${Category}`);
+    for(let n=0;n<categories.length;n++)
+        categories[n].style.backgroundColor='white';
+    category.style.backgroundColor='lightblue';
 }
 
 async function getCategoriesCount(category) {
