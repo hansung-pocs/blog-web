@@ -50,3 +50,7 @@ nav {
     justify-content: space-between;
     algien-items : center;
 }
+
+a {
+    text-decoration-line: none;
+  }
