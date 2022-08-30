@@ -45,14 +45,10 @@ async function fetchNotice() {
             if (data.data === null) {
                 notice_tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                //백엔드 api에서 삭제된 게시글 포함 전체 게시글 갯수를 알려주어야함(현재 미구현)
-                let countAllPosts=0;
-                for (let i = 0; i < data.data.categories.length; i++) {
-                    countAllPosts+= data.data.categories[i].count;
-                }
-                Notice_totalPage = Math.ceil(countAllPosts / 15);
-                //
-                for (let i = 0; i < 15; i++) {
+                Notice_totalPage = Math.ceil((data.data.categories[0].count + data.data.categories[1].count +
+                    data.data.categories[2].count + data.data.categories[3].count + data.data.categories[4].count +
+                    data.data.categories[5].count) / 15);
+                for (let i = 0; i < data.data.posts.length; i++) {
                     notice_tbody.innerHTML += `
                 <tr>
                 <td>${data.data.posts[i].postId}</td>
@@ -144,8 +140,7 @@ function moveAdminNoticePage(pageNum) {
 }
 
 function moveNextNoticePage() {
-    //지금은 삭제된 게시글을 제외하고 카운트해서 잘린 부분이 있음/수정되면 해당 주석 지울것
-    // if (Notice_currentPage >= Notice_totalPage) return;
+    if (Notice_currentPage >= Notice_totalPage) return;
     Notice_currentPage++;
     post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
     fetchNotice();
