@@ -36,7 +36,7 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='notices_detail.html?postId=${data.data.bestPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
@@ -50,7 +50,7 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.bestPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
@@ -66,7 +66,7 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='notices_detail.html?postId=${data.data.bestPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
@@ -80,7 +80,7 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.bestPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
@@ -115,7 +115,7 @@ fetch(url, {headers: header})
                     notice_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='notices_detail.html?postId=${data.data.noticePosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} · ${data.data.noticePosts[i].createdAt}</h6>
@@ -130,7 +130,7 @@ fetch(url, {headers: header})
                     notice_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='notices_detail.html?postId=${data.data.noticePosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} · ${data.data.noticePosts[i].createdAt}</h6>
@@ -166,7 +166,7 @@ fetch(url, {headers: header})
                     study_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.studyPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} · ${data.data.studyPosts[i].createdAt}</h6>
@@ -180,7 +180,7 @@ fetch(url, {headers: header})
                     study_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.studyPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} · ${data.data.studyPosts[i].createdAt}</h6>
@@ -213,7 +213,7 @@ fetch(url, {headers: header})
                     memory_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.memoryPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} · ${data.data.memoryPosts[i].createdAt}</h6>
@@ -227,7 +227,7 @@ fetch(url, {headers: header})
                     memory_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.memoryPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} · ${data.data.memoryPosts[i].createdAt}</h6>
@@ -260,7 +260,7 @@ fetch(url, {headers: header})
                     knowhow_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.knowhowPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} · ${data.data.knowhowPosts[i].createdAt}</h6>
@@ -274,7 +274,7 @@ fetch(url, {headers: header})
                     knowhow_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div id="main" class="card">
+                        <div id="main" class="card" onClick="location.href='posts_detail.html?postId=${data.data.knowhowPosts[i].postId}'">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
                             <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} · ${data.data.knowhowPosts[i].createdAt}</h6>
