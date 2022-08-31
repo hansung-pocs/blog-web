@@ -14,18 +14,20 @@ const user_tbody = document.querySelector("#user table tbody");
 
 //공지사항 pagination에 필요한 변수
 let Notice_currentPage = 1;
+let Notice_totalPage;
 
 //유저목록 pagination에 필요한 변수
 let User_cntPageNum = 0;
 let User_currentPage = 1;
+let User_totalPage;
 
 const offset = 15;
 
 let post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
 let user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
 
-function fetchNotice() {
-    fetch(post_url, {headers: header})
+async function fetchNotice() {
+    await fetch(post_url, {headers: header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -43,7 +45,10 @@ function fetchNotice() {
             if (data.data === null) {
                 notice_tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
             } else {
-                for (let i = 0; i < 15; i++) {
+                Notice_totalPage = Math.ceil((data.data.categories[0].count + data.data.categories[1].count +
+                    data.data.categories[2].count + data.data.categories[3].count + data.data.categories[4].count +
+                    data.data.categories[5].count) / 15);
+                for (let i = 0; i < data.data.posts.length; i++) {
                     notice_tbody.innerHTML += `
                 <tr>
                 <td>${data.data.posts[i].postId}</td>
@@ -58,10 +63,11 @@ function fetchNotice() {
                 }
             }
         });
+    await showNoticePagination();
 }
 
-function fetchUser() {
-    fetch(user_url, {headers: header})
+async function fetchUser() {
+    await fetch(user_url, {headers: header})
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
@@ -70,6 +76,7 @@ function fetchUser() {
             if (data.data.users === null) {
                 user_tbody.innerHTML = "<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
             } else {
+                User_totalPage=Math.ceil(data.data.countAllUsers/15);
                 for (let i = 0; i < data.data.users.length; i++) {
                     if(data.data.users[i].type==="anonymous"){
                         user_tbody.innerHTML += `
@@ -96,6 +103,7 @@ function fetchUser() {
                 }
             }
         });
+    await showUserPagination();
 }
 
 //Noticepgaination 구현
@@ -105,10 +113,13 @@ function showNoticePagination() {
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true" onclick="movePreviousNoticePage()">Previous</a>
                 </li>`;
     let pageGroup = Math.ceil(Notice_currentPage / 5);
-    let last_num = pageGroup * 5;
-
-    let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
-    for (let i = first_num; i <= last_num; i++) {
+    let last = pageGroup * 5;
+    if (last > Notice_totalPage) {
+        // 마지막 그룹이 5개 이하이면
+        last = Notice_totalPage;
+    }
+    let first_num = last - 4 <= 0 ? 1 : last - 4;
+    for (let i = first_num; i <= last; i++) {
         pageHTML += `<li class="page-item ${Notice_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveAdminNoticePage(${i})">${i}</a></li>`;
     }
 
@@ -129,6 +140,7 @@ function moveAdminNoticePage(pageNum) {
 }
 
 function moveNextNoticePage() {
+    if (Notice_currentPage >= Notice_totalPage) return;
     Notice_currentPage++;
     post_url = `http://34.64.161.55:8001/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
     fetchNotice();
@@ -151,10 +163,13 @@ function showUserPagination() {
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true" onclick="movePreviousUserPage()">Previous</a>
                 </li>`;
     let pageGroup = Math.ceil(User_currentPage / 5);
-    let last_num = pageGroup * 5;
-
-    let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
-    for (let i = first_num; i <= last_num; i++) {
+    let last = pageGroup * 5;
+    if (last > User_totalPage) {
+        // 마지막 그룹이 5개 이하이면
+        last = User_totalPage;
+    }
+    let first_num = last - 4 <= 0 ? 1 : last - 4;
+    for (let i = first_num; i <= last; i++) {
         pageHTML += `<li class="page-item ${User_currentPage == i ? "active" : ""}"><a class="page-link" onclick="moveAdminUserPage(${i})">${i}</a></li>`;
     }
 
@@ -175,6 +190,7 @@ function moveAdminUserPage(pageNum) {
 }
 
 function moveNextUserPage() {
+    if (User_currentPage >= User_totalPage) return;
     User_currentPage++;
     user_url = `http://34.64.161.55:8001/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
     fetchUser();
@@ -208,5 +224,5 @@ function moveNoticeDetailPage(postId) {
 
 fetchNotice();
 fetchUser();
-showNoticePagination();
-showUserPagination();
+// showNoticePagination();
+// showUserPagination();

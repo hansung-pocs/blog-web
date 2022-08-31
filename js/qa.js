@@ -13,6 +13,7 @@ const offset=15;
 let currentPage = 1;
 let cnt = 0;
 let cntPageNum=0;
+let totalPage;
 
 let url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
 
@@ -31,8 +32,8 @@ function getArticleCount() {
 }
 
 //공지사항 목록 조회
-function fetchQa() {
-  fetch(url ,{headers : header})
+async function fetchQa() {
+  await fetch(url ,{headers : header})
       .then((response) => response.json())
       .then((data) => {
           console.log(data);
@@ -48,6 +49,7 @@ function fetchQa() {
           if (data.data === null) {
               tbody.innerHTML = "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
           } else {
+              totalPage = Math.ceil(data.data.categories[5].count / 15);
               for (let i = 0; i < data.data.posts.length; i++) {
                   tbody.innerHTML += `
       <tr>
@@ -63,6 +65,7 @@ function fetchQa() {
               }
           }
       });
+  await showPagination();
 }
 
 //pgaination 구현
@@ -71,11 +74,15 @@ function showPagination() {
               <li class="page-item">
                   <a class="page-link" href="#" tabindex="-1" aria-disabled="true" onclick="movePreviousPage()">Previous</a>
               </li>`;
-  let pageGroup = Math.ceil(currentPage / 5);
-  let last_num = pageGroup * 5;
 
-  let first_num = last_num - 4 <= 0 ? 1 : last_num - 4;
-  for (let i = first_num; i <= last_num; i++) {
+  let pageGroup = Math.ceil(currentPage / 5);
+  let last = pageGroup * 5;
+  if (last > totalPage) {
+      // 마지막 그룹이 5개 이하이면
+      last = totalPage;
+  }
+  let first_num = last - 4 <= 0 ? 1 : last - 4;
+  for (let i = first_num; i <= last; i++) {
       pageHTML += `<li class="page-item ${currentPage == i ? "active" : ""}"><a class="page-link" onclick="movePage(${i})">${i}</a></li>`;
   }
 
@@ -96,6 +103,8 @@ function movePage(pageNum) {
 }
 
 function moveNextPage() {
+  if (currentPage >= totalPage)
+      return;
   currentPage++;
   url = `http://34.64.161.55:8001/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
@@ -128,4 +137,4 @@ function moveQaAddPage() {
 
 getArticleCount();
 fetchQa();
-showPagination();
+//showPagination();
