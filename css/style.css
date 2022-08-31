@@ -50,6 +50,14 @@ nav {
     justify-content: space-between;
     align-items : center;
 }
+
+a {
+    text-decoration-line: none;
+}
+
+#main.card:hover{
+    background-color: aliceblue;
+} 
 /* admin page userlist css */
 .user-list th {
     width: 30%;
