@@ -32,7 +32,8 @@ async function fetchNotice() {
         .then((data) => {
             console.log(data);
             post_data = data.data.posts;
-            notice_thead.innerHTML = `<tr>
+            notice_thead.innerHTML = `
+                <tr class="post-list">
                 <th>번호</th>
                 <th>제목</th>
                 <th>작성자</th>
@@ -50,10 +51,10 @@ async function fetchNotice() {
                     data.data.categories[5].count) / 15);
                 for (let i = 0; i < data.data.posts.length; i++) {
                     notice_tbody.innerHTML += `
-                <tr>
+                <tr class="post-list">
                 <td>${data.data.posts[i].postId}</td>
                 <td onclick="moveNoticeDetailPage(${post_data[i].postId})"
-                    style="cursor:pointer">${post_data[i].title}</td>
+                    >${post_data[i].title}</td>
                 <td>${post_data[i].writerName || "익명"}</td>
                 <td>${post_data[i].createdAt}</td>
                 <td>${post_data[i].updatedAt || ""}</td>
@@ -71,7 +72,13 @@ async function fetchUser() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            user_thead.innerHTML = "<tr><td>번호</td><td>성명</td><td>학번</td><td>e-mail</td></tr>";
+            user_thead.innerHTML = `
+                <tr class="user-list">
+                <th>번호</th>
+                <th>성명</th>
+                <th>학번</th>
+                <th>e-mail</th>
+                </tr>`;
             user_tbody.innerHTML = "";
             if (data.data.users === null) {
                 user_tbody.innerHTML = "<tr><td>유저를</td><td>추가</td><td>하세요.</td><td></td></tr>";
@@ -80,10 +87,10 @@ async function fetchUser() {
                 for (let i = 0; i < data.data.users.length; i++) {
                     if(data.data.users[i].type==="anonymous"){
                         user_tbody.innerHTML += `
-                <tr>
+                <tr class="user-list">
                     <td>${data.data.users[i].userId}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">익명${data.data.users[i].userId}</td>
+                        style="cursor:pointer">익명${data.data.users[i].userId}</td>
                     <td>${""}</td>
                     <td>${""}</td>
                 </tr>
@@ -91,12 +98,12 @@ async function fetchUser() {
                     }
                     else{
                         user_tbody.innerHTML += `
-                <tr>
+                <tr class="user-list">
                     <td>${data.data.users[i].userId}</td>
                     <td onclick="moveUserDetailPage(${data.data.users[i].userId})"
-                        style="pointer">${data.data.users[i].defaultInfo.name || `익명${data.data.users[i].userId}`}</td>
-                    <td>${data.data.users[i].defaultInfo.studentId || ""}</td>
-                    <td>${data.data.users[i].defaultInfo.email || ""}</td>
+                    style="cursor:pointer">${data.data.users[i].defaultInfo.name || `익명${data.data.users[i].userId}`}</td>
+                    <td>${data.data.users[i].defaultInfo.studentId || " "}</td>
+                    <td>${data.data.users[i].defaultInfo.email || " "}</td>
                 </tr>
                 `;
                     }

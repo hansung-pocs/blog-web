@@ -27,13 +27,13 @@ function fetchPost() {
             console.log(url);
             categoryPostCountCheck(data.data.categories);
             drawCategoryColor(cateID);
-            thead.innerHTML = `<tr>
+            thead.innerHTML = `<tr class="post-list">
         <th>번호</th>
-        <th class="text-center">제목</th>
-        <th class="text-center">작성자</th>
-        <th class="text-center">작성일</th>
-        <th class="text-center">수정일</th>
-        <th class="text-center">카테고리</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>수정일</th>
+        <th>카테고리</th>
     </tr>`;
             tbody.innerHTML = "";
             if (data.data === null) {
@@ -41,7 +41,7 @@ function fetchPost() {
             } else {
                 for (let i = 0; i < data.data.posts.length; i++) {
                     if(data.data.posts[i].onlyMember && userType ==="anonymous"){
-                        tbody.innerHTML += `<tr>
+                        tbody.innerHTML += `<tr class="post-list">
                         <td>${data.data.posts[i].postId}</td>
                         <td>비공개</td>
                         <td></td>
@@ -51,14 +51,14 @@ function fetchPost() {
                         </tr>`;
                     }else{
                         tbody.innerHTML += `
-                        <tr>
-                        <td class="text-muted w-10">${data.data.posts[i].postId}</td>
+                        <tr class="post-list">
+                        <td>${data.data.posts[i].postId}</td>
                         <td onclick="checktoGoDetailPage(${data.data.posts[i].postId})"
-                            style="cursor:pointer; width:50%">${data.data.posts[i].title}</td>
-                        <td class="text-muted w-10 text-center">${data.data.posts[i].writerName || "익명"}</td>
-                        <td class="text-muted w-10 text-center">${data.data.posts[i].createdAt}</td>
-                        <td class="text-muted w-10 text-center">${data.data.posts[i].updatedAt || ""}</td>
-                        <td class="text-muted w-10 text-center">${data.data.posts[i].category}</td>
+                            >${data.data.posts[i].title}</td>
+                        <td >${data.data.posts[i].writerName || "익명"}</td>
+                        <td>${data.data.posts[i].createdAt}</td>
+                        <td>${data.data.posts[i].updatedAt || ""}</td>
+                        <td>${data.data.posts[i].category}</td>
                         </tr>
                         `;
                     }
