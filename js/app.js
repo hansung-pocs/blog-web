@@ -36,10 +36,10 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.bestPosts[i].content.substring(0, 30) + "..."}<a href="notices_detail.html?postId=${data.data.bestPosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -50,10 +50,10 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.bestPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.bestPosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -66,10 +66,10 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.bestPosts[i].content}</p>
                           </div>
                         </div>
@@ -80,10 +80,10 @@ fetch(url, {headers: header})
                         best_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.bestPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} - ${data.data.bestPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.bestPosts[i].writerName || "익명"} · ${data.data.bestPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.bestPosts[i].content}</p>
                           </div>
                         </div>
@@ -115,10 +115,10 @@ fetch(url, {headers: header})
                     notice_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} - ${data.data.noticePosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} · ${data.data.noticePosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.noticePosts[i].content.substring(0, 30) + "..."}<a href="notices_detail.html?postId=${data.data.noticePosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -130,10 +130,10 @@ fetch(url, {headers: header})
                     notice_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.noticePosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} - ${data.data.noticePosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.noticePosts[i].writerName || "익명"} · ${data.data.noticePosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.noticePosts[i].content}</p>
                           </div>
                         </div>
@@ -166,10 +166,10 @@ fetch(url, {headers: header})
                     study_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} - ${data.data.studyPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} · ${data.data.studyPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.studyPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.studyPosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -180,10 +180,10 @@ fetch(url, {headers: header})
                     study_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.studyPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} - ${data.data.studyPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.studyPosts[i].writerName || "익명"} · ${data.data.studyPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.studyPosts[i].content}</p>
                           </div>
                         </div>
@@ -213,10 +213,10 @@ fetch(url, {headers: header})
                     memory_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} - ${data.data.memoryPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} · ${data.data.memoryPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.memoryPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.memoryPosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -227,10 +227,10 @@ fetch(url, {headers: header})
                     memory_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.memoryPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} - ${data.data.memoryPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.memoryPosts[i].writerName || "익명"} · ${data.data.memoryPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.memoryPosts[i].content}</p>
                           </div>
                         </div>
@@ -260,10 +260,10 @@ fetch(url, {headers: header})
                     knowhow_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} - ${data.data.knowhowPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} · ${data.data.knowhowPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.knowhowPosts[i].content.substring(0, 30) + "..."}<a href="posts_detail.html?postId=${data.data.knowhowPosts[i].postId}" class="card-link">더보기</a></p>
                           </div>
                         </div>
@@ -274,10 +274,10 @@ fetch(url, {headers: header})
                     knowhow_card.innerHTML +=
                         `
                         <div class="col-xl">
-                        <div class="card">
+                        <div id="main" class="card">
                           <div class="card-body">
                             <h3 class="card-title mb-3">${data.data.knowhowPosts[i].title}</h3>
-                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} - ${data.data.knowhowPosts[i].createdAt}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${data.data.knowhowPosts[i].writerName || "익명"} · ${data.data.knowhowPosts[i].createdAt}</h6>
                             <p class="card-text">${data.data.knowhowPosts[i].content}</p>
                           </div>
                         </div>
@@ -318,3 +318,5 @@ fetch(url, {headers: header})
             }
         }
     })
+
+  

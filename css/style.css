@@ -54,3 +54,8 @@ nav {
 a {
     text-decoration-line: none;
   }
+
+#main.card:hover{
+    background-color: aliceblue;    
+    cursor: pointer;
+}
