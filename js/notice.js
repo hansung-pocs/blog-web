@@ -24,13 +24,13 @@ async function fetchNotice() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            thead.innerHTML = `<tr>
+            thead.innerHTML = `<tr class="post-list">
                 <th>번호</th>
-                <th class="text-center">제목</th>
-                <th class="text-center">작성자</th>
-                <th class="text-center">작성일</th>
-                <th class="text-center">수정일</th>
-                <th class="text-center">카테고리</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>수정일</th>
+                <th>카테고리</th>
             </tr>`;
             tbody.innerHTML = "";
             if (data.data === null) {
@@ -40,7 +40,7 @@ async function fetchNotice() {
                 for (let i = 0; i < data.data.posts.length; i++) {
                     if(data.data.posts[i].onlyMember && userType ==="anonymous"){
                         tbody.innerHTML += `
-                <tr>
+                <tr class="post-list">
                 <td>${data.data.posts[i].postId}</td>
                 <td>비공개</td>
                 <td></td>
@@ -52,14 +52,14 @@ async function fetchNotice() {
                     }
                    else{
                         tbody.innerHTML += `
-                <tr>
-                <td class="text-muted w-10">${data.data.posts[i].postId}</td>
+                <tr class="post-list">
+                <td>${data.data.posts[i].postId}</td>
                 <td onclick="window.location.href='notices_detail.html?postId=${data.data.posts[i].postId}'"
-                    style="cursor:pointer; width:50%"">${data.data.posts[i].title}</td>
-                <td class="text-muted w-10 text-center">${data.data.posts[i].writerName}</td>
-                <td class="text-muted w-10 text-center">${data.data.posts[i].createdAt}</td>
-                <td class="text-muted w-10 text-center">${data.data.posts[i].updatedAt || ""}</td>
-                <td class="text-muted w-10 text-center">${data.data.posts[i].category}</td>
+                    style="cursor:pointer">${data.data.posts[i].title}</td>
+                <td>${data.data.posts[i].writerName}</td>
+                <td>${data.data.posts[i].createdAt}</td>
+                <td>${data.data.posts[i].updatedAt || ""}</td>
+                <td>${data.data.posts[i].category}</td>
                 </tr>
                 `;
                     }
