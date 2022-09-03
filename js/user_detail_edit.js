@@ -41,7 +41,7 @@ fetch(url, {headers : header})
 
             if(data.data.defaultInfo.company=='-' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.company==null)
                 company.value=``;
-            else company.value=`${data.data.company}`;
+            else company.value=`${data.data.defaultInfo.company}`;
             if(data.data.defaultInfo.github=='-' ||data.data.defaultInfo.github=='undefined'||data.data.defaultInfo.github==null)
                 github.value=``;
             else github.value=`${data.data.defaultInfo.github}`;
