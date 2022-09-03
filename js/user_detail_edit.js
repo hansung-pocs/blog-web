@@ -39,10 +39,10 @@ fetch(url, {headers : header})
             studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
             generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.defaultInfo.company=='-' ||data.data.defaultInfo.company=='undefined')
+            if(data.data.defaultInfo.company=='-' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.company==null)
                 company.value=``;
             else company.value=`${data.data.company}`;
-            if(data.data.defaultInfo.github=='-' ||data.data.defaultInfo.github=='undefined')
+            if(data.data.defaultInfo.github=='-' ||data.data.defaultInfo.github=='undefined'||data.data.defaultInfo.github==null)
                 github.value=``;
             else github.value=`${data.data.defaultInfo.github}`;
         }
