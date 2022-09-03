@@ -44,10 +44,10 @@ fetch(user_detail_url, {headers : header})
             studentId.innerHTML=`${data.data.defaultInfo.studentId}`;
             generation.innerHTML=`${data.data.defaultInfo.generation}`;
 
-            if(data.data.defaultInfo.company==='null' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.company==null)
+            if(data.data.defaultInfo.company==='' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.company==null)
                 company.innerHTML=`-`;
             else company.innerHTML=`${data.data.defaultInfo.company}`;
-            if(data.data.defaultInfo.company==='null' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.github==null)
+            if(data.data.defaultInfo.company==='' ||data.data.defaultInfo.company=='undefined'||data.data.defaultInfo.github==null)
                 github.innerHTML='-';
             else github.innerHTML=`${data.data.defaultInfo.github}`;
 
