@@ -31,7 +31,8 @@ async function PostDetailPage() {
             <div class="me-2"> ${data.data.writer.name || `익명`} </div>
             <div>조회수 ${data.data.views}</div>
             `;
-                notice_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
+                const str = data.data.content.split("pocs_project_@구분자@_???");
+                notice_detail_content.innerHTML = `<div style="min-height: 200px">${str[1]}</div>`;
                 postWriterId = data.data.writer.userId;
                 present_page_title = data.data.title;
                 present_page_content = data.data.content;

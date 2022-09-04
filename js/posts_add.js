@@ -1,5 +1,6 @@
 const post_title = document.querySelector("#title");
-const post_content = document.querySelector("#content");
+const post_content = document.querySelector("#inputContent");
+const post_md = document.querySelector("#compiledMarkdown");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 let category;
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -7,9 +8,21 @@ const userId = localStorage.getItem("userId");
 
 async function postSubmit(){
 
+    function nodeToString(node) {   
+        var tmpNode = document.createElement("div");   
+        tmpNode.appendChild(node.cloneNode(true));   
+        var str = tmpNode.innerHTML;   
+        tmpNode = node = null;  // prevent memory leaks in IE   
+        return str;
+    }
+
+    const res = post_content.value + "pocs_project_@구분자@_???" + nodeToString(post_md);
+
+    console.log(res)
+
     const sendData={
         title : post_title.value,
-        content: post_content.value,
+        content: res,
         userId: userId,
         onlyMember: flexCheckDefault.checked,
         category : category
@@ -19,7 +32,7 @@ async function postSubmit(){
         method : 'POST',
         headers : {
             'Content-Type' : 'application/json',
-            'x-pocs-session-token' : sessionToken
+            'x-pocs-session-token' : sessiontoken
         },
         body : JSON.stringify(sendData)
     };
