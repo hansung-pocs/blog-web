@@ -7,7 +7,8 @@ let header = new Headers({'x-pocs-session-token' : sessiontoken});
 
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
-const notice_content = document.querySelector("#content");
+const post_content = document.querySelector("#editContent");
+const post_md = document.querySelector("#compiledMarkdown");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 let user_Id;
 
@@ -19,7 +20,8 @@ function PostEditPage(){
         .then((data) => {
             console.log(data);
             notice_title.value = `${data.data.title}`;
-            notice_content.value = `${data.data.content}`;
+            const str = data.data.content.split("pocs_project_@구분자@_???");
+            post_content.value = `${str[0]}`;
             flexCheckDefault.checked = data.data.onlyMember;
             user_Id = data.data.writer.userId;
             category = data.data.category;
@@ -38,10 +40,20 @@ async function postEdit(){
     else if(category==="노하우")
         category="knowhow";
 
+    function nodeToString(node) {   
+        var tmpNode = document.createElement("div");   
+        tmpNode.appendChild(node.cloneNode(true));   
+        var str = tmpNode.innerHTML;   
+        tmpNode = node = null;  // prevent memory leaks in IE   
+        return str;
+    }
+
+    const res = post_content.value + "pocs_project_@구분자@_???" + nodeToString(post_md);
+    
     const sendData={
         userId: user_Id,
         title : notice_title.value,
-        content: notice_content.value,
+        content: res,
         onlyMember: flexCheckDefault.checked,
         category : category
     };
