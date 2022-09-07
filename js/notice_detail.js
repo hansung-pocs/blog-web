@@ -29,7 +29,7 @@ async function NoticeDetailPage() {
                 <div class="me-2"> ${data.data.writer.name} </div>
                 <div>조회수 ${data.data.views}</div>
                 `;
-                notice_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
+                notice_detail_content.innerHTML = `<div style="min-height: 200px">${marked.parse(data.data.content)}</div>`;
                 userId = data.data.writer.userId;
             }
         })

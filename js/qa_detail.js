@@ -36,7 +36,7 @@ async function QaDetailPage() {
             <div class="me-2"> 익명 </div>
             <div>조회수 ${data.data.views}</div>
             `;
-                qa_detail_content.innerHTML = `<div style="min-height: 200px">${data.data.content}</div>`;
+                qa_detail_content.innerHTML = `<div style="min-height: 200px">${marked.parse(data.data.content)}</div>`;
                 qaWriterId = data.data.writer.userId;
                 present_page_title = data.data.title;
                 present_page_content = data.data.content;
