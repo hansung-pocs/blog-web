@@ -82,13 +82,15 @@
     </nav>
 
     <script>
+      //const newImage = document.getElementById("profileImg");
+      //const chooseFile = document.getElementById("chooseFile");
+
       function loadFile(input) {
         var file = input.files[0]; //선택된 파일 가져오기
         console.log(file);
 
         //미리 만들어 놓은 div에 text(파일 이름) 추가
         var newImage = document.getElementById("profileImg");
-
         newImage.setAttribute("class", "img");
 
         //이미지 source 가져오기
@@ -96,7 +98,19 @@
         console.log(newImage.src);
         newImage.style.width = "200px";
         newImage.style.height = "200px";
+
+        var cancelImage = document.getElementById("cancelImage");
+        cancelImage.classList.remove("hidden");
       }
+      const cancelFile = () => {
+        const chooseFile = document.getElementById("chooseFile");
+        var newImage = document.getElementById("profileImg");
+        newImage.src = "../img/logo.png";
+        chooseFile.value = null;
+        console.log(chooseFile);
+        var cancelImage = document.getElementById("cancelImage");
+        cancelImage.classList.add("hidden");
+      };
     </script>
 
     <div class="container">
@@ -104,20 +118,36 @@
       <hr />
       <form id="editForm">
         <div class="d-flex">
-          <!-- <div>
-                    <img src="../img/logo.png" alt="..." style="width: 200px; height: 200px" />
-                    <div class="m-1 text-center">
-                        <button type="submit" id="user_detail_edit_saveBtn" class="btn btn-outline-primary">수정</button>
-                        <button type="button" id="user_detail_edit_cancelBtn" class="btn btn-outline-danger">취소</button>
-                    </div>
-                </div> -->
           <div>
-            <img
-              id="profileImg"
+            <div style="position: relative" class="imgBox">
+              <img
+                id="profileImg"
+                src="../img/logo.png"
+                alt="..."
+                style="width: 200px; height: 200px"
+              />
+              <div
+                style="position: absolute; top: 0px; left: 0px; opacity: 0.5"
+              >
+                <img
+                  id="cancelImage"
+                  class="cancelImage hidden"
+                  src="../img/pngegg.png"
+                  alt="..."
+                  style="width: 200px; height: 200px"
+                  onclick="cancelFile()"
+                />
+              </div>
+            </div>
+
+            <!-- <img
+              id=""
+              class="cancelImage"
               src="../img/logo.png"
               alt="..."
               style="width: 200px; height: 200px"
-            />
+              onclick="cancelFile()"
+            /> -->
             <input
               type="file"
               id="chooseFile"
