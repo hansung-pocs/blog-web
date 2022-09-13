@@ -1,4 +1,4 @@
-name: Docker building script
+name: Docker CI/CD script
 
 on:
   push:
@@ -26,3 +26,16 @@ jobs:
           push: true
           file: ./docker/Dockerfile
           tags: ipocs92/blog-web-${{ github.ref_name }}:latest
+      -
+        name: run docker-componse by ssh connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP_ADDRESS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ~/pocs-blog
+            ls -alsh
+            docker-compose kill
+            docker-compose up -d
