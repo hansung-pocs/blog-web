@@ -45,6 +45,7 @@ async function PostDetailPage() {
         present_page_title = data.data.title;
         present_page_content = data.data.content;
         category = data.data.category;
+        qaWriterId = '';
       }
     });
   await checktoShowButtons();
