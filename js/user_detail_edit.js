@@ -118,6 +118,7 @@ editForm.addEventListener("submit", async function userEdit(event) {
   const profileOptions = {
     method: "PATCH",
     header: {
+      "Content-Type": "multipart/form-data",
       "x-pocs-session-token": sessionToken,
     },
     body: formData,
