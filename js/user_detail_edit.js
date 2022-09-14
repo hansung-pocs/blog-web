@@ -101,7 +101,7 @@ editForm.addEventListener("submit", async function userEdit(event) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
@@ -122,8 +122,8 @@ editForm.addEventListener("submit", async function userEdit(event) {
   const profileOptions = {
     method: "PATCH",
     header: {
-      "Content-Type": "multipart/form-data",
-      "x-pocs-session-token": sessionToken,
+      //"Content-Type": "multipart/form-data",
+      "x-pocs-session-token": sessiontoken,
     },
     body: formData,
   };
@@ -135,14 +135,14 @@ editForm.addEventListener("submit", async function userEdit(event) {
   const result2 = await imageResponse.json();
   console.log(result2);
 
-  if (result.status !== 302) {
-    //에러 발생시
-    window.location.href = "../html/user_detail.html?userId=" + id;
-  } else {
-    //잘 되었다면
-    console.log(result.message);
-    window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
-  }
+  // if (result.status !== 302) {
+  //   //에러 발생시
+  //   window.location.href = "../html/user_detail.html?userId=" + id;
+  // } else {
+  //   //잘 되었다면
+  //   console.log(result.message);
+  //   window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
+  // }
 });
 
 //저장버튼-업데이트
