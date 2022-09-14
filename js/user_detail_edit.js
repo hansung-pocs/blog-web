@@ -21,9 +21,13 @@ const github = document.querySelector("#user_detail_edit_github");
 const editForm = document.querySelector("#editForm");
 const chooseFile = document.getElementById("chooseFile");
 
+let formData = new FormData();
+
 function loadFile(input) {
   var file = input.files[0]; //선택된 파일 가져오기
   console.log(file);
+
+  formData.append("image", file);
 
   //미리 만들어 놓은 div에 text(파일 이름) 추가
   var newImage = document.getElementById("profileImg");
@@ -110,10 +114,10 @@ editForm.addEventListener("submit", async function userEdit(event) {
   console.log(result);
 
   //profile 업로드
-  let formData = new FormData();
-  formData.append("image", chooseFile.files[0]);
+  // let formData = new FormData();
+  // formData.append("image", chooseFile.files[0]);
 
-  console.log(chooseFile.files[0]);
+  //console.log(chooseFile.files[0]);
 
   const profileOptions = {
     method: "PATCH",
