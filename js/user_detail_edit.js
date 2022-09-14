@@ -21,13 +21,9 @@ const github = document.querySelector("#user_detail_edit_github");
 const editForm = document.querySelector("#editForm");
 const chooseFile = document.getElementById("chooseFile");
 
-let formData = new FormData();
-
 function loadFile(input) {
   var file = input.files[0]; //선택된 파일 가져오기
   console.log(file);
-
-  formData.append("image", file);
 
   //미리 만들어 놓은 div에 text(파일 이름) 추가
   var newImage = document.getElementById("profileImg");
@@ -114,10 +110,10 @@ editForm.addEventListener("submit", async function userEdit(event) {
   console.log(result);
 
   //profile 업로드
-  // let formData = new FormData();
-  // formData.append("image", chooseFile.files[0]);
+  let formData = new FormData();
+  formData.append("image", chooseFile.files[0]);
 
-  //console.log(chooseFile.files[0]);
+  console.log(chooseFile.files[0]);
 
   const profileOptions = {
     method: "PATCH",
@@ -144,47 +140,6 @@ editForm.addEventListener("submit", async function userEdit(event) {
   //   window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
   // }
 });
-
-//저장버튼-업데이트
-// editForm.addEventListener("submit",async function userEdit(event){
-//     event.preventDefault();
-//     console.log('edit');
-
-//     const body=JSON.stringify({
-//         password: password.value,
-//         name:userName.value,
-//         email:email.value,
-//         github:github.value,
-//         company:company.value,
-//     });
-
-//     let formData = new FormData();
-//     formData.append('body', body);
-//     formData.append('files', chooseFile.files[0]);
-
-//     console.log(formData);
-
-//     const options = {
-//         method : 'PATCH',
-//         headers : {
-//             'x-pocs-session-token' : sessionToken
-//         },
-//         body : formData
-//     };
-
-//     const response = await fetch(`http://34.64.161.55:8001/users/${id}`, options);
-//     const result = await response.json();
-//     console.log(result);
-
-//     if(result.status !==302){ //에러 발생시
-//         window.location.href = '../html/user_detail.html?userId='+id;
-
-//     }
-//     else{ //잘 되었다면
-//         console.log(result.message);
-//         window.location.href = '../html/user_detail.html?userId='+id;////편집후 바로 이전화면으로
-//     }
-// });
 
 //유저 정보 수정을 취소하는 버튼 이벤트
 cancelBtn.addEventListener("click", function (event) {
