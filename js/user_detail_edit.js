@@ -20,13 +20,17 @@ const company = document.querySelector("#user_detail_edit_company");
 const github = document.querySelector("#user_detail_edit_github");
 const editForm = document.querySelector("#editForm");
 const chooseFile = document.getElementById("chooseFile");
+const profileImage = document.getElementById("profileImage");
+const cancelImage = document.getElementById("cancelImage");
+//useDefaultImage가 true일때만 api를 쏜다.
+let useDefaultImage = false;
 
 function loadFile(input) {
   var file = input.files[0]; //선택된 파일 가져오기
   console.log(file);
 
   //미리 만들어 놓은 div에 text(파일 이름) 추가
-  var newImage = document.getElementById("profileImg");
+  var newImage = document.getElementById("profileImage");
   newImage.setAttribute("class", "img");
 
   //이미지 source 가져오기
@@ -35,17 +39,20 @@ function loadFile(input) {
   newImage.style.width = "200px";
   newImage.style.height = "200px";
 
-  var cancelImage = document.getElementById("cancelImage");
   cancelImage.classList.remove("hidden");
+  //이미지를 넣었기 때문에 useDefaultImage를 true로 바꿔준다.
+  useDefaultImage = true;
 }
 
 const cancelFile = () => {
-  var newImage = document.getElementById("profileImg");
+  var newImage = document.getElementById("profileImage");
   newImage.src = "../img/logo.png";
   chooseFile.value = null;
   console.log(chooseFile);
   var cancelImage = document.getElementById("cancelImage");
   cancelImage.classList.add("hidden");
+  //이미지를 기본이미지로 바꿔줬기 때문에 useDefaultImage를 true로 바꿔준다. 그래야 null로 api를 쏜다.
+  useDefaultImage = true;
 };
 
 fetch(url, { headers: header })
@@ -78,6 +85,13 @@ fetch(url, { headers: header })
       )
         github.value = ``;
       else github.value = `${data.data.defaultInfo.github}`;
+
+      if (data.data.defaultInfo.userProfilePath === null) {
+        profileImage.src = "../img/logo.png";
+      } else {
+        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}.png`;
+        cancelImage.classList.remove("hidden");
+      }
     }
   });
 
@@ -123,22 +137,24 @@ editForm.addEventListener("submit", async function userEdit(event) {
     },
     body: formData,
   };
+  //null일때 api를 쏜다.
+  if (useDefaultImage === true) {
+    const imageResponse = await fetch(
+      `http://34.64.161.55:80/api/users/${id}/profile`,
+      profileOptions
+    );
+    const result2 = await imageResponse.json();
+    console.log(result2);
+  }
 
-  const imageResponse = await fetch(
-    `http://34.64.161.55:80/api/users/${id}/profile`,
-    profileOptions
-  );
-  const result2 = await imageResponse.json();
-  console.log(result2);
-
-  // if (result.status !== 302) {
-  //   //에러 발생시
-  //   window.location.href = "../html/user_detail.html?userId=" + id;
-  // } else {
-  //   //잘 되었다면
-  //   console.log(result.message);
-  //   window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
-  // }
+  if (result.status !== 302) {
+    //에러 발생시
+    window.location.href = "../html/user_detail.html?userId=" + id;
+  } else {
+    //잘 되었다면
+    console.log(result.message);
+    window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
+  }
 });
 
 //유저 정보 수정을 취소하는 버튼 이벤트

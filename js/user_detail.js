@@ -56,6 +56,12 @@ fetch(user_detail_url, { headers: header })
       )
         github.innerHTML = "-";
       else github.innerHTML = `${data.data.defaultInfo.github}`;
+      //이미지가 없으면 null로 반환한다. 그래서 null일 땐 기본이미지를 할당한다.
+      if (data.data.defaultInfo.userProfilePath === null) {
+        profileImage.src = "../img/logo.png";
+      } else {
+        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}.png`;
+      }
     }
   });
 
