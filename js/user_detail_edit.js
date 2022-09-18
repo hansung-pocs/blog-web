@@ -22,6 +22,8 @@ const editForm = document.querySelector("#editForm");
 const showImage = document.querySelector("#show-image");
 const uploadImage = document.querySelector("#upload-image");
 const formData = new FormData();
+let imageFlag = 0;
+let currentImage;
 
 fetch(url, { headers: header })
     .then((response) => response.json())
@@ -38,7 +40,10 @@ fetch(url, { headers: header })
             email.value = `${data.data.defaultInfo.email}`;
             studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
             generation.innerHTML = `${data.data.defaultInfo.generation}`;
-
+            currentImage = `${data.data.defaultInfo.userProfilePath}`;
+            if(data.data.defaultInfo.userProfilePath !== null) {
+                showImage.innerHTML = `<img src="http://34.64.161.55${data.data.defaultInfo.userProfilePath}" alt="..." style="width: 200px; height: 200px"/>`;
+            }
             if (data.data.defaultInfo.company == "-" || data.data.defaultInfo.company == "undefined" || data.data.defaultInfo.company == null) company.value = ``;
             else company.value = `${data.data.defaultInfo.company}`;
             if (data.data.defaultInfo.github == "-" || data.data.defaultInfo.github == "undefined" || data.data.defaultInfo.github == null) github.value = ``;
@@ -62,7 +67,27 @@ function checkImage(file) {
     reader.readAsDataURL(file);
     formData.append("image", file);
 }
+async function patchImg() {
+    const options = {
+        method: "PATCH",
+        headers: {
+            // "Content-Type": 'multipart/form-data',
+            "x-pocs-session-token": sessionToken,
+        },
+        body: formData,
+    };
+    const response = await fetch(`http://34.64.161.55:80/api/users/${id}/profile`, options);
+    const result = await response.json();
+    console.log(result);
 
+    if (result.status !== 200) {
+        //에러 발생시
+        alert(result.message);
+    } else {
+        //잘 되었다면
+        window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
+    }   
+}
 //저장버튼-업데이트
 editForm.addEventListener("submit", async function userEdit(event) {
     event.preventDefault();
@@ -84,33 +109,26 @@ editForm.addEventListener("submit", async function userEdit(event) {
         body: JSON.stringify(sendData),
     };
 
-    const options2 = {
-        method: "PATCH",
-        headers: {
-            // "Content-Type": 'multipart/form-data',
-            "x-pocs-session-token": sessionToken,
-        },
-        body: formData,
-    };
-
     const response = await fetch(`http://34.64.161.55:80/api/users/${id}`, options);
-    const response2 = await fetch(`http://34.64.161.55:80/api/users/${id}/profile`, options2);
-
     const result = await response.json();
-    const result2 = await response2.json();
     console.log(result);
-    console.log(result2);
-
-    if (result.status !== 302 || result2.status !== 200) {
-        //에러 발생시
-        console.log(result.message);
-        console.log(result2.message);
-        window.location.href = "../html/user_detail.html?userId=" + id;
+    console.log(imageFlag);
+    console.log(currentImage);
+    if (result.status !== 302) {
+        if(imageFlag == 1) {
+            // null to new image && current image to new image
+            patchImg();
+        } else if(currentImage !== null && imageFlag == 0){
+            // current image to null
+            formData.append("image", null);
+            patchImg();
+        } else {
+            // null to null
+            window.location.href = "../html/user_detail.html?userId=" + id; //편집후 바로 이전화면으로
+        }
     } else {
-        //잘 되었다면
-        console.log(result.message);
-        console.log(result2.message);
-        window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
+        // 오류시 오류메시지 alert후 화면 안넘어감
+        alert(result.message);
     }
 });
 //유저 정보 수정을 취소하는 버튼 이벤트
@@ -121,4 +139,5 @@ cancelBtn.addEventListener("click", function (event) {
 // 파일 선택시 이벤트
 uploadImage.addEventListener("change", () => {
     checkImage(uploadImage.files[0]);
+    imageFlag = 1;
 });

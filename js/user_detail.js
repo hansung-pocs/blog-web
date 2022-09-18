@@ -42,7 +42,9 @@ fetch(user_detail_url, { headers: header })
       email.innerHTML = `${data.data.defaultInfo.email}`;
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
-      showImage.innerHTML = `<img src="${data.data.defaultInfo.userProfilePath}" alt="..." style="width: 200px; height: 200px"/>`;
+      if(data.data.defaultInfo.userProfilePath !== null) {
+        showImage.innerHTML = `<img src="http://34.64.161.55${data.data.defaultInfo.userProfilePath}" alt="..." style="width: 200px; height: 200px"/>`;
+      }
       if (
         data.data.defaultInfo.company === "" ||
         data.data.defaultInfo.company == "undefined" ||
