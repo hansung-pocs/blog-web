@@ -29,6 +29,22 @@ function loadFile(input) {
   var file = input.files[0]; //선택된 파일 가져오기
   console.log(file);
 
+  if (file.size > 10 * 1024 * 1024) {
+    alert("이미지 사이즈는 10MB 이내로 가능합니다.");
+    chooseFile.value = null;
+    return;
+  }
+
+  let point = file.name.lastIndexOf(".");
+  let type = file.name.substr(point);
+
+  if (type === ".jpg" || type === ".jpeg" || type === ".png") {
+  } else {
+    alert(".jpg, .jpeg, .png 파일만 등록 가능합니다.");
+    chooseFile.value = null;
+    return;
+  }
+
   //미리 만들어 놓은 div에 text(파일 이름) 추가
   var newImage = document.getElementById("profileImage");
   newImage.setAttribute("class", "img");

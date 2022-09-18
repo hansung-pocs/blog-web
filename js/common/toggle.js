@@ -6,6 +6,8 @@ const toggleDetail = document.getElementById("toggleDetail");
 const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
+const navProfile = document.querySelector(".navbar .container .nav-item a img");
+console.log(navProfile);
 let user_type = localStorage.getItem("userType");
 
 if (sessionToken === null) {
@@ -110,8 +112,6 @@ async function handleNavigation() {
   if (sessionToken != null) {
     let user = await handleValidation(sessionToken);
     if (user.type === "admin") {
-      console.log(user.type);
-
       adminBtn.classList.toggle("hidden");
 
       if (window.location.href.match("notices.html") != null) {
@@ -136,6 +136,10 @@ async function handleNavigation() {
         const onlyMemberCheckBox = document.getElementById("title-below-area");
         onlyMemberCheckBox.classList.toggle("hidden");
       }
+    }
+
+    if (user.defaultInfo.userProfilePath != null) {
+      navProfile.src = `http://34.64.161.55:80/${user.defaultInfo.userProfilePath}`;
     }
   }
 }
