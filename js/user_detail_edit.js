@@ -112,9 +112,11 @@ editForm.addEventListener("submit", async function userEdit(event) {
     const response = await fetch(`http://34.64.161.55:80/api/users/${id}`, options);
     const result = await response.json();
     console.log(result);
-    console.log(imageFlag);
-    console.log(currentImage);
-    if (result.status !== 302) {
+    
+    if (result.status !== 200) {
+        // 오류시 오류메시지 alert후 화면 안넘어감
+        alert(result.message);
+    } else {
         if(imageFlag == 1) {
             // null to new image && current image to new image
             patchImg();
@@ -126,9 +128,6 @@ editForm.addEventListener("submit", async function userEdit(event) {
             // null to null
             window.location.href = "../html/user_detail.html?userId=" + id; //편집후 바로 이전화면으로
         }
-    } else {
-        // 오류시 오류메시지 alert후 화면 안넘어감
-        alert(result.message);
     }
 });
 //유저 정보 수정을 취소하는 버튼 이벤트
