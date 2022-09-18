@@ -46,10 +46,10 @@
     <div class="container">
         <h1 id="user_detail_edit_title"><b>ooo님의 정보 수정</b></h1>
         <hr />
-        <form onSubmit="A(event)" id="editForm" method="post" enctype="multipart/form-data">
+        <form id="editForm" method="post" enctype="multipart/form-data">
             <div class="d-flex">
                 <div>
-                    <img src="../img/logo.png" alt="..." style="width: 200px; height: 200px" />
+                    <img src="../img/logo.png" id="user_detail_edit_img" alt="..." style="width: 200px; height: 200px" />
                     <div class="m-1 text-center">
                         <button type="submit" id="user_detail_edit_saveBtn" class="btn btn-outline-primary">수정</button>
                         <button type="button" id="user_detail_edit_cancelBtn" class="btn btn-outline-danger">취소</button>
@@ -120,7 +120,12 @@
                             이미지
                         </div>
                         <div class="col-10 p-1">
-                            <input type="file" id="user_detail_edit_img_input">
+                            <div class="col mb-3">
+                                <input type="file" id="user_detail_edit_img_input">
+                            </div>
+                            <div class="col">
+                                <button type="button" id="user_detail_edit_img_2basic">기본 이미지로 변경</button>
+                            </div>
                             <img title="미리보기" id="user_detail_edit_img_preview" width="200px" height="200px">
                         </div>
                     </div>

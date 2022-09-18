@@ -7,6 +7,7 @@ const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
 let user_type = localStorage.getItem("userType");
+const nav_img = document.querySelector(".nav-item img");
 
 if (sessionToken === null) {
   window.location.href = "../html/index.html";
@@ -55,6 +56,12 @@ async function handleValidation(token) {
 
   if (result.status === 200) {
     console.log(result.data.user);
+    if(result.data.user.type!="anonymous"){
+      if(result.data.user.defaultInfo.userProfilePath!=null)
+        nav_img.src="http://34.64.161.55"+result.data.user.defaultInfo.userProfilePath;
+      else
+        nav_img.src="../img/logo.png";
+    }
     return result.data.user;
   } else {
     console.log(result.message);
