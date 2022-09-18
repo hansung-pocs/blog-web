@@ -19,6 +19,7 @@ const studentId = document.querySelector("#user_detail_studentId");
 const generation = document.querySelector("#user_detail_generation");
 const company = document.querySelector("#user_detail_company");
 const github = document.querySelector("#user_detail_github");
+const showImage = document.querySelector("#show-image");
 
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
@@ -41,7 +42,7 @@ fetch(user_detail_url, { headers: header })
       email.innerHTML = `${data.data.defaultInfo.email}`;
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
-
+      showImage.innerHTML = `<img src="${data.data.defaultInfo.userProfilePath}" alt="..." style="width: 200px; height: 200px"/>`;
       if (
         data.data.defaultInfo.company === "" ||
         data.data.defaultInfo.company == "undefined" ||

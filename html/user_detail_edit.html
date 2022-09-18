@@ -49,7 +49,12 @@
         <form id="editForm">
             <div class="d-flex">
                 <div>
-                    <img src="../img/logo.png" alt="..." style="width: 200px; height: 200px" />
+                    <div id="show-image">
+                        <img src="../img/logo.png" alt="..." style="width: 200px; height: 200px" />
+                    </div>
+                    <div>
+                        <input type="file" id="upload-image" style="width: 200px" />
+                    </div>
                     <div class="m-1 text-center">
                         <button type="submit" id="user_detail_edit_saveBtn" class="btn btn-outline-primary">수정</button>
                         <button type="button" id="user_detail_edit_cancelBtn" class="btn btn-outline-danger">취소</button>
