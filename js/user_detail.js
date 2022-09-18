@@ -60,7 +60,7 @@ fetch(user_detail_url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}.png`;
+        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}`;
       }
     }
   });
