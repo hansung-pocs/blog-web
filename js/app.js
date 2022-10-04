@@ -392,16 +392,21 @@ fetch(url, { headers: header })
       console.log("존재하지 않는 유저입니다.");
     } else {
       for (let i = 0; i < 5; i++) {
-        user_main.innerHTML += `
+          let imgPath;
+          if(data.data.users[i].defaultInfo.userProfilePath!=null)
+              imgPath="http://34.64.161.55"+data.data.users[i].defaultInfo.userProfilePath;
+          else
+              imgPath="../img/profile.png";
+          user_main.innerHTML += `
             <div class="col" style="text-align: center;">
-                <img src="../img/profile.png" style="width:100px;" class="rounded-pill">
+                <img src=${imgPath} style="width:100px;" class="rounded-pill">
                     <div>
                         <div id="user_main_userName">${
-                          data.data.users[i].defaultInfo.name || "익명"
-                        }</div>
+              data.data.users[i].defaultInfo.name || "익명"
+          }</div>
                         <div id="user_main_generation">${
-                          data.data.users[i].defaultInfo.generation
-                        }</div>
+              data.data.users[i].defaultInfo.generation
+          }</div>
                     </div>
             </div>
             `;

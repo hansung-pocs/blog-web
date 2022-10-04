@@ -16,6 +16,7 @@ const studentId = document.querySelector("#user_detail_studentId");
 const generation = document.querySelector("#user_detail_generation");
 const company = document.querySelector("#user_detail_company");
 const github = document.querySelector("#user_detail_github");
+const img = document.querySelector("#user_img");
 
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
@@ -29,7 +30,7 @@ fetch(user_detail_url, { headers: header })
       generation.innerHTML = "";
       company.innerHTML = "";
       github.innerHTML = "";
-    } else if ((data.data.type = "anonymous")) {
+    } else if ((data.data.type == "anonymous")) {
       user_detail_editBtn.classList.add("hidden");
       title.innerHTML = `해당 회원은 비회원입니다.`;
       userName.innerHTML = `익명${data.data.userId}`;
@@ -40,13 +41,18 @@ fetch(user_detail_url, { headers: header })
       github.innerHTML = "";
     } else {
       title.innerHTML = `
-                ${data.data.name || `익명${data.data.userId}`}님의 정보
+                ${data.data.defaultInfo.name || `익명${data.data.userId}`}님의 정보
             `;
       editBtn_a.href = "user_detail_edit.html?userId=" + id;
       userName.innerHTML = `${data.data.defaultInfo.name}`;
       email.innerHTML = `${data.data.defaultInfo.email}`;
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
+
+      if(data.data.defaultInfo.userProfilePath!=null)
+        img.src="http://34.64.161.55"+data.data.defaultInfo.userProfilePath;
+      else
+        img.src="../img/logo.png";
 
       if (
         data.data.defaultInfo.company == null ||

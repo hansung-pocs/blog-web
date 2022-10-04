@@ -20,6 +20,7 @@ let totalPage;
 let url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
+console.log(sessiontoken);
 
 async function doFetch() {
   await fetch(url, { headers: header })
@@ -46,12 +47,20 @@ function drawUserList(Arr) {
   usersDiv.innerHTML = "";
   for (let i = 0; i < 9; i++) {
     if (Arr[i] == undefined) continue;
+    console.log(Arr[i]?.defaultInfo.userProfilePath);
+    let profilePath;
+    if(Arr[i]?.defaultInfo.userProfilePath!=null){
+      profilePath="http://34.64.161.55"+Arr[i]?.defaultInfo.userProfilePath;
+      console.log(profilePath);
+    }else{
+      profilePath="../img/profile.png";
+    }
     usersDiv.innerHTML += `
             <div class="col-3 p-4 m-2" onclick="checktoGoDetailPage(${
               Arr[i]?.userId
             })" 
                     style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
-                    <img class="w-50" src="../img/profile.png">
+                    <img class="w-50" src=${profilePath}>
                     <div class="my-1" style="font-size: large"><b>${
                       Arr[i]?.defaultInfo.name || "비회원"
                     }</b></div>
