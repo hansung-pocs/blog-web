@@ -411,7 +411,7 @@ fetch(url, { headers: header })
           <div class="col" style="text-align: center;">
               <img src="http://34.64.161.55:80/${
                 data.data.users[i].defaultInfo.userProfilePath
-              }" style="width:100px;height:100px" class="rounded-pill">
+              }" style="width:100px;height:100px;object-fit: cover" class="rounded-pill">
                   <div>
                       <div id="user_main_userName">${
                         data.data.users[i].defaultInfo.name || "익명"

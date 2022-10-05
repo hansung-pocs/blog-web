@@ -41,6 +41,7 @@ async function PostDetailPage() {
         notice_detail_content.innerHTML = `<div style="min-height: 200px">${marked.parse(
           data.data.content
         )}</div>`;
+
         postWriterId = data.data.writer.userId;
         present_page_title = data.data.title;
         present_page_content = data.data.content;

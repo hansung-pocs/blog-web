@@ -53,7 +53,7 @@ function drawUserList(Arr) {
               Arr[i]?.userId
             })" 
                     style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
-                    <img class="w-50" src="../img/profile.png" style="width:140px;height:140px">
+                    <img class="w-50" src="../img/profile.png" style="width:140px;height:140px;object-fit: cover">
                     <div class="my-1" style="font-size: large"><b>${
                       Arr[i]?.defaultInfo.name || "비회원"
                     }</b></div>
@@ -85,7 +85,7 @@ function drawUserList(Arr) {
               style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
               <img class="w-50" src="http://34.64.161.55:80/${
                 Arr[i]?.defaultInfo.userProfilePath
-              }" style="width:140px;height:140px">
+              }" style="width:140px;height:140px;object-fit: cover">
               <div class="my-1" style="font-size: large"><b>${
                 Arr[i]?.defaultInfo.name || "비회원"
               }</b></div>

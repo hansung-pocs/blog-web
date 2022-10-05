@@ -115,6 +115,7 @@ a {
 .navbar .container .nav-item a img {
   width: 40px;
   height: 40px;
+  object-fit: cover;
 }
 
 /* 테스트 라인 */

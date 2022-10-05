@@ -41,7 +41,6 @@ async function fetchQa() {
       <th>제목</th>
       <th>작성자</th>
       <th>작성일</th>
-      <th>수정일</th>
       <th>카테고리</th>
   </tr>`;
       tbody.innerHTML = "";
@@ -58,7 +57,6 @@ async function fetchQa() {
           >${data.data.posts[i].title}</td>
       <td>익명</td>
       <td>${data.data.posts[i].createdAt}</td>
-      <td>${data.data.posts[i].updatedAt || ""}</td>
       <td>${data.data.posts[i].category}</td>
       </tr>
       `;
