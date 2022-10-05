@@ -1,107 +1,121 @@
 .hidden {
-    display: none!important;
+  display: none !important;
 }
 
 #login-form {
-    text-align: center;
+  text-align: center;
 }
 
 nav {
-    background-color: white;
+  background-color: white;
 }
 
 .notice-title {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .notice-title-first {
-    padding-top: 1em;
-    padding-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .notice-title-second {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 2em;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2em;
 }
 
-.notice-title-area input{
-    border-style : hidden;
-    border-color : white;
-    padding-bottom : 1em;
-    border-bottom : 1px solid black;
+.notice-title-area input {
+  border-style: hidden;
+  border-color: white;
+  padding-bottom: 1em;
+  border-bottom: 1px solid black;
 }
 
-.notice-content-area textarea{
-    border-style : hidden;
-    border-color : white;
+.notice-content-area textarea {
+  border-style: hidden;
+  border-color: white;
 }
 
-#card-area{
-    text-align: center;
-    height : 200px;
-    font-size: 40px;
-    border-color : white;
+#card-area {
+  text-align: center;
+  height: 200px;
+  font-size: 40px;
+  border-color: white;
 }
 
-#title-below-area{
-    display: flex;
-    justify-content: space-between;
-    align-items : center;
+#title-below-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 a {
-    text-decoration-line: none;
+  text-decoration-line: none;
 }
 
-#main.card:hover{
-    background-color: aliceblue;
-} 
+#main.card:hover {
+  background-color: aliceblue;
+}
 /* admin page userlist css */
 .user-list th {
-    width: 30%;
-    text-align: center;
+  width: 30%;
+  text-align: center;
 }
 .user-list th:first-child {
-    width: 10%;
-    text-align: left;
+  width: 10%;
+  text-align: left;
 }
 .user-list td {
-    width: 30%;
-    text-align: center;
-    opacity: 0.7;
+  width: 30%;
+  text-align: center;
+  opacity: 0.7;
 }
 .user-list td:nth-child(1) {
-    width: 10%;
-    text-align: left;
+  width: 10%;
+  text-align: left;
 }
 .user-list td:nth-child(2) {
-    opacity: 1;
+  opacity: 1;
 }
 /* notice, post, qa, admin(post) list 공통 css */
 .post-list th {
-    width: 11%;
-    text-align: center;
+  width: 11%;
+  text-align: center;
 }
 .post-list th:nth-child(1) {
-    width: 5%;
-    text-align: left;
+  width: 5%;
+  text-align: left;
 }
 .post-list th:nth-child(2) {
-    width: 41%;
+  width: 41%;
 }
 .post-list td {
-    text-align: center;
-    opacity: 0.7;
+  text-align: center;
+  opacity: 0.7;
 }
 .post-list td:nth-child(1) {
-    text-align: left;
+  text-align: left;
 }
 .post-list td:nth-child(2) {
-    text-align: left;
-    opacity: 1;
-    cursor: pointer;
+  text-align: left;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.cancelImage {
+  display: none;
+}
+
+.imgBox:hover .cancelImage {
+  display: block;
+}
+
+.navbar .container .nav-item a img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
 }
 
 /* 테스트 라인 */
@@ -124,7 +138,3 @@ textarea,
   box-sizing: border-box;
   padding: 0 20px;
 }
-
-
-
-

@@ -39,7 +39,7 @@ async function NoticeDetailPage() {
           data.data.content
         )}</div>`;
         userId = data.data.writer.userId;
-        qaWriterId = '';
+        qaWriterId = "";
       }
     });
 }

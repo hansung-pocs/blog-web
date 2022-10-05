@@ -29,7 +29,6 @@ async function fetchNotice() {
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
-                <th>수정일</th>
                 <th>카테고리</th>
             </tr>`;
       tbody.innerHTML = "";
@@ -47,20 +46,16 @@ async function fetchNotice() {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 </tr>
                 `;
           } else {
             tbody.innerHTML += `
                 <tr class="post-list">
                 <td>${data.data.posts[i].postId}</td>
-                <td onclick="window.location.href='notices_detail.html?postId=${
-                  data.data.posts[i].postId
-                }'"
+                <td onclick="window.location.href='notices_detail.html?postId=${data.data.posts[i].postId}'"
                     style="cursor:pointer">${data.data.posts[i].title}</td>
                 <td>${data.data.posts[i].writerName}</td>
                 <td>${data.data.posts[i].createdAt}</td>
-                <td>${data.data.posts[i].updatedAt || ""}</td>
                 <td>${data.data.posts[i].category}</td>
                 </tr>
                 `;

@@ -40,7 +40,7 @@ async function login(event) {
   event.preventDefault();
 
   const sendData = {
-    username: username.value,
+    userName: username.value,
     password: password.value,
   };
 

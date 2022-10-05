@@ -38,7 +38,6 @@ async function fetchNotice() {
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
-                <th>수정일</th>
                 <th>카테고리</th>
             </tr>`;
       notice_tbody.innerHTML = "";
@@ -64,7 +63,6 @@ async function fetchNotice() {
                     >${post_data[i].title}</td>
                 <td>${post_data[i].writerName || "익명"}</td>
                 <td>${post_data[i].createdAt}</td>
-                <td>${post_data[i].updatedAt || ""}</td>
                 <td>${post_data[i].category}</td>
                 </tr>
                 `;
