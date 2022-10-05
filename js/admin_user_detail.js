@@ -16,6 +16,7 @@ const studentId = document.querySelector("#user_detail_studentId");
 const generation = document.querySelector("#user_detail_generation");
 const company = document.querySelector("#user_detail_company");
 const github = document.querySelector("#user_detail_github");
+const img = document.querySelector("#user_img");
 
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
@@ -49,6 +50,11 @@ fetch(user_detail_url, { headers: header })
       email.innerHTML = `${data.data.defaultInfo.email}`;
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
+
+      if(data.data.defaultInfo.userProfilePath!=null)
+        img.src="http://34.64.161.55"+data.data.defaultInfo.userProfilePath;
+      else
+        img.src="../img/logo.png";
 
       if (
         data.data.defaultInfo.company == null ||

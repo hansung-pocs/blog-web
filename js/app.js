@@ -398,11 +398,11 @@ fetch(url, { headers: header })
                 <img src="../img/profile.png" style="width:100px;height:100px" class="rounded-pill">
                     <div>
                         <div id="user_main_userName">${
-                          data.data.users[i].defaultInfo.name || "익명"
-                        }</div>
+              data.data.users[i].defaultInfo.name || "익명"
+          }</div>
                         <div id="user_main_generation">${
-                          data.data.users[i].defaultInfo.generation
-                        }</div>
+              data.data.users[i].defaultInfo.generation
+          }</div>
                     </div>
             </div>
             `;

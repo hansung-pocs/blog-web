@@ -20,6 +20,7 @@ let totalPage;
 let url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
+console.log(sessiontoken);
 
 async function doFetch() {
   await fetch(url, { headers: header })
