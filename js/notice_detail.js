@@ -13,7 +13,7 @@ async function NoticeDetailPage() {
   const notice_detail_content = document.querySelector(
     ".notice-detail-content"
   );
-  const d_url = `http://34.64.161.55:80/api/posts/${id}`;
+  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
   await fetch(d_url, { headers: header })
     .then((response) => response.json())
@@ -60,7 +60,7 @@ async function DeleteNotice() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}/delete`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
     options
   );
   const result = await response.json();

@@ -1,7 +1,7 @@
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
-const url = `http://34.64.161.55:80/api/posts/${id}`;
+const url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -47,7 +47,7 @@ async function noticeEdit() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`,
     options
   );
   const result = await response.json();

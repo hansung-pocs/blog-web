@@ -17,7 +17,7 @@ const offset = 9;
 let currentPage = 1;
 let totalPage;
 
-let url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
+let url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 console.log(sessiontoken);
@@ -84,9 +84,9 @@ function drawUserList(Arr) {
         Arr[i]?.userId
       })" 
               style="cursor:pointer;text-align: center;border: solid white 1px;border-radius: 10px;box-shadow:0px 1px 3px 1px gray">
-              <img class="w-50" src="http://34.64.161.55:80/${
-                Arr[i]?.defaultInfo.userProfilePath
-              }" style="width:140px;height:140px;object-fit: cover">
+              <img class="w-50" src="http://${process.env.DEV_API_KEY}:80/${
+        Arr[i]?.defaultInfo.userProfilePath
+      }" style="width:140px;height:140px;object-fit: cover">
               <div class="my-1" style="font-size: large"><b>${
                 Arr[i]?.defaultInfo.name || "비회원"
               }</b></div>
@@ -182,7 +182,7 @@ async function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
   await doFetch();
   await showPagination();
 }
@@ -191,7 +191,7 @@ async function moveNextPage() {
   if (currentPage >= totalPage) return;
   //넘길페이지가 전체 페이지보다 클경우 그냥 return
   currentPage++;
-  url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
   await doFetch();
   await showPagination();
 }
@@ -200,7 +200,7 @@ async function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://34.64.161.55:80/api/users?offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
   await doFetch();
   await showPagination();
 }
@@ -236,7 +236,7 @@ radio1.addEventListener("click", onClick);
 radio2.addEventListener("click", onClick);
 
 async function searchName(name) {
-  url = `http://34.64.161.55:80/api/users?search=${name}&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/users?search=${name}&offset=${offset}&pageNum=${currentPage}`;
   await doFetch();
 }
 

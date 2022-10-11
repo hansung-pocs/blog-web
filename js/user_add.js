@@ -38,7 +38,7 @@ async function addUser(event) {
   };
 
   const response = await fetch(
-    "http://34.64.161.55:80/api/admin/users",
+    `http://${process.env.DEV_API_KEY}:80/api/admin/users`,
     options
   );
   const result = await response.json();

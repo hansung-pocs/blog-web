@@ -1,0 +1,1 @@
+document.querySelector("#title"),document.querySelector("#inputContent"),document.querySelector("#flexCheckDefault"),localStorage.getItem("sessionToken"),localStorage.getItem("userId");

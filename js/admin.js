@@ -23,8 +23,8 @@ let User_totalPage;
 
 const offset = 15;
 
-let post_url = `http://34.64.161.55:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
-let user_url = `http://34.64.161.55:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
+let post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
+let user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
 
 async function fetchNotice() {
   await fetch(post_url, { headers: header })
@@ -157,7 +157,7 @@ function moveAdminNoticePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (Notice_currentPage === pageNum) return;
   Notice_currentPage = pageNum;
-  post_url = `http://34.64.161.55:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
+  post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
   fetchNotice();
   showNoticePagination();
 }
@@ -165,7 +165,7 @@ function moveAdminNoticePage(pageNum) {
 function moveNextNoticePage() {
   if (Notice_currentPage >= Notice_totalPage) return;
   Notice_currentPage++;
-  post_url = `http://34.64.161.55:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
+  post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
   fetchNotice();
   showNoticePagination();
 }
@@ -174,7 +174,7 @@ function movePreviousNoticePage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (Notice_currentPage <= 1) return;
   Notice_currentPage--;
-  post_url = `http://34.64.161.55:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
+  post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
   fetchNotice();
   showNoticePagination();
 }
@@ -209,7 +209,7 @@ function moveAdminUserPage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (User_currentPage === pageNum) return;
   User_currentPage = pageNum;
-  user_url = `http://34.64.161.55:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
+  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
   fetchUser();
   showUserPagination();
 }
@@ -217,7 +217,7 @@ function moveAdminUserPage(pageNum) {
 function moveNextUserPage() {
   if (User_currentPage >= User_totalPage) return;
   User_currentPage++;
-  user_url = `http://34.64.161.55:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
+  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
   fetchUser();
   showUserPagination();
 }
@@ -226,7 +226,7 @@ function movePreviousUserPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (User_currentPage <= 1) return;
   User_currentPage--;
-  user_url = `http://34.64.161.55:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
+  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
   fetchUser();
   showUserPagination();
 }

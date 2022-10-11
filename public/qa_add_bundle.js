@@ -1,0 +1,1 @@
+(()=>{document.querySelector("#title"),document.querySelector("#content");let e=localStorage.getItem("sessionToken");new Headers({"x-pocs-session-token":e});const t=document.querySelector("#flexCheckDefault");"anonymous"===localStorage.getItem("userType")&&(t.checked=!1)})();

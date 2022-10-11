@@ -1,129 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../css/style.css" />
     <title>Notice_detail</title>
-</head>
+  </head>
 
-<body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
     <!-- 네비게이션 바 -->
-    <nav class="navbar navbar-expand-sm bg-light justify-content-center"
-        style="position: sticky; top: 0; height: auto; z-index: 10">
-        <div class="container">
-            <div class="navbar-brand nav-link" onclick="moveMainPage()" style="cursor: pointer;">POCS</div>
-            <ul class="navbar-nav" id="navItem">
-                <li class="nav-item" id="NoticeBtn">
-                    <div class='nav-link' onclick="moveNoticePage()" style="cursor: pointer;">Notice</div>
-                </li>
-                <li class="nav-item" id="PostBtn">
-                    <div class="nav-link" onclick="movePostPage()" style="cursor: pointer;">Post</div>
-                </li>
-                <li class="nav-item" id="UserBtn">
-                    <div class="nav-link" onclick="moveUserPage()" style="cursor: pointer;">User</div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="qa.html">Q/A</a>
-                </li>
-                <li class="nav-item hidden" id="adminBtn">
-                    <a class="nav-link" href="admin.html">Admin</a>
-                </li>
-            </ul>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="toggle" role="button" data-bs-toggle="dropdown">
-                    <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
-                </a>
-                <ul class="dropdown-menu" id="toggleDetail">
-                    
-                </ul>
-            </div>
+    <nav
+      class="navbar navbar-expand-sm bg-light justify-content-center"
+      style="position: sticky; top: 0; height: auto; z-index: 10"
+    >
+      <div class="container">
+        <div
+          class="navbar-brand nav-link"
+          onclick="moveMainPage()"
+          style="cursor: pointer"
+        >
+          POCS
         </div>
+        <ul class="navbar-nav" id="navItem">
+          <li class="nav-item" id="NoticeBtn">
+            <div
+              class="nav-link"
+              onclick="moveNoticePage()"
+              style="cursor: pointer"
+            >
+              Notice
+            </div>
+          </li>
+          <li class="nav-item" id="PostBtn">
+            <div
+              class="nav-link"
+              onclick="movePostPage()"
+              style="cursor: pointer"
+            >
+              Post
+            </div>
+          </li>
+          <li class="nav-item" id="UserBtn">
+            <div
+              class="nav-link"
+              onclick="moveUserPage()"
+              style="cursor: pointer"
+            >
+              User
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="qa.html">Q/A</a>
+          </li>
+          <li class="nav-item hidden" id="adminBtn">
+            <a class="nav-link" href="admin.html">Admin</a>
+          </li>
+        </ul>
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              src="../img/logo.png"
+              style="width: 40px"
+              class="rounded-pill"
+            />
+          </a>
+          <ul class="dropdown-menu" id="toggleDetail"></ul>
+        </div>
+      </div>
     </nav>
 
     <div class="container notice-detail">
-        <h1 style="margin-bottom: 1em"><span style="color:cornflowerblue">| </span>공지사항</h1>
-        <div class="notice-title" style="margin-bottom: 1em">
-            <div class="notice-title-first">
-                <h3>제목</h3>
-            </div>
-            <div style="display: flex; justify-content: space-between;font-size:small;color:gray;">
-                <div class="notice-title-second"></div>
-                <div id="admin-notice-buttons">
-                    <button type="button" class="btn btn-outline-primary" onclick="noticeEditPage()">수정</button>
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">삭제</button>
-                </div>
-            </div>
+      <h1 style="margin-bottom: 1em">
+        <span style="color: cornflowerblue">| </span>공지사항
+      </h1>
+      <div class="notice-title" style="margin-bottom: 1em">
+        <div class="notice-title-first">
+          <h3>제목</h3>
         </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            font-size: small;
+            color: gray;
+          "
+        >
+          <div class="notice-title-second"></div>
+          <div id="admin-notice-buttons">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              onclick="noticeEditPage()"
+            >
+              수정
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              삭제
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <div class="notice-detail-content mt-4" style="margin-bottom: 1em"></div>
-
+      <div class="notice-detail-content mt-4" style="margin-bottom: 1em"></div>
     </div>
 
     <div class="container notice-edit hidden">
-        <h1>공지사항</h1>
-        <div id="title-below-area">
-            <div class="form-check" style="padding-top : 10px;">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                <label class="form-check-label" for="flexCheckDefault">
-                    회원들에게만 게시
-                </label>
-            </div>
-            <div style="text-align: end">
-                <button type="submit" class="btn btn-outline-primary" onclick="noticeEdit()">게시하기</button>
-            </div>
+      <h1>공지사항</h1>
+      <div id="title-below-area">
+        <div class="form-check" style="padding-top: 10px">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            checked
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            회원들에게만 게시
+          </label>
         </div>
-        <hr>
-        <div style="margin-bottom: 1em">
-            <div class="notice-title-area">
-                <input type="text" value="제목" id="title" style="width: 1300px" />
-            </div>
+        <div style="text-align: end">
+          <button
+            type="submit"
+            class="btn btn-outline-primary"
+            onclick="noticeEdit()"
+          >
+            게시하기
+          </button>
         </div>
+      </div>
+      <hr />
+      <div style="margin-bottom: 1em">
+        <div class="notice-title-area">
+          <input type="text" value="제목" id="title" style="width: 1300px" />
+        </div>
+      </div>
 
-        <div class="notice-content-area" style="margin-bottom: 1em">
-            <textarea id="content" style="height: 300px; width: 1300px">내용을 입력하세요.</textarea>
-        </div>
-
+      <div class="notice-content-area" style="margin-bottom: 1em">
+        <textarea id="content" style="height: 300px; width: 1300px">
+내용을 입력하세요.</textarea
+        >
+      </div>
     </div>
 
     <!-- 삭제 경고창 -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">공지사항 삭제</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">정말로 삭제하시겠습니까?</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"
-                        onclick="DeleteNotice()">예</button>
-                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">아니오</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">공지사항 삭제</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">정말로 삭제하시겠습니까?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+              onclick="DeleteNotice()"
+            >
+              예
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+            >
+              아니오
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <footer class="footer mt-auto py-3 bg-dark">
-        <div class="container">
-            <img src="../img/pocs.jpg" width="100px" height="100px" />
-            <span class="text-muted px-5">Additional Link</span>
-            <span class="text-muted px-5">Additional Link</span>
-            <span class="text-muted px-5">Additional Link</span>
-            <span class="text-muted px-5">@Your Company 2022. We Love You</span>
-        </div>
+      <div class="container">
+        <img src="../img/pocs.jpg" width="100px" height="100px" />
+        <span class="text-muted px-5">Additional Link</span>
+        <span class="text-muted px-5">Additional Link</span>
+        <span class="text-muted px-5">Additional Link</span>
+        <span class="text-muted px-5">@Your Company 2022. We Love You</span>
+      </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-    <script src="../js/admin_notice_detail.js"></script>
-    <script src="../js/common/toggle.js"></script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../public/admin_notice_detail_bundle.js"></script>
+    <script src="../public/toggle_bundle.js"></script>
+  </body>
 </html>

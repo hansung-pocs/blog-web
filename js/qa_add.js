@@ -30,7 +30,10 @@ async function qaSubmit() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch("http://34.64.161.55:80/api/posts", options);
+  const response = await fetch(
+    `http://${process.env.DEV_API_KEY}:80/api/posts`,
+    options
+  );
   const result = await response.json();
   console.log(result);
 
@@ -62,7 +65,7 @@ async function qaSubmit() {
 //         body: JSON.stringify(sendData),
 //     };
 //     console.log(sendData);
-//     const response = await fetch("http://34.64.161.55:80/api/posts", options);
+//     const response = await fetch("http://${process.env.DEV_API_KEY}:80/api/posts", options);
 //     const result = await response.json();
 //     console.log(result);
 

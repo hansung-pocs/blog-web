@@ -2,7 +2,9 @@ const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
 
-const user_detail_url = new URL("http://34.64.161.55:80/api/users/" + id);
+const user_detail_url = new URL(
+  `http://${process.env.DEV_API_KEY}:80/api/users/${id}`
+);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -43,10 +45,9 @@ fetch(user_detail_url, { headers: header })
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
-      if(data.data.defaultInfo.userProfilePath!=null)
-        img.src="http://34.64.161.55"+data.data.defaultInfo.userProfilePath;
-      else
-        img.src="../img/logo.png";
+      if (data.data.defaultInfo.userProfilePath != null)
+        img.src = `http://${process.env.DEV_API_KEY}${data.data.defaultInfo.userProfilePath}`;
+      else img.src = "../img/logo.png";
 
       if (
         data.data.defaultInfo.company === "" ||
@@ -66,7 +67,7 @@ fetch(user_detail_url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}`;
+        profileImage.src = `http://${process.env.DEV_API_KEY}:80/${data.data.defaultInfo.userProfilePath}`;
       }
     }
   });
@@ -99,7 +100,7 @@ async function userKick() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/admin/users/${id}/kick`,
+    `http://${process.env.DEV_API_KEY}:80/api/admin/users/${id}/kick`,
     options
   );
   const result = await response.json();

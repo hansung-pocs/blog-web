@@ -13,7 +13,7 @@ const notice_content = document.querySelector("#content");
 const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
-const d_url = `http://34.64.161.55:80/api/posts/${notice_Id}`;
+const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
 let writerId;
@@ -85,7 +85,7 @@ async function noticeEdit() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${notice_Id}`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}`,
     options
   );
   const result = await response.json();
@@ -112,7 +112,7 @@ async function DeleteNotice() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${notice_Id}/delete`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}/delete`,
     options
   );
   const result = await response.json();

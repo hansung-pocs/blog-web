@@ -13,7 +13,7 @@ if (window.location.href.includes("notices.html")) {
   const first = 0;
   let totalPage;
 
-  let url = `http://34.64.161.55:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
+  let url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
   let sessiontoken = localStorage.getItem("sessionToken");
   let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -99,7 +99,7 @@ if (window.location.href.includes("notices.html")) {
     //이동할 페이지가 이미 그 페이지라면
     if (currentPage === pageNum) return;
     currentPage = pageNum;
-    url = `http://34.64.161.55:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
     await fetchNotice();
     await showPagination();
   }
@@ -107,7 +107,7 @@ if (window.location.href.includes("notices.html")) {
   async function moveNextPage() {
     if (currentPage >= totalPage) return;
     currentPage++;
-    url = `http://34.64.161.55:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
     await fetchNotice();
     await showPagination();
   }
@@ -116,7 +116,7 @@ if (window.location.href.includes("notices.html")) {
     //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
     if (currentPage <= 1) return;
     currentPage--;
-    url = `http://34.64.161.55:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=notice&offset=${offset}&pageNum=${currentPage}`;
     await fetchNotice();
     await showPagination();
   }

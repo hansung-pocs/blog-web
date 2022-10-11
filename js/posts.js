@@ -12,7 +12,7 @@ let cntPageNum = 0;
 let totalPage;
 let cateID = "";
 
-let url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+let url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -98,7 +98,7 @@ async function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
   await getCategoriesCount(Category[1]);
   await fetchPost();
@@ -108,7 +108,7 @@ async function movePage(pageNum) {
 async function moveNextPage() {
   if (currentPage >= totalPage) return;
   currentPage++;
-  url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
   await getCategoriesCount(Category[1]);
   await fetchPost();
@@ -119,7 +119,7 @@ async function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
   await getCategoriesCount(Category[1]);
   await fetchPost();
@@ -166,7 +166,7 @@ async function clickCategory(Category) {
   } else {
     cateID = `id=${Category}`;
     currentPage = 1;
-    url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await getCategoriesCount(Category);
     await fetchPost();
     await showPagination();
@@ -238,13 +238,13 @@ async function ShowPostsByCategory() {
     get_category_from_url === "undefined#"
   ) {
     cateID = "";
-    url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await getCategoriesCount("");
     await fetchPost();
     await showPagination();
   } else {
     cateID = `id=${get_category_from_url}`;
-    url = `http://34.64.161.55:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
+    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
     await getCategoriesCount(get_category_from_url);
     await fetchPost();
     await showPagination();

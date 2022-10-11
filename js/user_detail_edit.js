@@ -1,7 +1,7 @@
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
-const url = new URL("http://34.64.161.55:80/api/users/" + id);
+const url = new URL(`http://${process.env.DEV_API_KEY}:80/api/users/` + id);
 
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
@@ -93,12 +93,11 @@ fetch(url, { headers: header })
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
-      if(data.data.defaultInfo.userProfilePath!=null) {
-        img_preview.src = "http://34.64.161.55" + data.data.defaultInfo.userProfilePath;
-        img.src = "http://34.64.161.55" + data.data.defaultInfo.userProfilePath;
-      }
-      else{
-        img_preview.src="../img/logo.png";
+      if (data.data.defaultInfo.userProfilePath != null) {
+        img_preview.src = `http://${process.env.DEV_API_KEY}${data.data.defaultInfo.userProfilePath}`;
+        img.src = `http://${process.env.DEV_API_KEY}"${data.data.defaultInfo.userProfilePath}`;
+      } else {
+        img_preview.src = "../img/logo.png";
         img.src = "../img/logo.png";
       }
 
@@ -120,7 +119,7 @@ fetch(url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}`;
+        profileImage.src = `http://${process.env.DEV_API_KEY}:80/${data.data.defaultInfo.userProfilePath}`;
         basicProfileBtn.classList.remove("disabled");
       }
     }
@@ -132,24 +131,21 @@ editForm.addEventListener("submit", async function userEdit(event) {
   console.log("edit");
   let imageData = new FormData();
   let file;
-  if(img_input.files[0]==null)
-    imageData=null;
-  else if(img_input.files.length>1){
-    alert('1개의 이미지만 선택해주세요.');
+  if (img_input.files[0] == null) imageData = null;
+  else if (img_input.files.length > 1) {
+    alert("1개의 이미지만 선택해주세요.");
     return;
-  } else{
-    file=img_input.files[0];
-    if(!file.type.match("image/.*")){
-      alert('jpg나 png 파일이 아닙니다.');
+  } else {
+    file = img_input.files[0];
+    if (!file.type.match("image/.*")) {
+      alert("jpg나 png 파일이 아닙니다.");
       return;
-    }
-    else if(file.size>1000000){
-      alert('이미지의 크기가 10mb 이상입니다. ');
+    } else if (file.size > 1000000) {
+      alert("이미지의 크기가 10mb 이상입니다. ");
       return;
-    }
-    else{
-      imageData.append("image",img_input.files[0]);
-      console.log('append');
+    } else {
+      imageData.append("image", img_input.files[0]);
+      console.log("append");
     }
   }
   const sendData = {
@@ -170,12 +166,12 @@ editForm.addEventListener("submit", async function userEdit(event) {
   };
 
   const response = await fetch(
-      `http://34.64.161.55:80/api/users/${id}`,
-      options
+    `http://${process.env.DEV_API_KEY}:80/api/users/${id}`,
+    options
   );
   const result = await response.json();
 
-  if(img2BasicFlag || imageData!=null){
+  if (img2BasicFlag || imageData != null) {
     const options2 = {
       method: "PATCH",
       headers: {
@@ -186,11 +182,11 @@ editForm.addEventListener("submit", async function userEdit(event) {
     };
     console.log(options2);
     const response2 = await fetch(
-        `http://34.64.161.55:80/api/users/${id}/profile`,
-        options2
+      `http://${process.env.DEV_API_KEY}:80/api/users/${id}/profile`,
+      options2
     );
     const result2 = await response2.json();
-    console.log(result2,response2);
+    console.log(result2, response2);
   }
 
   //profile 업로드
@@ -210,7 +206,7 @@ editForm.addEventListener("submit", async function userEdit(event) {
   //null일때 api를 쏜다.
   if (useDefaultImage === true) {
     const imageResponse = await fetch(
-      `http://34.64.161.55:80/api/users/${id}/profile`,
+      `http://${process.env.DEV_API_KEY}:80/api/users/${id}/profile`,
       profileOptions
     );
     const result2 = await imageResponse.json();
@@ -233,17 +229,17 @@ cancelBtn.addEventListener("click", function (event) {
   window.location.href = "../html/user_detail.html?userId=" + id;
 });
 //업로드한 이미지 미리보기
-img_input.addEventListener("change",function (event){
+img_input.addEventListener("change", function (event) {
   let reader = new FileReader();
-  let AA= event.target.files[0];
-  reader.onload = function(event) {
-    img_preview.src=event.target.result;
+  let AA = event.target.files[0];
+  reader.onload = function (event) {
+    img_preview.src = event.target.result;
   };
   reader.readAsDataURL(AA);
-})
+});
 //미리보기를 기본 이미지로 변경
 //현재 프로필 이미지와 다르면 flag 부여
-img_2basic.addEventListener("click",function (event){
-  img_preview.src="../img/logo.png";
-  if(img.src!=img_preview.src) img2BasicFlag=true;
-})
+img_2basic.addEventListener("click", function (event) {
+  img_preview.src = "../img/logo.png";
+  if (img.src != img_preview.src) img2BasicFlag = true;
+});
