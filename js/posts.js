@@ -18,6 +18,11 @@ let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
 const userType = localStorage.getItem("userType");
 
+window.backToPostList = backToPostList;
+window.movePostAddPage = movePostAddPage;
+window.clickCategory = clickCategory;
+window.checktoGoDetailPage = checktoGoDetailPage;
+
 //공지사항 목록 조회
 function fetchPost() {
   fetch(url, { headers: header })

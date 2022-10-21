@@ -20,6 +20,9 @@ const company = document.querySelector("#user_detail_company");
 const github = document.querySelector("#user_detail_github");
 const img = document.querySelector("#user_img");
 
+window.LookupUserPost = LookupUserPost;
+window.userKick = userKick;
+
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
   .then((data) => {

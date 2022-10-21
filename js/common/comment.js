@@ -4,14 +4,18 @@ const WP_Url = window.location.href;
 const W_arr = Url.split("?postId=");
 const arr = Url.split("?postId=");
 const W_id = arr[1];
+const id = arr[1];
 
 let w_sessiontoken = localStorage.getItem("sessionToken");
+let sessionToken = localStorage.getItem("sessionToken");
 let w_header = new Headers({ "x-pocs-session-token": w_sessiontoken });
 
 const checkUserType = localStorage.getItem("userType");
 const checkUserId = localStorage.getItem("userId");
 
 const c_url = `http://34.64.161.55:80/api/comments/${W_id}`;
+
+window.AddComment = AddComment;
 
 //회원인지 비회원인지 체크(qna게시판은 상관x)-타입에 따라 다른 html구성
 function checkNonMember(input_type = "comment") {

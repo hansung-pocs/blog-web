@@ -25,6 +25,9 @@ const basicProfileBtn = document.getElementById("basicProfileBtn");
 //useDefaultImage가 true일때만 api를 쏜다.
 let useDefaultImage = false;
 
+window.cancelFile = cancelFile;
+window.loadFile = loadFile;
+
 function loadFile(input) {
   var file = input.files[0]; //선택된 파일 가져오기
   console.log(file);
@@ -59,8 +62,8 @@ function loadFile(input) {
   //이미지를 넣었기 때문에 useDefaultImage를 true로 바꿔준다.
   useDefaultImage = true;
 }
-
-const cancelFile = () => {
+function cancelFile() {
+  //const cancelFile = () => {
   var newImage = document.getElementById("profileImage");
   newImage.src = "../img/logo.png";
   chooseFile.value = null;
@@ -68,7 +71,7 @@ const cancelFile = () => {
   basicProfileBtn.classList.add("disabled");
   //이미지를 기본이미지로 바꿔줬기 때문에 useDefaultImage를 true로 바꿔준다. 그래야 null로 api를 쏜다.
   useDefaultImage = true;
-};
+}
 
 const img = document.querySelector("#user_detail_edit_img");
 const img_input = document.querySelector("#user_detail_edit_img_input");
@@ -93,13 +96,13 @@ fetch(url, { headers: header })
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
-      if (data.data.defaultInfo.userProfilePath != null) {
-        img_preview.src = `http://${process.env.DEV_API_KEY}${data.data.defaultInfo.userProfilePath}`;
-        img.src = `http://${process.env.DEV_API_KEY}"${data.data.defaultInfo.userProfilePath}`;
-      } else {
-        img_preview.src = "../img/logo.png";
-        img.src = "../img/logo.png";
-      }
+      // if (data.data.defaultInfo.userProfilePath != null) {
+      //   img_preview.src = `http://34.64.161.55:80${data.data.defaultInfo.userProfilePath}`;
+      //   img.src = `http://34.64.161.55:80"${data.data.defaultInfo.userProfilePath}`;
+      // } else {
+      //   img_preview.src = "../img/logo.png";
+      //   img.src = "../img/logo.png";
+      // }
 
       if (
         data.data.defaultInfo.company == "-" ||
@@ -119,7 +122,8 @@ fetch(url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://${process.env.DEV_API_KEY}:80/${data.data.defaultInfo.userProfilePath}`;
+        console.log(data.data.defaultInfo.userProfilePath);
+        profileImage.src = `http://${process.env.DEV_API_KEY}:80${data.data.defaultInfo.userProfilePath}`;
         basicProfileBtn.classList.remove("disabled");
       }
     }
@@ -223,23 +227,23 @@ editForm.addEventListener("submit", async function userEdit(event) {
   }
 });
 
-//유저 정보 수정을 취소하는 버튼 이벤트
-cancelBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-  window.location.href = "../html/user_detail.html?userId=" + id;
-});
-//업로드한 이미지 미리보기
-img_input.addEventListener("change", function (event) {
-  let reader = new FileReader();
-  let AA = event.target.files[0];
-  reader.onload = function (event) {
-    img_preview.src = event.target.result;
-  };
-  reader.readAsDataURL(AA);
-});
-//미리보기를 기본 이미지로 변경
-//현재 프로필 이미지와 다르면 flag 부여
-img_2basic.addEventListener("click", function (event) {
-  img_preview.src = "../img/logo.png";
-  if (img.src != img_preview.src) img2BasicFlag = true;
-});
+// //유저 정보 수정을 취소하는 버튼 이벤트
+// cancelBtn.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   window.location.href = "../html/user_detail.html?userId=" + id;
+// });
+// //업로드한 이미지 미리보기
+// img_input.addEventListener("change", function (event) {
+//   let reader = new FileReader();
+//   let AA = event.target.files[0];
+//   reader.onload = function (event) {
+//     img_preview.src = event.target.result;
+//   };
+//   reader.readAsDataURL(AA);
+// });
+// //미리보기를 기본 이미지로 변경
+// //현재 프로필 이미지와 다르면 flag 부여
+// img_2basic.addEventListener("click", function (event) {
+//   img_preview.src = "../img/logo.png";
+//   if (img.src != img_preview.src) img2BasicFlag = true;
+// });

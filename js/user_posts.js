@@ -19,6 +19,9 @@ let cntPageNum = 0;
 
 let user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
 
+window.moveNextPage = moveNextPage;
+window.movePreviousPage = movePreviousPage;
+
 //제목에 이름을 표시하기 위한 명령어
 fetch(`http://${process.env.DEV_API_KEY}:80/api/users/${id}`, {
   headers: header,

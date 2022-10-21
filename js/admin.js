@@ -26,6 +26,15 @@ const offset = 15;
 let post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
 let user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
 
+window.moveNoticeDetailPage = moveNoticeDetailPage;
+window.moveUserDetailPage = moveUserDetailPage;
+window.moveNoticeAddPage = moveNoticeAddPage;
+window.moveNextNoticePage = moveNextNoticePage;
+window.moveAdminNoticePage = moveAdminNoticePage;
+window.moveUserAddPage = moveUserAddPage;
+window.moveNextUserPage = moveNextUserPage;
+//window.backToAdminPage = backToAdminPage;
+
 async function fetchNotice() {
   await fetch(post_url, { headers: header })
     .then((response) => response.json())

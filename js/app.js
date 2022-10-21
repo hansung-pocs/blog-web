@@ -413,10 +413,10 @@ fetch(url, { headers: header })
         } else {
           user_main.innerHTML += `
           <div class="col" style="text-align: center;">
-              <img src="http://34.64.161.55:80/${
-                data.data.users[i].defaultInfo.userProfilePath
-              }
-              style="width:100px;height:100px;object-fit: cover" class="rounded-pill">
+              <img src="http://${process.env.DEV_API_KEY}:80${
+            data.data.users[i].defaultInfo.userProfilePath
+          }"
+                style="width:100px;height:100px;object-fit: cover" class="rounded-pill">
                   <div>
                       <div id="user_main_userName">${
                         data.data.users[i].defaultInfo.name || "익명"

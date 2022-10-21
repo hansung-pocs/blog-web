@@ -19,6 +19,8 @@ if (window.location.href.includes("notices.html")) {
 
   const userType = localStorage.getItem("userType");
 
+  window.moveNoticeAddPage = moveNoticeAddPage;
+
   //공지사항 목록 조회
   async function fetchNotice() {
     await fetch(url, { headers: header })

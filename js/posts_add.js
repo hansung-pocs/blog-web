@@ -5,6 +5,9 @@ let category;
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
 
+window.checkedCategory = checkedCategory;
+window.postSubmit = postSubmit;
+
 async function postSubmit() {
   const sendData = {
     title: post_title.value,

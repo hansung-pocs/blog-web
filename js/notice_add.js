@@ -4,6 +4,8 @@ let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
+window.noticeSubmit = noticeSubmit;
+
 async function noticeSubmit() {
   const sendData = {
     title: notice_title.value,

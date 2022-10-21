@@ -22,6 +22,16 @@ let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 console.log(sessiontoken);
 
+window.btnClick = btnClick;
+window.movePage = movePage;
+window.moveNextPage = moveNextPage;
+window.movePreviousPage = movePreviousPage;
+
+function btnClick() {
+  const name = document.getElementById("searchUser").value;
+  searchName(name);
+}
+
 async function doFetch() {
   await fetch(url, { headers: header })
     .then((response) => response.json())

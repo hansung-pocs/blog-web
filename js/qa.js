@@ -16,6 +16,8 @@ let totalPage;
 
 let url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
 
+window.moveQaAddPage = moveQaAddPage;
+
 function getArticleCount() {
   fetch(url, { headers: header })
     .then((response) => response.json())

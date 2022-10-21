@@ -11,6 +11,8 @@ const qa_title = document.querySelector("#title");
 const qa_content = document.querySelector("#content");
 let user_Id;
 
+window.QaEdit = QaEdit;
+
 function QaEditPage() {
   fetch(url, { headers: header })
     .then((response) => response.json())

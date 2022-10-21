@@ -6,6 +6,10 @@ console.log(id);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
+window.backToList = backToList;
+window.gotoNoticeEditPage = gotoNoticeEditPage;
+window.DeleteNotice = DeleteNotice;
+
 //공지사항 상세페이지 구현
 async function NoticeDetailPage() {
   const notice_title_first = document.querySelector(".notice-title-first");
@@ -54,7 +58,7 @@ async function DeleteNotice() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
@@ -67,7 +71,7 @@ async function DeleteNotice() {
   console.log(result.status);
 
   //삭제 성공(result.status===201)하면
-  if (result.status === 201) {
+  if (result.status === 200) {
     backToList();
   } else {
     console.log(result.message);

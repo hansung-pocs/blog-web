@@ -10,45 +10,17 @@ const navProfile = document.querySelector(".navbar .container .nav-item a img");
 let user_type = localStorage.getItem("userType");
 const nav_img = document.querySelector(".nav-item img");
 
-document.body.insertAdjacentHTML =
-  ("beforebegin",
-  `<nav class="navbar navbar-expand-sm bg-light justify-content-center"
-  style="position: sticky; top: 0; height: auto; z-index: 10">
-<div class="container">
-  <div class="navbar-brand nav-link" onclick="moveMainPage()" style="cursor: pointer;">POCS</div>
-  <ul class="navbar-nav" id="navItem">
-      <li class="nav-item" id="NoticeBtn">
-          <div class='nav-link' onclick="moveNoticePage()" style="cursor: pointer;">Notice</div>
-      </li>
-      <li class="nav-item" id="PostBtn">
-          <div class="nav-link" onclick="movePostPage()" style="cursor: pointer;">Post</div>
-      </li>
-      <li class="nav-item" id="UserBtn">
-          <div class="nav-link" onclick="moveUserPage()" style="cursor: pointer;">User</div>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="qa.html">Q/A</a>
-      </li>
-      <li class="nav-item hidden" id="adminBtn">
-          <a class="nav-link" href="admin.html">Admin</a>
-      </li>
-  </ul>
-  <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="toggle" role="button" data-bs-toggle="dropdown">
-          <img src="../img/logo.png" style="width:40px;" class="rounded-pill">
-      </a>
-      <ul class="dropdown-menu"  id="toggleDetail">
-          
-      </ul>
-  </div>
-</div>
-</nav>`);
-
 if (!window.location.href.includes("index")) {
   if (sessionToken === null) {
     window.location.href = "../html/index.html";
   }
 }
+
+window.moveMainPage = moveMainPage;
+window.moveNoticePage = moveNoticePage;
+window.movePostPage = movePostPage;
+window.moveUserPage = moveUserPage;
+window.handleLogout = handleLogout;
 
 function preventChanginguserId() {
   window.addEventListener("storage", () => {

@@ -8,6 +8,9 @@ let postWriterId;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
+window.DeletePost = DeletePost;
+window.GotoPostEditPage = GotoPostEditPage;
+
 //게시글 상세페이지 구현
 async function PostDetailPage() {
   const notice_title_first = document.querySelector(".notice-title-first");

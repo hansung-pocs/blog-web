@@ -6,6 +6,8 @@ let header = new Headers({ "x-pocs-session-token": sessiontoken });
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 let user_type1 = localStorage.getItem("userType");
 
+window.qaSubmit = qaSubmit;
+
 if (user_type1 === "anonymous") {
   flexCheckDefault.checked = false;
 }

@@ -24,6 +24,10 @@ let present_page_title;
 let present_page_content;
 let category;
 
+window.noticeEditPage = noticeEditPage;
+window.noticeEdit = noticeEdit;
+window.DeleteNotice = DeleteNotice;
+
 function fetchAdminNotice() {
   fetch(d_url, { headers: header })
     .then((response) => response.json())

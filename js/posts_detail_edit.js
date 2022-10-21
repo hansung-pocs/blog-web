@@ -13,6 +13,8 @@ let user_Id;
 
 let category;
 
+window.postEdit = postEdit;
+
 function PostEditPage() {
   fetch(url, { headers: header })
     .then((response) => response.json())
@@ -46,7 +48,7 @@ async function postEdit() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };

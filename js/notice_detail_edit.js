@@ -11,8 +11,11 @@ let category;
 
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
-const notice_content = document.querySelector("#content");
+const notice_content = document.querySelector("#editContent");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
+
+window.noticeEdit = noticeEdit;
+window.backToList = backToList;
 
 function NoticeEditPage() {
   fetch(url, { headers: header })
@@ -36,12 +39,13 @@ async function noticeEdit() {
     onlyMember: flexCheckDefault.checked,
     category: category,
   };
+  console.log(sendData);
 
   const options = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
@@ -51,7 +55,8 @@ async function noticeEdit() {
     options
   );
   const result = await response.json();
-  if (result.status === 302) {
+  console.log(result.status);
+  if (result.status === 200) {
     backToList();
   } else {
     console.log(result.message);

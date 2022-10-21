@@ -11,6 +11,8 @@ let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
 let qaWriterId;
 
+window.DeleteQa = DeleteQa;
+
 // 게시글 상세페이지 구현
 async function QaDetailPage() {
   const qa_title_first = document.querySelector("#qa-title-first");
