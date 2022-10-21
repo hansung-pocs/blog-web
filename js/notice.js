@@ -20,6 +20,9 @@ if (window.location.href.includes("notices.html")) {
   const userType = localStorage.getItem("userType");
 
   window.moveNoticeAddPage = moveNoticeAddPage;
+  window.movePage = movePage;
+  window.moveNextPage = moveNextPage;
+  window.movePreviousPage = movePreviousPage;
 
   //공지사항 목록 조회
   async function fetchNotice() {

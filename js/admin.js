@@ -33,6 +33,9 @@ window.moveNextNoticePage = moveNextNoticePage;
 window.moveAdminNoticePage = moveAdminNoticePage;
 window.moveUserAddPage = moveUserAddPage;
 window.moveNextUserPage = moveNextUserPage;
+window.moveAdminUserPage = moveAdminUserPage;
+window.movePreviousNoticePage = movePreviousNoticePage;
+window.movePreviousUserPage = movePreviousUserPage;
 //window.backToAdminPage = backToAdminPage;
 
 async function fetchNotice() {

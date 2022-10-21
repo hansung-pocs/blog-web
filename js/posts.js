@@ -22,6 +22,9 @@ window.backToPostList = backToPostList;
 window.movePostAddPage = movePostAddPage;
 window.clickCategory = clickCategory;
 window.checktoGoDetailPage = checktoGoDetailPage;
+window.movePage = movePage;
+window.movePreviousPage = movePreviousPage;
+window.moveNextPage = moveNextPage;
 
 //공지사항 목록 조회
 function fetchPost() {
