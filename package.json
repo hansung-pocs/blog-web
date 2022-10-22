@@ -28,6 +28,7 @@
   "homepage": "https://github.com/hansung-pocs/blog-web#readme",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "dotenv-webpack": "^8.0.1"
+    "dotenv-webpack": "^8.0.1",
+    "mime": "^3.0.0"
   }
 }
