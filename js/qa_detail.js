@@ -12,6 +12,7 @@ let header = new Headers({ "x-pocs-session-token": sessiontoken });
 let qaWriterId;
 
 window.DeleteQa = DeleteQa;
+window.qaWriterId = qaWriterId;
 
 // 게시글 상세페이지 구현
 async function QaDetailPage() {
@@ -49,6 +50,7 @@ async function QaDetailPage() {
         present_page_title = data.data.title;
         present_page_content = data.data.content;
         category = data.data.category;
+        qaWriterId = "";
       }
     });
   await checktoShowButtons();

@@ -26,6 +26,7 @@ window.btnClick = btnClick;
 window.movePage = movePage;
 window.moveNextPage = moveNextPage;
 window.movePreviousPage = movePreviousPage;
+window.checktoGoDetailPage = checktoGoDetailPage;
 
 function btnClick() {
   const name = document.getElementById("searchUser").value;

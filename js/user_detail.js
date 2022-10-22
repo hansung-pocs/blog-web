@@ -24,6 +24,7 @@ const github = document.querySelector("#user_detail_github");
 
 window.userKick = userKick;
 window.LookupUserPost = LookupUserPost;
+window.checktoShowButtons = checktoShowButtons;
 
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
@@ -112,6 +113,7 @@ async function userKick() {
 function checktoShowButtons() {
   let login_id = localStorage.getItem("userId");
   let user_type = localStorage.getItem("userType");
+  console.log(login_id + "," + id);
   if (user_type === "member") {
     //본인이 다른유저 정보를 조회할 경우
     if (login_id !== id) {

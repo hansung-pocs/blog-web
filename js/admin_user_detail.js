@@ -57,7 +57,7 @@ fetch(user_detail_url, { headers: header })
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
       if (data.data.defaultInfo.userProfilePath != null)
-        img.src = `http://${process.env.DEV_API_KEY}"${data.data.defaultInfo.userProfilePath}`;
+        img.src = `http://${process.env.DEV_API_KEY}${data.data.defaultInfo.userProfilePath}`;
       else img.src = "../img/logo.png";
 
       if (

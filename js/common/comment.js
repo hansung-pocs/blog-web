@@ -4,7 +4,7 @@ const WP_Url = window.location.href;
 const W_arr = Url.split("?postId=");
 const arr = Url.split("?postId=");
 const W_id = arr[1];
-const id = arr[1];
+//const id = arr[1];
 
 let w_sessiontoken = localStorage.getItem("sessionToken");
 let sessionToken = localStorage.getItem("sessionToken");
@@ -13,9 +13,13 @@ let w_header = new Headers({ "x-pocs-session-token": w_sessiontoken });
 const checkUserType = localStorage.getItem("userType");
 const checkUserId = localStorage.getItem("userId");
 
-const c_url = `http://34.64.161.55:80/api/comments/${W_id}`;
+const c_url = `http://${process.env.DEV_API_KEY}:80/api/comments/${W_id}`;
 
 window.AddComment = AddComment;
+window.commentBtnClick = commentBtnClick;
+window.clickEditCommentBtn = clickEditCommentBtn;
+window.DeleteComment = DeleteComment;
+window.EditComment = EditComment;
 
 //회원인지 비회원인지 체크(qna게시판은 상관x)-타입에 따라 다른 html구성
 function checkNonMember(input_type = "comment") {
@@ -25,10 +29,14 @@ function checkNonMember(input_type = "comment") {
   const reply_input = document.querySelector(".reply_input");
   const reply_input_btn = document.querySelector(".reply_input_btn");
   const category = document.querySelector("#title_category"); //html을 통해서 카테고리 정보 가져옴
-  const checkPostWriter = qaWriterId; //qa_detail.js로부터 받아온 정보
-  if (category.innerHTML == "Q/A" && checkUserId == checkPostWriter)
-    //&&자기 자신의 qna 게시글은 댓글 등록 허용
-    return;
+  // if (category.innerHTML == "Q/A" && checkUserId == checkPostWriter)
+  //   //&&자기 자신의 qna 게시글은 댓글 등록 허용
+  //   return;
+  if (category.innerHTML == "Q/A") {
+    const checkPostWriter = qaWriterId; //qa_detail.js로부터 받아온 정보
+    if (checkUserId == checkPostWriter) return;
+  }
+
   if (userType === "anonymous") {
     // && Category !== 'qna'|| Category !== 'qna') {
     comment_input.placeholder = "회원만 작성할 수 있습니다.";
@@ -212,7 +220,7 @@ async function AddComment(pId = null, type = "comment") {
   if (type === "comment") input = document.querySelector(`#${type}_input`);
   else input = document.querySelector(`#comment${pId} .${type}_input`);
   const sendData = {
-    postId: Number(id),
+    postId: Number(W_id),
     content: input.value,
     parentId: pId,
   };
@@ -225,7 +233,10 @@ async function AddComment(pId = null, type = "comment") {
     body: JSON.stringify(sendData),
   };
   console.log(sendData);
-  const response = await fetch(`http://34.64.161.55:80/api/comments`, options);
+  const response = await fetch(
+    `http://${process.env.DEV_API_KEY}:80/api/comments`,
+    options
+  );
   const result = await response.json();
   console.log(result);
 
@@ -240,7 +251,7 @@ async function AddComment(pId = null, type = "comment") {
 //수정 버튼 클릭후 댓글내용을 입력창으로 변경
 // 댓글 작성자만 수정 가능
 function clickEditCommentBtn(writerId, commentId, type = "comment") {
-  if (checkUserId === writerId) {
+  if (checkUserId == writerId) {
     console.log(`#${type}${commentId} .content`);
     const content = document.querySelector(`#${type}${commentId} .content`);
     const contentEdit = document.querySelector(
@@ -271,7 +282,7 @@ async function EditComment(id, type = "comment") {
     body: JSON.stringify(sendData),
   };
   const response = await fetch(
-    `http://34.64.161.55:80/api/comments/${id}`,
+    `http://${process.env.DEV_API_KEY}:80/api/comments/${id}`,
     options
   );
   const result = await response.json();
@@ -301,13 +312,13 @@ async function DeleteComment(writerId, commentId) {
       },
     };
     const response = await fetch(
-      `http://34.64.161.55:80/api/comments/${commentId}/delete`,
+      `http://${process.env.DEV_API_KEY}:80/api/comments/${commentId}/delete`,
       options
     );
     const result = await response.json();
     console.log(result);
 
-    if (result.status === 201) {
+    if (result.status === 200) {
       //삭제전 확인 한번 더 필요함
       alert(result.message);
       checkComments(c_url);
@@ -329,7 +340,7 @@ function commentBtnClick(id) {
 // 관리자와 댓글 작성자에게만 수정, 삭제 버튼 보이게함
 function commentEditDelBtn(writerId, commentId) {
   const editDelBtn = document.querySelector(`#editDelBtn${commentId}`);
-  if (checkUserType === "admin" || checkUserId === writerId) {
+  if (checkUserType == "admin" || checkUserId == writerId) {
     //console.log(editDelBtn);
     editDelBtn.classList.replace("hidden", "non-hidden");
   } else {

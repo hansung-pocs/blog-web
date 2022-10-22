@@ -20,6 +20,7 @@ window.moveQaAddPage = moveQaAddPage;
 window.movePage = movePage;
 window.moveNextPage = moveNextPage;
 window.movePreviousPage = movePreviousPage;
+window.goQaDetailPage = goQaDetailPage;
 
 function getArticleCount() {
   fetch(url, { headers: header })
