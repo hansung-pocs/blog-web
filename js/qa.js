@@ -14,7 +14,13 @@ let cnt = 0;
 let cntPageNum = 0;
 let totalPage;
 
-let url = `http://34.64.161.55:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+let url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+
+window.moveQaAddPage = moveQaAddPage;
+window.movePage = movePage;
+window.moveNextPage = moveNextPage;
+window.movePreviousPage = movePreviousPage;
+window.goQaDetailPage = goQaDetailPage;
 
 function getArticleCount() {
   fetch(url, { headers: header })
@@ -97,7 +103,7 @@ function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://34.64.161.55:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }
@@ -105,7 +111,7 @@ function movePage(pageNum) {
 function moveNextPage() {
   if (currentPage >= totalPage) return;
   currentPage++;
-  url = `http://34.64.161.55:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }
@@ -114,7 +120,7 @@ function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://34.64.161.55:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
   fetchQa();
   showPagination();
 }

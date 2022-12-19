@@ -6,11 +6,15 @@ const notice_card = document.querySelector(".notice-card");
 const study_card = document.querySelector(".study-card");
 const memory_card = document.querySelector(".memory-card");
 const knowhow_card = document.querySelector(".knowhow-card");
+//const mainPage = document.querySelector("#main");
 
-url = `http://34.64.161.55:80/api`;
+url = `http://${process.env.DEV_API_KEY}:80/api`;
 const sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
+//mainPage.addEventListener("load", setMainPage);
+
+//function setMainPage() {
 fetch(url, { headers: header })
   .then((response) => response.json())
   .then((data) => {
@@ -381,7 +385,7 @@ fetch(url, { headers: header })
     }
   });
 
-url = `http://34.64.161.55:80/api/users?offset=5&pageNum=1`;
+url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=5&pageNum=1`;
 //정보
 const user_main = document.querySelector("#user-main");
 fetch(url, { headers: header })
@@ -398,20 +402,21 @@ fetch(url, { headers: header })
                 <img src="../img/profile.png" style="width:100px;height:100px" class="rounded-pill">
                     <div>
                         <div id="user_main_userName">${
-              data.data.users[i].defaultInfo.name || "익명"
-          }</div>
+                          data.data.users[i].defaultInfo.name || "익명"
+                        }</div>
                         <div id="user_main_generation">${
-              data.data.users[i].defaultInfo.generation
-          }</div>
+                          data.data.users[i].defaultInfo.generation
+                        }</div>
                     </div>
             </div>
             `;
         } else {
           user_main.innerHTML += `
           <div class="col" style="text-align: center;">
-              <img src="http://34.64.161.55:80/${
-                data.data.users[i].defaultInfo.userProfilePath
-              }" style="width:100px;height:100px;object-fit: cover" class="rounded-pill">
+              <img src="http://${process.env.DEV_API_KEY}:80${
+            data.data.users[i].defaultInfo.userProfilePath
+          }"
+                style="width:100px;height:100px;object-fit: cover" class="rounded-pill">
                   <div>
                       <div id="user_main_userName">${
                         data.data.users[i].defaultInfo.name || "익명"

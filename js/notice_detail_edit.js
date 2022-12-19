@@ -1,7 +1,7 @@
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
-const url = `http://34.64.161.55:80/api/posts/${id}`;
+const url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -11,8 +11,11 @@ let category;
 
 //공지사항 제목, 공지사항 내용 가져오기
 const notice_title = document.querySelector("#title");
-const notice_content = document.querySelector("#content");
+const notice_content = document.querySelector("#editContent");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
+
+window.noticeEdit = noticeEdit;
+window.backToList = backToList;
 
 function NoticeEditPage() {
   fetch(url, { headers: header })
@@ -36,22 +39,24 @@ async function noticeEdit() {
     onlyMember: flexCheckDefault.checked,
     category: category,
   };
+  console.log(sendData);
 
   const options = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`,
     options
   );
   const result = await response.json();
-  if (result.status === 302) {
+  console.log(result.status);
+  if (result.status === 200) {
     backToList();
   } else {
     console.log(result.message);

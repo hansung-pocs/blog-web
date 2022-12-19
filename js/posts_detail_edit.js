@@ -1,7 +1,7 @@
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
-const url = `http://34.64.161.55:80/api/posts/${id}`;
+const url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -12,6 +12,8 @@ const flexCheckDefault = document.querySelector("#flexCheckDefault");
 let user_Id;
 
 let category;
+
+window.postEdit = postEdit;
 
 function PostEditPage() {
   fetch(url, { headers: header })
@@ -46,13 +48,13 @@ async function postEdit() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`,
     options
   );
   const result = await response.json();

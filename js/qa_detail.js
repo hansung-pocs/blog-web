@@ -11,12 +11,15 @@ let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
 let qaWriterId;
 
+window.DeleteQa = DeleteQa;
+window.qaWriterId = qaWriterId;
+
 // 게시글 상세페이지 구현
 async function QaDetailPage() {
   const qa_title_first = document.querySelector("#qa-title-first");
   const qa_title_second = document.querySelector("#qa-title-second");
   const qa_detail_content = document.querySelector("#qa-detail-content");
-  const d_url = `http://34.64.161.55:80/api/posts/${id}`;
+  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
   await fetch(d_url, { headers: header })
     .then((response) => response.json())
@@ -47,6 +50,7 @@ async function QaDetailPage() {
         present_page_title = data.data.title;
         present_page_content = data.data.content;
         category = data.data.category;
+        qaWriterId = "";
       }
     });
   await checktoShowButtons();
@@ -68,7 +72,7 @@ async function DeleteQa() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}/delete`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
     options
   );
   const result = await response.json();

@@ -17,10 +17,15 @@ let cnt;
 let currentPage = 1;
 let cntPageNum = 0;
 
-let user_posts_url = `http://34.64.161.55:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
+let user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
+
+window.moveNextPage = moveNextPage;
+window.movePreviousPage = movePreviousPage;
 
 //제목에 이름을 표시하기 위한 명령어
-fetch("http://34.64.161.55:80/api/users/" + id, { headers: header })
+fetch(`http://${process.env.DEV_API_KEY}:80/api/users/${id}`, {
+  headers: header,
+})
   .then((response) => response.json())
   .then((userdata) => {
     console.log(userdata);
@@ -101,14 +106,14 @@ function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  user_posts_url = `http://34.64.161.55:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
+  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
   fetchNotice();
   showPagination();
 }
 
 function moveNextPage() {
   currentPage++;
-  user_posts_url = `http://34.64.161.55:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
+  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
   fetchNotice();
   showPagination();
 }
@@ -117,7 +122,7 @@ function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  user_posts_url = `http://34.64.161.55:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
+  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
   fetchNotice();
   showPagination();
 }

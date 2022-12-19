@@ -1,5 +1,5 @@
-const validationUrl = "http://34.64.161.55:80/api/auth/validation";
-const logoutUrl = "http://34.64.161.55:80/api/auth/logout";
+const validationUrl = `http://${process.env.DEV_API_KEY}:80/api/auth/validation`;
+const logoutUrl = `http://${process.env.DEV_API_KEY}:80/api/auth/logout`;
 const toggle = document.getElementById("toggle");
 const sessionToken = localStorage.getItem("sessionToken");
 const toggleDetail = document.getElementById("toggleDetail");
@@ -7,13 +7,20 @@ const navItem = document.getElementById("navItem");
 const adminBtn = document.getElementById("adminBtn");
 const localStorage_userId = localStorage.getItem("userId");
 const navProfile = document.querySelector(".navbar .container .nav-item a img");
-console.log(navProfile);
 let user_type = localStorage.getItem("userType");
 const nav_img = document.querySelector(".nav-item img");
 
-if (sessionToken === null) {
-  window.location.href = "../html/index.html";
+if (!window.location.href.includes("index")) {
+  if (sessionToken === null) {
+    window.location.href = "../html/index.html";
+  }
 }
+
+window.moveMainPage = moveMainPage;
+window.moveNoticePage = moveNoticePage;
+window.movePostPage = movePostPage;
+window.moveUserPage = moveUserPage;
+window.handleLogout = handleLogout;
 
 function preventChanginguserId() {
   window.addEventListener("storage", () => {
@@ -58,11 +65,10 @@ async function handleValidation(token) {
 
   if (result.status === 200) {
     console.log(result.data.user);
-    if(result.data.user.type!="anonymous"){
-      if(result.data.user.defaultInfo.userProfilePath!=null)
-        nav_img.src="http://34.64.161.55"+result.data.user.defaultInfo.userProfilePath;
-      else
-        nav_img.src="../img/logo.png";
+    if (result.data.user.type != "anonymous") {
+      if (result.data.user.defaultInfo.userProfilePath != null)
+        nav_img.src = `http://${process.env.DEV_API_KEY}${result.data.user.defaultInfo.userProfilePath}`;
+      else nav_img.src = "../img/logo.png";
     }
     return result.data.user;
   } else {
@@ -146,14 +152,17 @@ async function handleNavigation() {
     }
 
     if (user.defaultInfo.userProfilePath != null) {
-      navProfile.src = `http://34.64.161.55:80/${user.defaultInfo.userProfilePath}`;
+      //navProfile.src = `http://${process.env.DEV_API_KEY}:80/${user.defaultInfo.userProfilePath}`;
+      navProfile.src = `http://34.64.161.55:80${user.defaultInfo.userProfilePath}`;
     }
   }
 }
 
-window.addEventListener("load", handleNavigation);
-toggle.addEventListener("click", handleToggle);
-preventChanginguserId();
+if (!window.location.href.includes("index")) {
+  window.addEventListener("load", handleNavigation);
+  toggle.addEventListener("click", handleToggle);
+  preventChanginguserId();
+}
 
 //네비게이션 공통
 function moveMainPage(event) {

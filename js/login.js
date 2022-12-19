@@ -1,12 +1,17 @@
-const url = "http://34.64.161.55:80/api/auth/login";
-
+const url = `http://${process.env.DEV_API_KEY}:80/api/auth/login`;
 const username = document.getElementById("floatingInput");
 const password = document.getElementById("floatingPassword");
 const loginForm = document.getElementById("loginForm");
 const RegisterBtn = document.getElementById("RegisterBtn");
-
 const Register_username = document.getElementById("register-id");
 const Register_password = document.getElementById("register-password");
+
+// if (process.env.DEV === "on") {
+//   console.log(`process.env.DEV_API_KEY:`, process.env.DEV_API_KEY);
+//   console.log(`env = ${process.env.process.env.DEV_API_KEY}`);
+// } else {
+//   console.log(`PRO_process.env.DEV_API_KEY:`, PRO_process.env.DEV_API_KEY);
+// }
 
 async function register_anonymous(event) {
   event.preventDefault();
@@ -24,7 +29,10 @@ async function register_anonymous(event) {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch("http://34.64.161.55:80/api/users", options);
+  const response = await fetch(
+    `http://${process.env.DEV_API_KEY}:80/api/users`,
+    options
+  );
   const result = await response.json();
   console.log(result);
   if (result.status === 201) {

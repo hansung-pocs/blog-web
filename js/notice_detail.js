@@ -6,6 +6,10 @@ console.log(id);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
+window.backToList = backToList;
+window.gotoNoticeEditPage = gotoNoticeEditPage;
+window.DeleteNotice = DeleteNotice;
+
 //공지사항 상세페이지 구현
 async function NoticeDetailPage() {
   const notice_title_first = document.querySelector(".notice-title-first");
@@ -13,7 +17,7 @@ async function NoticeDetailPage() {
   const notice_detail_content = document.querySelector(
     ".notice-detail-content"
   );
-  const d_url = `http://34.64.161.55:80/api/posts/${id}`;
+  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
   await fetch(d_url, { headers: header })
     .then((response) => response.json())
@@ -54,20 +58,20 @@ async function DeleteNotice() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}/delete`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
     options
   );
   const result = await response.json();
   console.log(result.status);
 
   //삭제 성공(result.status===201)하면
-  if (result.status === 201) {
+  if (result.status === 200) {
     backToList();
   } else {
     console.log(result.message);

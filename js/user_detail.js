@@ -2,7 +2,9 @@ const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
 
-const user_detail_url = new URL("http://34.64.161.55:80/api/users/" + id);
+const user_detail_url = new URL(
+  `http://${process.env.DEV_API_KEY}:80/api/users/${id}`
+);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -19,7 +21,10 @@ const studentId = document.querySelector("#user_detail_studentId");
 const generation = document.querySelector("#user_detail_generation");
 const company = document.querySelector("#user_detail_company");
 const github = document.querySelector("#user_detail_github");
-const img = document.querySelector("#user_img");
+
+window.userKick = userKick;
+window.LookupUserPost = LookupUserPost;
+window.checktoShowButtons = checktoShowButtons;
 
 fetch(user_detail_url, { headers: header })
   .then((response) => response.json())
@@ -43,11 +48,6 @@ fetch(user_detail_url, { headers: header })
       studentId.innerHTML = `${data.data.defaultInfo.studentId}`;
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
-      if(data.data.defaultInfo.userProfilePath!=null)
-        img.src="http://34.64.161.55"+data.data.defaultInfo.userProfilePath;
-      else
-        img.src="../img/logo.png";
-
       if (
         data.data.defaultInfo.company === "" ||
         data.data.defaultInfo.company == "undefined" ||
@@ -66,7 +66,7 @@ fetch(user_detail_url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://34.64.161.55:80/${data.data.defaultInfo.userProfilePath}`;
+        profileImage.src = `http://${process.env.DEV_API_KEY}:80/${data.data.defaultInfo.userProfilePath}`;
       }
     }
   });
@@ -99,7 +99,7 @@ async function userKick() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/admin/users/${id}/kick`,
+    `http://${process.env.DEV_API_KEY}:80/api/admin/users/${id}/kick`,
     options
   );
   const result = await response.json();
@@ -113,6 +113,7 @@ async function userKick() {
 function checktoShowButtons() {
   let login_id = localStorage.getItem("userId");
   let user_type = localStorage.getItem("userType");
+  console.log(login_id + "," + id);
   if (user_type === "member") {
     //본인이 다른유저 정보를 조회할 경우
     if (login_id !== id) {

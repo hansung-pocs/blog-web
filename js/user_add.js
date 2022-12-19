@@ -32,13 +32,13 @@ async function addUser(event) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
   const response = await fetch(
-    "http://34.64.161.55:80/api/admin/users",
+    `http://${process.env.DEV_API_KEY}:80/api/admin/users`,
     options
   );
   const result = await response.json();

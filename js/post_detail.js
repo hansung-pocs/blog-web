@@ -8,6 +8,9 @@ let postWriterId;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
+window.DeletePost = DeletePost;
+window.GotoPostEditPage = GotoPostEditPage;
+
 //게시글 상세페이지 구현
 async function PostDetailPage() {
   const notice_title_first = document.querySelector(".notice-title-first");
@@ -15,7 +18,7 @@ async function PostDetailPage() {
   const notice_detail_content = document.querySelector(
     ".notice-detail-content"
   );
-  const d_url = `http://34.64.161.55:80/api/posts/${id}`;
+  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
   await fetch(d_url, { headers: header })
     .then((response) => response.json())
@@ -46,7 +49,6 @@ async function PostDetailPage() {
         present_page_title = data.data.title;
         present_page_content = data.data.content;
         category = data.data.category;
-        qaWriterId = "";
       }
     });
   await checktoShowButtons();
@@ -68,7 +70,7 @@ async function DeletePost() {
   };
 
   const response = await fetch(
-    `http://34.64.161.55:80/api/posts/${id}/delete`,
+    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
     options
   );
   const result = await response.json();
