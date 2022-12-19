@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const Dotenv = require("dotenv-webpack");
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -33,43 +34,18 @@ module.exports = {
     path: path.resolve(__dirname, "public"),
     filename: "[name]_bundle.js",
   },
-  // //devtool: 'source-maps',
-  // module: {
-  //   rules: [
-  //     { test: /\.js$/, exclude: /node_modules/ },
-  //     {
-  //       test: /\.css$/,
-  //       use: ["style-loader", "css-loader"],
-  //     },
-  //     {
-  //       test: /\.png$/,
-  //       use: [
-  //         {
-  //           loader: "url-loader",
-  //           options: {
-  //             mimetype: "image/png",
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
-  // devServer: {
-  //   contentBase: "src",
-  //   hot: true,
-  //   open: true,
-  //   port: 8000,
-  //   watchContentBase: true,
-  // },
+
   plugins: [
-    // new webpack.DefinePlugin({
-    //   DEV_API_KEY: JSON.stringify("34.64.170.244"),
-    //   PRO_API_KEY: JSON.stringify("34.64.85.213"),
-    // }),
-    //new webpack.EnvironmentPlugin({ API_KEY: "34.64.85.213" }),
     new Dotenv({
       path: "./.env", // .env 파일 경로 (기본값)
       safe: true, // .env.example 로드 (기본값은 dotenv-safe를 사용하지 않는 "false")
     }),
+
+    // new HtmlWebpackPlugin({
+    //   inject: true,
+    //   template: "./html/admin_notice_detail.html",
+    //   filename: "admin_notice_detail.html",
+    //   chunks:["admin_notice_detail", "toggle"]
+    // }),
   ],
 };
