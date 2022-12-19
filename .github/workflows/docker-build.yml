@@ -49,6 +49,6 @@ jobs:
           script: |
             cd ~/pocs-blog
             ls -alsh
-            docker-compose down --rmi all
-            docker-compose pull --parallel
-            docker-compose up -d
+            sudo docker-compose down --rmi all
+            sudo docker-compose pull --parallel
+            sudo docker-compose up -d
