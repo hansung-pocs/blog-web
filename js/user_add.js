@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const userName = document.querySelector("#user_detail_edit_userName");
 const passWord = document.querySelector("#user_detail_edit_password");
 const name = document.querySelector("#user_detail_edit_Name");
@@ -37,15 +39,12 @@ async function addUser(event) {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/admin/users`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/admin/users`), options);
   const result = await response.json();
   console.log(result);
 
   if (result.status === 201) {
-    window.location.href = "../html/admin.html";
+    window.location.href = "./admin.html";
   } else {
     console.log(result.message);
   }

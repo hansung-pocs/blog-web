@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
@@ -19,9 +21,8 @@ async function QaDetailPage() {
   const qa_title_first = document.querySelector("#qa-title-first");
   const qa_title_second = document.querySelector("#qa-title-second");
   const qa_detail_content = document.querySelector("#qa-detail-content");
-  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
-  await fetch(d_url, { headers: header })
+  await fetch(makeUrl(`api/posts/${id}`), { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -53,7 +54,7 @@ async function QaDetailPage() {
         qaWriterId = "";
       }
     });
-  await checktoShowButtons();
+  checktoShowButtons();
 }
 
 //게시글 삭제하기
@@ -71,10 +72,7 @@ async function DeleteQa() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${id}/delete`), options);
   const result = await response.json();
   console.log(result.status);
 
@@ -98,11 +96,11 @@ function checktoShowButtons() {
 }
 //질문 수정 페이지
 function moveQaEditPage() {
-  window.location.href = `../html/qa_detail_edit.html?postId=${id}`;
+  window.location.href = `./qa_detail_edit.html?postId=${id}`;
 }
 //목록으로 복귀
 function backToQaList() {
-  window.location.href = "../html/qa.html";
+  window.location.href = "./qa.html";
 }
 //api의 category En을 Kr로 변경
 function CategoryEn2Kr(category) {

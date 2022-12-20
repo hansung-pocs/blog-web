@@ -1,7 +1,8 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
-const url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
@@ -14,7 +15,7 @@ let user_Id;
 window.QaEdit = QaEdit;
 
 function QaEditPage() {
-  fetch(url, { headers: header })
+  fetch(makeUrl(`api/posts/${id}`), { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -22,7 +23,6 @@ function QaEditPage() {
       qa_content.value = `${data.data.content}`;
       flexCheckDefault.checked = data.data.onlyMember;
       user_Id = data.data.writer.userId;
-      // category = data.data.category;
       console.log(user_Id);
     });
 }
@@ -46,10 +46,7 @@ async function QaEdit() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${id}`), options);
   const result = await response.json();
   if (result.status === 302) {
     backToQaList();
@@ -59,7 +56,7 @@ async function QaEdit() {
 }
 
 function backToQaList() {
-  window.location.href = "../html/qa.html";
+  window.location.href = "./qa.html";
 }
 
 QaEditPage();

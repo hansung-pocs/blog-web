@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");
 let sessiontoken = localStorage.getItem("sessionToken");
@@ -19,20 +21,17 @@ async function noticeSubmit() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts`), options);
   const result = await response.json();
   console.log(result);
 
   if (result.status === 201) {
-    window.location.href = "../html/notices.html";
+    window.location.href = "./notices.html";
   } else {
     console.log(result.message);
   }
