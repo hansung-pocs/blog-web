@@ -1,3 +1,4 @@
+import { makeUrl } from "./util";
 //현재 페이지(window) url변수
 const Url = window.location.href;
 const WP_Url = window.location.href;
@@ -13,7 +14,7 @@ let w_header = new Headers({ "x-pocs-session-token": w_sessiontoken });
 const checkUserType = localStorage.getItem("userType");
 const checkUserId = localStorage.getItem("userId");
 
-const c_url = `http://${process.env.DEV_API_KEY}:80/api/comments/${W_id}`;
+const c_url = makeUrl(`api/comments/${W_id}`);
 
 window.AddComment = AddComment;
 window.commentBtnClick = commentBtnClick;
@@ -29,9 +30,7 @@ function checkNonMember(input_type = "comment") {
   const reply_input = document.querySelector(".reply_input");
   const reply_input_btn = document.querySelector(".reply_input_btn");
   const category = document.querySelector("#title_category"); //html을 통해서 카테고리 정보 가져옴
-  // if (category.innerHTML == "Q/A" && checkUserId == checkPostWriter)
-  //   //&&자기 자신의 qna 게시글은 댓글 등록 허용
-  //   return;
+
   if (category.innerHTML == "Q/A") {
     const checkPostWriter = qaWriterId; //qa_detail.js로부터 받아온 정보
     if (checkUserId == checkPostWriter) return;
@@ -233,10 +232,7 @@ async function AddComment(pId = null, type = "comment") {
     body: JSON.stringify(sendData),
   };
   console.log(sendData);
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/comments`,
-    options
-  );
+  const response = await fetch(makeUrl("api/comments"), options);
   const result = await response.json();
   console.log(result);
 
@@ -281,10 +277,7 @@ async function EditComment(id, type = "comment") {
     },
     body: JSON.stringify(sendData),
   };
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/comments/${id}`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/comments/${id}`), options);
   const result = await response.json();
   console.log(result);
 
@@ -312,7 +305,7 @@ async function DeleteComment(writerId, commentId) {
       },
     };
     const response = await fetch(
-      `http://${process.env.DEV_API_KEY}:80/api/comments/${commentId}/delete`,
+      makeUrl(`api/comments/${commentId}/delete`),
       options
     );
     const result = await response.json();

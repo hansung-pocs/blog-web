@@ -1,7 +1,8 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
-const url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -16,7 +17,7 @@ let category;
 window.postEdit = postEdit;
 
 function PostEditPage() {
-  fetch(url, { headers: header })
+  fetch(makeUrl(`api/posts/${id}`), { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -53,12 +54,9 @@ async function postEdit() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${id}`), options);
   const result = await response.json();
-  if (result.status === 302) {
+  if (result.status === 200) {
     backToPostList();
   } else {
     console.log(result.message);
@@ -67,7 +65,7 @@ async function postEdit() {
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToPostList() {
-  window.location.href = "../html/posts.html";
+  window.location.href = "./posts.html";
 }
 
 PostEditPage();

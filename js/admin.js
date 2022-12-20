@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 let post_data;
@@ -23,8 +25,12 @@ let User_totalPage;
 
 const offset = 15;
 
-let post_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`;
-let user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
+let post_url = makeUrl(
+  `api/admin/posts?offset=${offset}&pageNum=${Notice_currentPage}`
+);
+let user_url = makeUrl(
+  `api/admin/users?offset=${offset}&pageNum=${User_currentPage}`
+);
 
 window.moveNoticeDetailPage = moveNoticeDetailPage;
 window.moveUserDetailPage = moveUserDetailPage;
@@ -36,7 +42,6 @@ window.moveNextUserPage = moveNextUserPage;
 window.moveAdminUserPage = moveAdminUserPage;
 window.movePreviousNoticePage = movePreviousNoticePage;
 window.movePreviousUserPage = movePreviousUserPage;
-//window.backToAdminPage = backToAdminPage;
 
 async function fetchNotice() {
   await fetch(post_url, { headers: header })
@@ -217,49 +222,55 @@ function showUserPagination() {
   document.querySelector("#user-pagination-bar").innerHTML = pageHTML;
 }
 
+function render() {
+  fetchUser();
+  showUserPagination();
+}
+
 function moveAdminUserPage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (User_currentPage === pageNum) return;
   User_currentPage = pageNum;
-  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
-  fetchUser();
-  showUserPagination();
+  user_url = makeUrl(
+    `api/admin/users?offset=${offset}&pageNum=${User_currentPage}`
+  );
+  render();
 }
 
 function moveNextUserPage() {
   if (User_currentPage >= User_totalPage) return;
   User_currentPage++;
-  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
-  fetchUser();
-  showUserPagination();
+  user_url = makeUrl(
+    `api/admin/users?offset=${offset}&pageNum=${User_currentPage}`
+  );
+  render();
 }
 
 function movePreviousUserPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (User_currentPage <= 1) return;
   User_currentPage--;
-  user_url = `http://${process.env.DEV_API_KEY}:80/api/admin/users?offset=${offset}&pageNum=${User_currentPage}`;
-  fetchUser();
-  showUserPagination();
+  user_url = makeUrl(
+    `api/admin/users?offset=${offset}&pageNum=${User_currentPage}`
+  );
+  render();
 }
 
 function moveUserAddPage() {
-  window.location.href = "../html/user_add.html";
+  window.location.href = "./user_add.html";
 }
 
 function moveNoticeAddPage() {
-  window.location.href = "../html/notices_add.html";
+  window.location.href = "./notices_add.html";
 }
 
 function moveUserDetailPage(Id) {
-  window.location.href = `../html/admin_user_detail.html?userId=${Id}`;
+  window.location.href = `./admin_user_detail.html?userId=${Id}`;
 }
 
 function moveNoticeDetailPage(postId) {
-  window.location.href = `../html/admin_notice_detail.html?postId=${postId}`;
+  window.location.href = `./admin_notice_detail.html?postId=${postId}`;
 }
 
 fetchNotice();
 fetchUser();
-// showNoticePagination();
-// showUserPagination();

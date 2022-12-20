@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
@@ -18,9 +20,8 @@ async function PostDetailPage() {
   const notice_detail_content = document.querySelector(
     ".notice-detail-content"
   );
-  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
-  await fetch(d_url, { headers: header })
+  await fetch(makeUrl(`api/posts/${id}`), { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -46,12 +47,12 @@ async function PostDetailPage() {
         )}</div>`;
 
         postWriterId = data.data.writer.userId;
-        present_page_title = data.data.title;
-        present_page_content = data.data.content;
-        category = data.data.category;
+        // present_page_title = data.data.title;
+        // present_page_content = data.data.content;
+        // category = data.data.category;
       }
     });
-  await checktoShowButtons();
+  checktoShowButtons();
 }
 
 //게시글 삭제하기
@@ -64,20 +65,17 @@ async function DeletePost() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${id}/delete`), options);
   const result = await response.json();
   console.log(result.status);
 
-  //삭제 성공(result.status===201)하면
-  if (result.status === 201) {
+  //삭제 성공(result.status===200)하면
+  if (result.status === 200) {
     backToPostList();
   } else {
     console.log(result.message);
@@ -97,12 +95,12 @@ function checktoShowButtons() {
 
 //공지사항 수정 페이지
 function GotoPostEditPage() {
-  window.location.href = `../html/posts_detail_edit.html?postId=${id}`;
+  window.location.href = `./posts_detail_edit.html?postId=${id}`;
 }
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToPostList() {
-  window.location.href = "../html/posts.html";
+  window.location.href = "./posts.html";
 }
 
 PostDetailPage();

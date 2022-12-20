@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const post_title = document.querySelector("#title");
 const post_content = document.querySelector("#inputContent");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
@@ -26,15 +28,12 @@ async function postSubmit() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts`), options);
   const result = await response.json();
   console.log(result);
 
   if (result.status === 201) {
-    window.location.href = "../html/posts.html";
+    window.location.href = "./posts.html";
   } else {
     console.log(result.message);
   }

@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
@@ -17,13 +19,11 @@ let cnt;
 let currentPage = 1;
 let cntPageNum = 0;
 
-let user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
-
 window.moveNextPage = moveNextPage;
 window.movePreviousPage = movePreviousPage;
-
+window.movePostDetailPage = movePostDetailPage;
 //제목에 이름을 표시하기 위한 명령어
-fetch(`http://${process.env.DEV_API_KEY}:80/api/users/${id}`, {
+fetch(makeUrl(`api/users/${id}`), {
   headers: header,
 })
   .then((response) => response.json())
@@ -35,8 +35,8 @@ fetch(`http://${process.env.DEV_API_KEY}:80/api/users/${id}`, {
   });
 
 //공지사항 목록 조회
-function fetchNotice() {
-  fetch(user_posts_url, { headers: header })
+function fetchNotice(url) {
+  fetch(url, { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -79,6 +79,13 @@ function fetchNotice() {
     });
 }
 
+function render() {
+  fetchNotice(
+    makeUrl(`api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`)
+  );
+  showPagination();
+}
+
 //pgaination 구현
 function showPagination() {
   let pageHTML = `<ul class="pagination justify-content-center">
@@ -106,30 +113,26 @@ function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
-  fetchNotice();
-  showPagination();
+  render();
 }
 
 function moveNextPage() {
   currentPage++;
-  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
-  fetchNotice();
-  showPagination();
+  render();
 }
 
 function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  user_posts_url = `http://${process.env.DEV_API_KEY}:80/api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`;
-  fetchNotice();
-  showPagination();
+  render();
 }
 
 function movePostDetailPage(postId) {
-  window.location.href = `../html/posts_detail.html?postId=${postId}`;
+  window.location.href = `./posts_detail.html?postId=${postId}`;
 }
 
-fetchNotice();
+fetchNotice(
+  makeUrl(`api/admin/posts/${id}?offset=${offset}&pageNum=${currentPage}`)
+);
 showPagination();

@@ -1,3 +1,5 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const notice_Id = arr[1];
@@ -13,7 +15,7 @@ const notice_content = document.querySelector("#content");
 const admin_notice_buttons = document.querySelector("#admin-notice-buttons");
 const flexCheckDefault = document.querySelector("#flexCheckDefault");
 
-const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}`;
+const d_url = makeUrl(`api/posts/${notice_Id}`);
 let sessiontoken = localStorage.getItem("sessionToken");
 const userId = localStorage.getItem("userId");
 let writerId;
@@ -83,15 +85,12 @@ async function noticeEdit() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${notice_Id}`), options);
   const result = await response.json();
   if (result.status === 302) {
     backToAdminPage();
@@ -110,13 +109,13 @@ async function DeleteNotice() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
   const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${notice_Id}/delete`,
+    makeUrl(`api/posts/${notice_Id}/delete`),
     options
   );
   const result = await response.json();
@@ -132,7 +131,7 @@ async function DeleteNotice() {
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToAdminPage() {
-  window.location.href = "../html/admin.html";
+  window.location.href = "./admin.html";
 }
 
 fetchAdminNotice();
