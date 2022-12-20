@@ -1,17 +1,11 @@
-const url = `http://${process.env.DEV_API_KEY}:80/api/auth/login`;
+import { makeUrl } from "./common/util";
+
 const username = document.getElementById("floatingInput");
 const password = document.getElementById("floatingPassword");
 const loginForm = document.getElementById("loginForm");
 const RegisterBtn = document.getElementById("RegisterBtn");
 const Register_username = document.getElementById("register-id");
 const Register_password = document.getElementById("register-password");
-
-// if (process.env.DEV === "on") {
-//   console.log(`process.env.DEV_API_KEY:`, process.env.DEV_API_KEY);
-//   console.log(`env = ${process.env.process.env.DEV_API_KEY}`);
-// } else {
-//   console.log(`PRO_process.env.DEV_API_KEY:`, PRO_process.env.DEV_API_KEY);
-// }
 
 async function register_anonymous(event) {
   event.preventDefault();
@@ -29,15 +23,12 @@ async function register_anonymous(event) {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/users`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/users`), options);
   const result = await response.json();
   console.log(result);
   if (result.status === 201) {
     alert("비회원 가입 완료");
-    window.location.href = "../html/main.html";
+    window.location.href = "./main.html";
   } else {
     alert("다시 입력해주세요");
     console.log("비회원 회원가입 실패");
@@ -46,7 +37,6 @@ async function register_anonymous(event) {
 
 async function login(event) {
   event.preventDefault();
-
   const sendData = {
     userName: username.value,
     password: password.value,
@@ -61,7 +51,7 @@ async function login(event) {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(url, options);
+  const response = await fetch(makeUrl(`api/auth/login`), options);
   const result = await response.json();
 
   console.log(result);
@@ -70,7 +60,7 @@ async function login(event) {
     localStorage.setItem("sessionToken", result.data.sessionToken);
     localStorage.setItem("userId", result.data.user.userId);
     localStorage.setItem("userType", result.data.user.type);
-    window.location.href = "../html/main.html";
+    window.location.href = "./main.html";
   } else {
     console.log("로그인 실패");
   }

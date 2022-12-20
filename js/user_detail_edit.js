@@ -1,7 +1,8 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
-const url = new URL(`http://${process.env.DEV_API_KEY}:80/api/users/` + id);
 
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
@@ -62,8 +63,8 @@ function loadFile(input) {
   //이미지를 넣었기 때문에 useDefaultImage를 true로 바꿔준다.
   useDefaultImage = true;
 }
+
 function cancelFile() {
-  //const cancelFile = () => {
   var newImage = document.getElementById("profileImage");
   newImage.src = "../img/logo.png";
   chooseFile.value = null;
@@ -73,14 +74,8 @@ function cancelFile() {
   useDefaultImage = true;
 }
 
-const img = document.querySelector("#user_detail_edit_img");
-const img_input = document.querySelector("#user_detail_edit_img_input");
-const img_preview = document.querySelector("#user_detail_edit_img_preview");
-const img_2basic = document.querySelector("#user_detail_edit_img_2basic");
-let img2BasicFlag = false;
-
 console.log(sessiontoken);
-fetch(url, { headers: header })
+fetch(makeUrl(`api/users/${id}`), { headers: header })
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
@@ -115,7 +110,7 @@ fetch(url, { headers: header })
         profileImage.src = "../img/logo.png";
       } else {
         console.log(data.data.defaultInfo.userProfilePath);
-        profileImage.src = `http://${process.env.DEV_API_KEY}:80${data.data.defaultInfo.userProfilePath}`;
+        profileImage.src = `${makeUrl(data.data.defaultInfo.userProfilePath)}`;
         basicProfileBtn.classList.remove("disabled");
       }
     }
@@ -125,25 +120,7 @@ fetch(url, { headers: header })
 editForm.addEventListener("submit", async function userEdit(event) {
   event.preventDefault();
   console.log("edit");
-  // let imageData = new FormData();
-  // let file;
-  // if (img_input.files[0] == null) imageData = null;
-  // else if (img_input.files.length > 1) {
-  //   alert("1개의 이미지만 선택해주세요.");
-  //   return;
-  // } else {
-  //   file = img_input.files[0];
-  //   if (!file.type.match("image/.*")) {
-  //     alert("jpg나 png 파일이 아닙니다.");
-  //     return;
-  //   } else if (file.size > 1000000) {
-  //     alert("이미지의 크기가 10mb 이상입니다. ");
-  //     return;
-  //   } else {
-  //     imageData.append("image", img_input.files[0]);
-  //     console.log("append");
-  //   }
-  // }
+
   const sendData = {
     password: password.value,
     name: userName.value,
@@ -161,29 +138,8 @@ editForm.addEventListener("submit", async function userEdit(event) {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/users/${id}`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/users/${id}`), options);
   const result = await response.json();
-
-  // if (img2BasicFlag || imageData != null) {
-  //   const options2 = {
-  //     method: "PATCH",
-  //     headers: {
-  //       //"Content-Type": 'multipart/form-data;boundary=xxx;',
-  //       "x-pocs-session-token": sessionToken,
-  //     },
-  //     body: imageData,
-  //   };
-  //   console.log(options2);
-  //   const response2 = await fetch(
-  //     `http://${process.env.DEV_API_KEY}:80/api/users/${id}/profile`,
-  //     options2
-  //   );
-  //   const result2 = await response2.json();
-  //   console.log(result2, response2);
-  // }
 
   //profile 업로드
   let formData = new FormData();
@@ -194,49 +150,31 @@ editForm.addEventListener("submit", async function userEdit(event) {
   const profileOptions = {
     method: "PATCH",
     headers: {
-      //"Content-Type": "multipart/form-data",
+      "Content-Type": "multipart/form-data",
       "x-pocs-session-token": sessiontoken,
     },
     body: formData,
   };
   //null일때 api를 쏜다.
   if (useDefaultImage === true) {
-    const imageResponse = await fetch(
-      `http://${process.env.DEV_API_KEY}:80/api/users/${id}/profile`,
-      profileOptions
-    );
-    const result2 = await imageResponse.json();
-    console.log(result2);
+    await fetch(makeUrl(`api/users/${id}/profile`), profileOptions)
+      .then((response) => response.json)
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
   }
 
   if (result.status !== 302) {
     //에러 발생시
-    window.location.href = "../html/user_detail.html?userId=" + id;
+    window.location.href = "./user_detail.html?userId=" + id;
   } else {
     //잘 되었다면
     console.log(result.message);
-    window.location.href = "../html/user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
+    window.location.href = "./user_detail.html?userId=" + id; ////편집후 바로 이전화면으로
   }
 });
 
 //유저 정보 수정을 취소하는 버튼 이벤트
 cancelBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  window.location.href = "../html/user_detail.html?userId=" + id;
+  window.location.href = "./user_detail.html?userId=" + id;
 });
-
-// //업로드한 이미지 미리보기
-// img_input.addEventListener("change", function (event) {
-//   let reader = new FileReader();
-//   let AA = event.target.files[0];
-//   reader.onload = function (event) {
-//     img_preview.src = event.target.result;
-//   };
-//   reader.readAsDataURL(AA);
-// });
-// //미리보기를 기본 이미지로 변경
-// //현재 프로필 이미지와 다르면 flag 부여
-// img_2basic.addEventListener("click", function (event) {
-//   img_preview.src = "../img/logo.png";
-//   if (img.src != img_preview.src) img2BasicFlag = true;
-// });

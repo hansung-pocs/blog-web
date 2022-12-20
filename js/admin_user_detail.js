@@ -1,10 +1,9 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
 
-const user_detail_url = new URL(
-  `http://${process.env.DEV_API_KEY}:80/api/admin/users/${id}`
-);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -23,7 +22,7 @@ const img = document.querySelector("#user_img");
 window.LookupUserPost = LookupUserPost;
 window.userKick = userKick;
 
-fetch(user_detail_url, { headers: header })
+fetch(makeUrl(`api/admin/users/${id}`), { headers: header })
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
@@ -57,7 +56,7 @@ fetch(user_detail_url, { headers: header })
       generation.innerHTML = `${data.data.defaultInfo.generation}`;
 
       if (data.data.defaultInfo.userProfilePath != null)
-        img.src = `http://${process.env.DEV_API_KEY}${data.data.defaultInfo.userProfilePath}`;
+        img.src = `${makeUrl(`${data.data.defaultInfo.userProfilePath}`)}`;
       else img.src = "../img/logo.png";
 
       if (
@@ -76,7 +75,7 @@ fetch(user_detail_url, { headers: header })
   });
 
 function backToAdminPage() {
-  window.location.href = "../html/admin.html";
+  window.location.href = "./admin.html";
 }
 
 async function userKick() {
@@ -97,15 +96,12 @@ async function userKick() {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-pocs-session-token": sessionToken,
+      "x-pocs-session-token": sessiontoken,
     },
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/admin/users/${id}/kick`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/admin/users/${id}/kick`), options);
   const result = await response.json();
   if (result.status === 201) {
     backToAdminPage();
@@ -115,5 +111,5 @@ async function userKick() {
 }
 
 function LookupUserPost() {
-  window.location.href = `../html/user_posts.html?userId=${id}`;
+  window.location.href = `./user_posts.html?userId=${id}`;
 }

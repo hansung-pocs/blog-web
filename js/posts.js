@@ -1,18 +1,14 @@
-const notice = document.querySelector("#notice table");
+import { makeUrl } from "./common/util";
+
 const thead = document.querySelector("#notice table thead");
 const tbody = document.querySelector("#notice table tbody");
-
-let category;
-let userId;
 
 //pagination에 필요한 변수
 const offset = 15;
 let currentPage = 1;
-let cntPageNum = 0;
 let totalPage;
 let cateID = "";
 
-let url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -27,7 +23,7 @@ window.movePreviousPage = movePreviousPage;
 window.moveNextPage = moveNextPage;
 
 //공지사항 목록 조회
-function fetchPost() {
+async function fetchPost(url) {
   fetch(url, { headers: header })
     .then((response) => response.json())
     .then((data) => {
@@ -101,37 +97,39 @@ function showPagination() {
   document.querySelector("#post-pagination-bar").innerHTML = pageHTML;
 }
 
+async function render(category, cateId, offset, currentPage) {
+  await getCategoriesCount(category);
+  await fetchPost(
+    makeUrl(`api/posts?${cateId}&offset=${offset}&pageNum=${currentPage}`)
+  );
+  showPagination();
+}
+
 async function movePage(pageNum) {
   if (pageNum > totalPage) return;
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
-  await getCategoriesCount(Category[1]);
-  await fetchPost();
-  await showPagination();
+
+  render(Category[1], cateID, offset, currentPage);
 }
 
 async function moveNextPage() {
   if (currentPage >= totalPage) return;
   currentPage++;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
-  await getCategoriesCount(Category[1]);
-  await fetchPost();
-  await showPagination();
+
+  render(Category[1], cateID, offset, currentPage);
 }
 
 async function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
   let Category = cateID.split("id=");
-  await getCategoriesCount(Category[1]);
-  await fetchPost();
-  await showPagination();
+
+  render(Category[1], cateID, offset, currentPage);
 }
 
 function checktoGoDetailPage(Id) {
@@ -140,11 +138,11 @@ function checktoGoDetailPage(Id) {
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToPostList() {
-  window.location.href = "../html/posts.html";
+  window.location.href = "./posts.html";
 }
 
 function movePostAddPage() {
-  window.location.href = "../html/posts_add.html";
+  window.location.href = "./posts_add.html";
 }
 
 //api의 category En을 Kr로 변경
@@ -174,10 +172,8 @@ async function clickCategory(Category) {
   } else {
     cateID = `id=${Category}`;
     currentPage = 1;
-    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
-    await getCategoriesCount(Category);
-    await fetchPost();
-    await showPagination();
+
+    render(Category, cateID, offset, currentPage);
   }
 }
 
@@ -192,7 +188,10 @@ function drawCategoryColor(CateId) {
 }
 
 async function getCategoriesCount(category) {
-  await fetch(url, { headers: header })
+  await fetch(
+    makeUrl(`api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`),
+    { headers: header }
+  )
     .then((response) => response.json())
     .then((data) => {
       if (category === "study")
@@ -203,33 +202,49 @@ async function getCategoriesCount(category) {
         totalPage = Math.ceil(data.data.categories[3].count / 15);
       else if (category === "knowhow")
         totalPage = Math.ceil(data.data.categories[4].count / 15);
-      else if (category === "qna")
-        totalPage = Math.ceil(data.data.categories[5].count / 15);
+      // else if (category === "qna")
+      //   totalPage = Math.ceil(data.data.categories[5].count / 15);
+      // +data.data.categories[5].count
       else
         totalPage = Math.ceil(
           (data.data.categories[0].count +
             data.data.categories[1].count +
             data.data.categories[2].count +
             data.data.categories[3].count +
-            data.data.categories[4].count +
-            data.data.categories[5].count) /
+            data.data.categories[4].count) /
             15
         );
-    });
-  console.log(totalPage);
+    })
+    .catch((e) => console.log(e));
 }
 //카테고리 별 게시글 수 표시:
 // 카테고리에 변경 있을시 인덱스를 직접 수정해주어야함(카테고리명으로 인덱싱하는방법?)
 function categoryPostCountCheck(Cdata) {
   //stduy:0 memory:2 reference:3 knowhow:4
-  const c_study = document.querySelector(".category #study_count");
-  const c_memory = document.querySelector(".category #memory_count");
-  const c_reference = document.querySelector(".category #reference_count");
-  const c_knowhow = document.querySelector(".category #knowhow_count");
-  c_study.innerHTML = `(${Cdata[0].count})`;
-  c_memory.innerHTML = `(${Cdata[2].count})`;
-  c_reference.innerHTML = `(${Cdata[3].count})`;
-  c_knowhow.innerHTML = `(${Cdata[4].count})`;
+  const study = document.querySelector(".category #study_count");
+  const memory = document.querySelector(".category #memory_count");
+  const reference = document.querySelector(".category #reference_count");
+  const knowhow = document.querySelector(".category #knowhow_count");
+  Cdata.map((data) => {
+    switch (data.category) {
+      case "스터디":
+        study.innerHTML = `(${data.count})`;
+        break;
+      case "추억":
+        memory.innerHTML = `(${data.count})`;
+        break;
+      case "노하우":
+        knowhow.innerHTML = `(${data.count})`;
+        break;
+      case "추천":
+        reference.innerHTML = `(${data.count})`;
+        break;
+    }
+  });
+  // c_study.innerHTML = `(${Cdata[0].count})`;
+  // c_memory.innerHTML = `(${Cdata[2].count})`;
+  // c_reference.innerHTML = `(${Cdata[3].count})`;
+  // c_knowhow.innerHTML = `(${Cdata[4].count})`;
 }
 
 async function ShowPostsByCategory() {
@@ -246,16 +261,10 @@ async function ShowPostsByCategory() {
     get_category_from_url === "undefined#"
   ) {
     cateID = "";
-    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
-    await getCategoriesCount("");
-    await fetchPost();
-    await showPagination();
+    render("", cateID, offset, currentPage);
   } else {
     cateID = `id=${get_category_from_url}`;
-    url = `http://${process.env.DEV_API_KEY}:80/api/posts?${cateID}&offset=${offset}&pageNum=${currentPage}`;
-    await getCategoriesCount(get_category_from_url);
-    await fetchPost();
-    await showPagination();
+    render(get_category_from_url, cateID, offset, currentPage);
   }
 }
 

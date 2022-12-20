@@ -1,20 +1,15 @@
-const qa = document.querySelector("#qa table");
+import { makeUrl } from "./common/util";
+
 const thead = document.querySelector("#qa table thead");
 const tbody = document.querySelector("#qa table tbody");
-const userType = localStorage.getItem("userType");
 
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
 //pagination에 필요한 변수
-let post_index = [];
 const offset = 15;
 let currentPage = 1;
-let cnt = 0;
-let cntPageNum = 0;
-let totalPage;
-
-let url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
+let totalPage = 0;
 
 window.moveQaAddPage = moveQaAddPage;
 window.movePage = movePage;
@@ -23,21 +18,22 @@ window.movePreviousPage = movePreviousPage;
 window.goQaDetailPage = goQaDetailPage;
 
 function getArticleCount() {
-  fetch(url, { headers: header })
+  fetch(makeUrl(`api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`), {
+    headers: header,
+  })
     .then((response) => response.json())
     .then((data) => {
-      /*for (let i = 0; i < data.data.postsAll.length; i++) {
-                if (data.data.postsAll[i].category === "QNA") {
-                    cnt++;
-                    post_index.push(i);
-                }
-            }*/
-      //console.log(post_index);
+      data.data.categories.map((data) => {
+        totalPage += data.count;
+        console.log(totalPage);
+      });
+      totalPage = Math.ceil(totalPage / 15);
+      console.log(totalPage);
     });
 }
 
 //공지사항 목록 조회
-async function fetchQa() {
+async function fetchQa(url) {
   await fetch(url, { headers: header })
     .then((response) => response.json())
     .then((data) => {
@@ -54,7 +50,6 @@ async function fetchQa() {
         tbody.innerHTML =
           "<tr><td>0</td><td>글을 작성하세요.</td><td></td></tr>";
       } else {
-        totalPage = Math.ceil(data.data.categories[5].count / 15);
         for (let i = 0; i < data.data.posts.length; i++) {
           tbody.innerHTML += `
       <tr class="post-list">
@@ -69,7 +64,7 @@ async function fetchQa() {
         }
       }
     });
-  await showPagination();
+  showPagination();
 }
 
 //pgaination 구현
@@ -99,30 +94,29 @@ function showPagination() {
   document.querySelector("#post-pagination-bar").innerHTML = pageHTML;
 }
 
+function render() {
+  fetchQa(makeUrl(`api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`));
+  showPagination();
+}
+
 function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
-  fetchQa();
-  showPagination();
+  render();
 }
 
 function moveNextPage() {
   if (currentPage >= totalPage) return;
   currentPage++;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
-  fetchQa();
-  showPagination();
+  render();
 }
 
 function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://${process.env.DEV_API_KEY}:80/api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`;
-  fetchQa();
-  showPagination();
+  render();
 }
 
 function goQaDetailPage(Id) {
@@ -130,16 +124,15 @@ function goQaDetailPage(Id) {
 }
 
 function backToQaList() {
-  window.location.href = "../html/qa.html";
+  window.location.href = "./qa.html";
 }
 
 // 모든 회원이 질문 작성 가능
 function moveQaAddPage() {
   const checkUserType = localStorage.getItem("userType");
   console.log(checkUserType);
-  window.location.href = "../html/qa_add.html";
+  window.location.href = "./qa_add.html";
 }
 
 getArticleCount();
-fetchQa();
-//showPagination();
+fetchQa(makeUrl(`api/posts?id=qna&offset=${offset}&pageNum=${currentPage}`));

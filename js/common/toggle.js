@@ -1,5 +1,7 @@
-const validationUrl = `http://${process.env.DEV_API_KEY}:80/api/auth/validation`;
-const logoutUrl = `http://${process.env.DEV_API_KEY}:80/api/auth/logout`;
+import { makeUrl } from "./util";
+
+const validationUrl = makeUrl(`api/auth/validation`);
+const logoutUrl = makeUrl(`api/auth/logout`);
 const toggle = document.getElementById("toggle");
 const sessionToken = localStorage.getItem("sessionToken");
 const toggleDetail = document.getElementById("toggleDetail");
@@ -12,7 +14,8 @@ const nav_img = document.querySelector(".nav-item img");
 
 if (!window.location.href.includes("index")) {
   if (sessionToken === null) {
-    window.location.href = "../html/index.html";
+    console.log("ok");
+    window.location.href = "./index.html";
   }
 }
 
@@ -67,7 +70,9 @@ async function handleValidation(token) {
     console.log(result.data.user);
     if (result.data.user.type != "anonymous") {
       if (result.data.user.defaultInfo.userProfilePath != null)
-        nav_img.src = `http://${process.env.DEV_API_KEY}${result.data.user.defaultInfo.userProfilePath}`;
+        nav_img.src = makeUrl(
+          `${result.data.user.defaultInfo.userProfilePath}`
+        );
       else nav_img.src = "../img/logo.png";
     }
     return result.data.user;
@@ -95,8 +100,6 @@ function settingToggle(userId) {
 }
 
 async function handleLogout(event) {
-  //event.preventDefault();
-
   const options = {
     method: "POST",
     headers: {
@@ -114,7 +117,7 @@ async function handleLogout(event) {
     localStorage.removeItem("sessionToken");
     localStorage.removeItem("userId");
     localStorage.removeItem("userType");
-    window.location.href = "../html/index.html";
+    window.location.href = "./index.html";
     alert("로그아웃 되었습니다.");
   } else {
     console.log(result.message);
@@ -152,7 +155,6 @@ async function handleNavigation() {
     }
 
     if (user.defaultInfo.userProfilePath != null) {
-      //navProfile.src = `http://${process.env.DEV_API_KEY}:80/${user.defaultInfo.userProfilePath}`;
       navProfile.src = `http://34.64.161.55:80${user.defaultInfo.userProfilePath}`;
     }
   }
@@ -166,36 +168,21 @@ if (!window.location.href.includes("index")) {
 
 //네비게이션 공통
 function moveMainPage(event) {
-  window.location.href = `../html/main.html`;
+  window.location.href = `./main.html`;
 }
 
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
 function moveNoticePage(event) {
-  /* if (user_type === null || user_type === "anonymous") {
-        moveLoginPage();
-        //alert("블로그 회원만 조회 가능합니다.");
-    }
-    else {*/
   window.location.href = `../html/notices.html`;
-  //}
 }
 
 function movePostPage(category) {
-  // if (user_type === null || user_type === "anonymous") {
-  //     if(category==="study")
-  //         window.location.href = `../html/posts.html?category=${category}`;
-  //     else
-  //         moveLoginPage();
-  // }
-  // else {
   window.location.href = `../html/posts.html?category=${category}`;
-  //}
 }
 
 function moveUserPage() {
   if (user_type === null || user_type === "anonymous") {
     moveLoginPage();
-    //alert("블로그 회원만 조회 가능합니다.");
   } else {
     window.location.href = `../html/user.html`;
   }

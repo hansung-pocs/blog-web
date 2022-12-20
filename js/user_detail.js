@@ -1,10 +1,9 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?userId=");
 const id = arr[1];
 
-const user_detail_url = new URL(
-  `http://${process.env.DEV_API_KEY}:80/api/users/${id}`
-);
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
@@ -26,7 +25,7 @@ window.userKick = userKick;
 window.LookupUserPost = LookupUserPost;
 window.checktoShowButtons = checktoShowButtons;
 
-fetch(user_detail_url, { headers: header })
+fetch(makeUrl(`api/users/${id}`), { headers: header })
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
@@ -66,13 +65,13 @@ fetch(user_detail_url, { headers: header })
       if (data.data.defaultInfo.userProfilePath === null) {
         profileImage.src = "../img/logo.png";
       } else {
-        profileImage.src = `http://${process.env.DEV_API_KEY}:80/${data.data.defaultInfo.userProfilePath}`;
+        profileImage.src = `${makeUrl(data.data.defaultInfo.userProfilePath)}`;
       }
     }
   });
 
 function backToAdminPage() {
-  window.location.href = "../html/admin.html";
+  window.location.href = "./admin.html";
 }
 
 async function userKick() {
@@ -98,10 +97,7 @@ async function userKick() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/admin/users/${id}/kick`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/admin/users/${id}/kick`), options);
   const result = await response.json();
   if (result.status === 201) {
     backToAdminPage();
@@ -137,6 +133,6 @@ function checktoShowButtons() {
 }
 
 function LookupUserPost() {
-  window.location.href = `../html/user_posts.html?userId=${id}`;
+  window.location.href = `./user_posts.html?userId=${id}`;
 }
 checktoShowButtons();

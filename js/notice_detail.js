@@ -1,9 +1,12 @@
+import { makeUrl } from "./common/util";
+
 const Url = window.location.href;
 const arr = Url.split("?postId=");
 const id = arr[1];
 console.log(id);
 
 let sessiontoken = localStorage.getItem("sessionToken");
+let userId;
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 
 window.backToList = backToList;
@@ -17,9 +20,8 @@ async function NoticeDetailPage() {
   const notice_detail_content = document.querySelector(
     ".notice-detail-content"
   );
-  const d_url = `http://${process.env.DEV_API_KEY}:80/api/posts/${id}`;
 
-  await fetch(d_url, { headers: header })
+  await fetch(makeUrl(`api/posts/${id}`), { headers: header })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -43,7 +45,7 @@ async function NoticeDetailPage() {
           data.data.content
         )}</div>`;
         userId = data.data.writer.userId;
-        qaWriterId = "";
+        // qaWriterId = "";
       }
     });
 }
@@ -63,10 +65,7 @@ async function DeleteNotice() {
     body: JSON.stringify(sendData),
   };
 
-  const response = await fetch(
-    `http://${process.env.DEV_API_KEY}:80/api/posts/${id}/delete`,
-    options
-  );
+  const response = await fetch(makeUrl(`api/posts/${id}/delete`), options);
   const result = await response.json();
   console.log(result.status);
 
@@ -80,12 +79,12 @@ async function DeleteNotice() {
 
 //목록으로 버튼을 누르면 다시 공지사항목록으로 복귀
 function backToList() {
-  window.location.href = "../html/notices.html";
+  window.location.href = "./notices.html";
 }
 
 //공지사항 수정 페이지
 function gotoNoticeEditPage() {
-  window.location.href = `../html/notices_detail_edit.html?postId=${id}`;
+  window.location.href = `./notices_detail_edit.html?postId=${id}`;
 }
 
 NoticeDetailPage();

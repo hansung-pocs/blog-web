@@ -1,7 +1,6 @@
-const usersDiv = document.querySelector("#usersDiv");
-//const thead = document.querySelector("#user table thead");
-//const tbody = document.querySelector("#user table tbody");
+import { makeUrl } from "./common/util";
 
+const usersDiv = document.querySelector("#usersDiv");
 const radio0 = document.querySelector("#inlineRadio0");
 const radio1 = document.querySelector("#inlineRadio1");
 const radio2 = document.querySelector("#inlineRadio2");
@@ -17,7 +16,6 @@ const offset = 9;
 let currentPage = 1;
 let totalPage;
 
-let url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
 let sessiontoken = localStorage.getItem("sessionToken");
 let header = new Headers({ "x-pocs-session-token": sessiontoken });
 console.log(sessiontoken);
@@ -33,7 +31,7 @@ function btnClick() {
   searchName(name);
 }
 
-async function doFetch() {
+async function doFetch(url) {
   await fetch(url, { headers: header })
     .then((response) => response.json())
     .then((data) => {
@@ -61,7 +59,7 @@ function drawUserList(Arr) {
     if (Arr[i] == undefined) continue;
     let profilePath;
     if (Arr[i]?.defaultInfo.userProfilePath != null) {
-      profilePath = `http://${process.env.DEV_API_KEY}${Arr[i]?.defaultInfo.userProfilePath}`;
+      profilePath = makeUrl(`${Arr[i]?.defaultInfo.userProfilePath}`);
       console.log(profilePath);
     } else {
       profilePath = "../img/profile.png";
@@ -136,6 +134,11 @@ function sortArr(Arr, option) {
   }
 }
 
+async function render() {
+  await doFetch(makeUrl(`api/users?offset=${offset}&pageNum=${currentPage}`));
+  showPagination();
+}
+
 //pgaination 구현
 function showPagination() {
   let pageHTML = `<ul class="pagination justify-content-center">
@@ -168,27 +171,21 @@ async function movePage(pageNum) {
   //이동할 페이지가 이미 그 페이지라면
   if (currentPage === pageNum) return;
   currentPage = pageNum;
-  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
-  await doFetch();
-  await showPagination();
+  render();
 }
 
 async function moveNextPage() {
   if (currentPage >= totalPage) return;
   //넘길페이지가 전체 페이지보다 클경우 그냥 return
   currentPage++;
-  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
-  await doFetch();
-  await showPagination();
+  render();
 }
 
 async function movePreviousPage() {
   //뒤로갈페이지가 1보다 작거나 같을경우 그냥 return
   if (currentPage <= 1) return;
   currentPage--;
-  url = `http://${process.env.DEV_API_KEY}:80/api/users?offset=${offset}&pageNum=${currentPage}`;
-  await doFetch();
-  await showPagination();
+  render();
 }
 //옵션이 선택 될 때 목록 다시 그림
 function onClick(event) {
@@ -222,8 +219,9 @@ radio1.addEventListener("click", onClick);
 radio2.addEventListener("click", onClick);
 
 async function searchName(name) {
-  url = `http://${process.env.DEV_API_KEY}:80/api/users?search=${name}&offset=${offset}&pageNum=${currentPage}`;
-  await doFetch();
+  await doFetch(
+    makeUrl(`api/users?search=${name}&offset=${offset}&pageNum=${currentPage}`)
+  );
 }
 
-doFetch();
+doFetch(makeUrl(`api/users?offset=${offset}&pageNum=${currentPage}`));
