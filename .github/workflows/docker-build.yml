@@ -2,9 +2,9 @@ name: Docker CI/CD script
 
 on:
   push:
-    branches: [ "develop", "master" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master", "develop" ]
+    branches: [ "master" ]
     
   workflow_dispatch:
     inputs:
