@@ -84,7 +84,7 @@ async function handleValidation(token) {
 
 function settingToggle(userId) {
   if (userId === "loginFirst") {
-    toggleDetail.innerHTML = `<li><a class="dropdown-item" href="../html/index.html">로그인</a></li>`;
+    toggleDetail.innerHTML = `<li><a class="dropdown-item" href="./index.html">로그인</a></li>`;
   } else {
     if (user_type === "anonymous") {
       toggleDetail.innerHTML = `
@@ -92,7 +92,7 @@ function settingToggle(userId) {
         `;
     } else {
       toggleDetail.innerHTML = `
-            <li><a class="dropdown-item" href="../html/user_detail_edit.html?userId=${userId}">내 정보 수정</a></li>
+            <li><a class="dropdown-item" href="./user_detail_edit.html?userId=${userId}">내 정보 수정</a></li>
             <li><a class="dropdown-item" href="#" onclick="handleLogout()">로그아웃</a></li>
         `;
     }
@@ -173,25 +173,25 @@ function moveMainPage(event) {
 
 //홈페이지에서 공지사항 더보기 눌렀을때 공지사항 페이지로 이동
 function moveNoticePage(event) {
-  window.location.href = `../html/notices.html`;
+  window.location.href = `./notices.html`;
 }
 
 function movePostPage(category) {
-  window.location.href = `../html/posts.html?category=${category}`;
+  window.location.href = `./posts.html?category=${category}`;
 }
 
 function moveUserPage() {
   if (user_type === null || user_type === "anonymous") {
     moveLoginPage();
   } else {
-    window.location.href = `../html/user.html`;
+    window.location.href = `./user.html`;
   }
 }
 
 //alert대신 사용하면 됨(로그인페이지로 이동가능)
 function moveLoginPage() {
   if (confirm("블로그 회원만 조회 가능합니다.\n로그인하시겠습니까?")) {
-    window.location.href = `../html/index.html`;
+    window.location.href = `./index.html`;
   } else {
     return;
   }
