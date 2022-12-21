@@ -1,4 +1,4 @@
-import { makeUrl } from "./util";
+import { makeUrl } from "./api_util";
 //현재 페이지(window) url변수
 const Url = window.location.href;
 const WP_Url = window.location.href;
