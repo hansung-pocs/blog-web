@@ -1,4 +1,4 @@
-const baseUrl = `http://${process.env.DEV_API_KEY}`;
+const baseUrl = `https://${process.env.DEV_API_KEY}`;
 
 export function makeUrl(api) {
   return `${baseUrl}/${api}`;
