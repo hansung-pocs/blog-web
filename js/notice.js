@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 if (window.location.href.includes("notices.html")) {
   const thead = document.querySelector("#notice table thead");

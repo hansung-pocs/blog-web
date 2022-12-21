@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const Url = window.location.href;
 const arr = Url.split("?userId=");

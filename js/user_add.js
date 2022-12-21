@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const userName = document.querySelector("#user_detail_edit_userName");
 const passWord = document.querySelector("#user_detail_edit_password");

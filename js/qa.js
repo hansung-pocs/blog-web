@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const thead = document.querySelector("#qa table thead");
 const tbody = document.querySelector("#qa table tbody");

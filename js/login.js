@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const username = document.getElementById("floatingInput");
 const password = document.getElementById("floatingPassword");

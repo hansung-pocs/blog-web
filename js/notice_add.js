@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const notice_title = document.querySelector("#title");
 const notice_content = document.querySelector("#content");

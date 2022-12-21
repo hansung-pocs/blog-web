@@ -1,4 +1,4 @@
-import { makeUrl } from "./common/util";
+import { makeUrl } from "./common/api_util";
 
 const usersDiv = document.querySelector("#usersDiv");
 const radio0 = document.querySelector("#inlineRadio0");

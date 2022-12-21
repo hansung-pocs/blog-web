@@ -1,4 +1,4 @@
-import { makeUrl } from "./util";
+import { makeUrl } from "./api_util";
 
 const validationUrl = makeUrl(`api/auth/validation`);
 const logoutUrl = makeUrl(`api/auth/logout`);
@@ -155,7 +155,7 @@ async function handleNavigation() {
     }
 
     if (user.defaultInfo.userProfilePath != null) {
-      navProfile.src = `http://34.64.161.55:80${user.defaultInfo.userProfilePath}`;
+      navProfile.src = makeUrl(user.defaultInfo.userProfilePath.substr(1));
     }
   }
 }
