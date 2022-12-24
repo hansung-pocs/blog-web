@@ -145,12 +145,9 @@ editForm.addEventListener("submit", async function userEdit(event) {
   let formData = new FormData();
   formData.append("image", chooseFile.files[0]);
 
-  console.log(chooseFile.files[0]);
-
   const profileOptions = {
     method: "PATCH",
     headers: {
-      "Content-Type": "multipart/form-data",
       "x-pocs-session-token": sessiontoken,
     },
     body: formData,
